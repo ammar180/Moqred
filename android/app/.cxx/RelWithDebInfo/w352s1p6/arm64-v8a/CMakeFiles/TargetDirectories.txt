@@ -1,0 +1,2 @@
+D:/moqred/moqred/android/app/.cxx/RelWithDebInfo/w352s1p6/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/moqred/moqred/android/app/.cxx/RelWithDebInfo/w352s1p6/arm64-v8a/CMakeFiles/rebuild_cache.dir
