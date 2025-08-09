@@ -1,0 +1,2 @@
+D:/moqred/moqred/android/app/.cxx/Debug/5x3h3b2t/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/moqred/moqred/android/app/.cxx/Debug/5x3h3b2t/armeabi-v7a/CMakeFiles/rebuild_cache.dir

@@ -9,6 +9,9 @@ class SQLiteHelper {
   static Future<Database> get db async {
     if (_db != null) return _db!;
     _db = await _initDB();
+    final result = await _db!.rawQuery(
+        "SELECT name, type FROM sqlite_master WHERE name='person_overview'");
+    print("Hello: $result");
     return _db!;
   }
 
@@ -34,4 +37,3 @@ class SQLiteHelper {
     return await openDatabase(path, version: 1);
   }
 }
-

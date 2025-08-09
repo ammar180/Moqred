@@ -8,7 +8,7 @@ class FetchPersonsOverviewCall {
     required int perPage,
   }) async {
     final serviceReader = DbReader<PersonOverviewStruct>(
-      tableName: 'notes',
+      tableName: 'persons_overview',
       fromMap: (map) => PersonOverviewStruct().fromMap(map),
     );
 

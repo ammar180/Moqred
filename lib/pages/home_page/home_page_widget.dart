@@ -242,7 +242,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                   .displaySmallFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .secondary,
+                                                              .success,
                                                           letterSpacing: 0.0,
                                                           useGoogleFonts: GoogleFonts
                                                                   .asMap()
@@ -345,7 +345,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                   .displaySmallFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .alternate,
+                                                              .error,
                                                           letterSpacing: 0.0,
                                                           useGoogleFonts: GoogleFonts
                                                                   .asMap()
