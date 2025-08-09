@@ -1,10 +1,7 @@
-import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'drawer_model.dart';
 export 'drawer_model.dart';
@@ -59,9 +56,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 onPressed: () async {
                   safeSetState(() {});
                 },
-                text: FFLocalizations.of(context).getText(
-                  '7o37k0v5' /* استلام اشعارات */,
-                ),
+                text: "استلام اشعارات",
                 options: FFButtonOptions(
                   height: 31.09,
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
@@ -87,74 +82,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
-              FlutterFlowDropDown<String>(
-                controller: _model.dropDownLanguageValueController ??=
-                    FormFieldController<String>(
-                  _model.dropDownLanguageValue ??= valueOrDefault<String>(
-                    FFLocalizations.of(context).languageCode,
-                    'ar',
-                  ),
-                ),
-                options: List<String>.from(['ar', 'en']),
-                optionLabels: [
-                  FFLocalizations.of(context).getText(
-                    '9weh2cno' /* العربية */,
-                  ),
-                  FFLocalizations.of(context).getText(
-                    '9mfw75bt' /* الانجليزية */,
-                  )
-                ],
-                onChanged: (val) async {
-                  safeSetState(() => _model.dropDownLanguageValue = val);
-                  setAppLanguage(
-                      context,
-                      valueOrDefault<String>(
-                        _model.dropDownLanguageValue,
-                        'ar',
-                      ));
-                },
-                width: 200.0,
-                height: 40.0,
-                textStyle: FlutterFlowTheme.of(context).bodyLarge.override(
-                      font: GoogleFonts.inter(
-                        fontWeight:
-                            FlutterFlowTheme.of(context).bodyLarge.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyLarge.fontStyle,
-                      ),
-                      letterSpacing: 0.0,
-                      fontWeight:
-                          FlutterFlowTheme.of(context).bodyLarge.fontWeight,
-                      fontStyle:
-                          FlutterFlowTheme.of(context).bodyLarge.fontStyle,
-                    ),
-                hintText: FFLocalizations.of(context).getText(
-                  'j6sjpwu5' /* اختر اللغة... */,
-                ),
-                icon: Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: FlutterFlowTheme.of(context).secondaryText,
-                  size: 24.0,
-                ),
-                fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                elevation: 2.0,
-                borderColor: Colors.transparent,
-                borderWidth: 0.0,
-                borderRadius: 8.0,
-                margin: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                hidesUnderline: true,
-                isOverButton: false,
-                isSearchable: false,
-                isMultiSelect: false,
-              ),
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    FFLocalizations.of(context).getText(
-                      'q6xqdami' /* الوضع المظلم */,
-                    ),
+                    "الوضع المظلم",
                     style: FlutterFlowTheme.of(context).bodyLarge.override(
                           font: GoogleFonts.inter(
                             fontWeight: FlutterFlowTheme.of(context)
@@ -202,9 +135,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ),
               FFButtonWidget(
                 onPressed: () async {},
-                text: FFLocalizations.of(context).getText(
-                  '9f8uy4uc' /* تحديث كلمة المرور */,
-                ),
+                text: "تحديث كلمة المرور",
                 icon: Icon(
                   Icons.lock,
                   color: FlutterFlowTheme.of(context).primaryBackground,

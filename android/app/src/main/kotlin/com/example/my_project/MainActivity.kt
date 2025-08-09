@@ -1,4 +1,4 @@
-package com.elsewedyelectrometer.Moqred
+package com.ammaromran.moqred
 
 import io.flutter.embedding.android.FlutterActivity
 
