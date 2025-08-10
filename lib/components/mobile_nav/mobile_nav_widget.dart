@@ -15,16 +15,10 @@ class MobileNavWidget extends StatefulWidget {
     super.key,
     this.navOneIcon,
     this.navTwoIcon,
-    this.navThreeIcon,
-    this.navFourIcon,
-    this.navFiveIcon,
   });
 
   final Widget? navOneIcon;
   final Widget? navTwoIcon;
-  final Widget? navThreeIcon;
-  final Widget? navFourIcon;
-  final Widget? navFiveIcon;
 
   @override
   State<MobileNavWidget> createState() => _MobileNavWidgetState();
@@ -146,7 +140,7 @@ class _MobileNavWidgetState extends State<MobileNavWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      widget.navFourIcon!,
+                      widget.navTwoIcon!,
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),

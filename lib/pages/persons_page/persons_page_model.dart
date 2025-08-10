@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:moqred/components/mobile_nav/mobile_nav_model.dart';
-import 'package:moqred/flutter_flow/flutter_flow_model.dart';
-import 'package:moqred/pages/persons_page/persons_page_widget.dart';
+import 'persons_page_widget.dart' show PersonsPageWidget;
+import '/flutter_flow/flutter_flow_util.dart';
+import '/components/mobile_nav/mobile_nav_widget.dart';
 
-class PersonsModel extends FlutterFlowModel<PersonsPageWidget> {
+class PersonsPageModel extends FlutterFlowModel<PersonsPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   // Model for mobileNav component.
