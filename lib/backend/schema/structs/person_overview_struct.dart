@@ -18,8 +18,9 @@ class PersonOverviewStruct extends BaseModel {
         _remainder = remainder,
         _lastTransaction = lastTransaction;
 
+  static String TABLE_NAME = "persons_overview";
   @override
-  String get tableName => "persons_overview";
+  String get tableName => TABLE_NAME;
   @override
   String? id;
 
@@ -145,4 +146,3 @@ class PersonOverviewStruct extends BaseModel {
         lastTransaction,
       ]);
 }
-
