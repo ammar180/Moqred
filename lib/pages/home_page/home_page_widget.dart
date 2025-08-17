@@ -1,12 +1,12 @@
 import 'package:moqred/backend/db_requests/db_calls.dart';
 import 'package:moqred/backend/schema/structs/index.dart';
+import 'package:moqred/backend/schema/util/pagination_util.dart';
 import '/components/mobile_nav/mobile_nav_widget.dart';
 import '/flutter_flow/flutter_flow_data_table.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 import 'home_page_model.dart';
 export 'home_page_model.dart';
@@ -30,17 +30,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HomePageModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.personsOverviewResponse = await FetchPersonsOverviewCall.call(
-        page: _model.dtCurrentPage,
-        perPage: valueOrDefault<int>(
-          _model.paginatedDataTableController.rowsPerPage,
-          10,
-        ),
-      );
-    });
   }
 
   @override
@@ -172,7 +161,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 12.0, 0.0, 12.0),
                                         child: Wrap(
-                                          spacing: 24.0,
+                                          spacing: 12.0,
                                           runSpacing: 0.0,
                                           alignment: WrapAlignment.spaceBetween,
                                           crossAxisAlignment:
@@ -203,7 +192,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     '3,502',
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .headlineMedium
+                                                        .headlineSmall
                                                         .override(
                                                           fontFamily: 'Sora',
                                                           color: FlutterFlowTheme
@@ -234,7 +223,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     '42,592',
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .headlineMedium,
+                                                        .headlineSmall,
                                                   ),
                                                 ),
                                               ],
@@ -258,7 +247,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     '2,201-',
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .headlineMedium
+                                                        .headlineSmall
                                                         .override(
                                                           fontFamily: 'Sora',
                                                           color: FlutterFlowTheme
@@ -290,17 +279,49 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    Builder(
-                                      builder: (context) {
-                                        final person = _model
-                                                .personsOverviewResponse
-                                                ?.items ??
-                                            [];
+                                    FutureBuilder<
+                                        PaginatedResult<PersonOverviewStruct>>(
+                                      future: FetchPersonsOverviewCall.call(
+                                        page: _model.dtCurrentPage,
+                                        perPage: valueOrDefault<int>(
+                                          _model.paginatedDataTableController
+                                              .rowsPerPage,
+                                          _model.dtCurrentPage,
+                                        ),
+                                      ),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Center(
+                                              child:
+                                                  CircularProgressIndicator());
+                                        } else if (snapshot.hasError) {
+                                          return Center(
+                                            child: Text(
+                                              'Error: ${snapshot.error}',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .headlineSmall
+                                                      .override(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .error,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
+                                          );
+                                        } else if (!snapshot.hasData ||
+                                            snapshot.data!.items.isEmpty) {
+                                          return const Center(
+                                              child: Text('No data available'));
+                                        }
+                                        final person = snapshot.data!.items;
                                         return SizedBox(
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height *
-                                              0.7, // finite height for table
+                                              0.5, // finite height for table
                                           child: FlutterFlowDataTable<
                                               PersonOverviewStruct>(
                                             controller: _model
@@ -308,21 +329,68 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             data: person,
                                             columnsBuilder: (onSortChanged) => [
                                               DataColumn2(
-                                                  label: Text('اسم المقترض')),
+                                                label: DefaultTextStyle.merge(
+                                                  softWrap: true,
+                                                  child: Text('المقترض',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge),
+                                                ),
+                                                fixedWidth:
+                                                    MediaQuery.sizeOf(context)
+                                                            .width *
+                                                        0.25,
+                                              ),
                                               DataColumn2(
-                                                  label: Text('مبلغ القرض')),
+                                                label: DefaultTextStyle.merge(
+                                                  softWrap: true,
+                                                  child: Text('القرض',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge),
+                                                ),
+                                              ),
                                               DataColumn2(
-                                                  label:
-                                                      Text('المبلغ المتبقي')),
+                                                label: DefaultTextStyle.merge(
+                                                  softWrap: true,
+                                                  child: Text('المتبقي',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge),
+                                                ),
+                                              ),
                                               DataColumn2(
-                                                  label: Text('تاريخ اخر دفع')),
+                                                label: DefaultTextStyle.merge(
+                                                  softWrap: true,
+                                                  child: Text('اخر دفع',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge),
+                                                ),
+                                                fixedWidth:
+                                                    MediaQuery.sizeOf(context)
+                                                            .width *
+                                                        0.2,
+                                              ),
                                             ],
                                             dataRowBuilder: (personItem,
                                                     personIndex,
                                                     selected,
                                                     onSelectChanged) =>
                                                 DataRow(
-                                              color: MaterialStateProperty.all(
+                                              color: WidgetStateProperty.all(
                                                 personIndex % 2 == 0
                                                     ? FlutterFlowTheme.of(
                                                             context)
@@ -332,21 +400,48 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                         .primaryBackground,
                                               ),
                                               cells: [
-                                                DataCell(Text(valueOrDefault(
-                                                    personItem.name,
-                                                    'المقترض'))),
-                                                DataCell(Text(
-                                                    '${personItem.loan}')),
-                                                DataCell(Text(
-                                                    '${personItem.remainder}')),
-                                                DataCell(Text(dateTimeFormat(
-                                                  "relative",
-                                                  personItem.lastTransaction,
-                                                  locale: FFLocalizations.of(
-                                                          context)
-                                                      .languageCode,
-                                                ))),
-                                              ],
+                                                Text(
+                                                    valueOrDefault<String>(
+                                                      personItem.name,
+                                                      'المقترض',
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .labelSmall),
+                                                Text(
+                                                    valueOrDefault<String>(
+                                                      personItem.loan
+                                                          .toString(),
+                                                      '0',
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .labelSmall),
+                                                Text(
+                                                    valueOrDefault<String>(
+                                                      personItem.remainder
+                                                          .toString(),
+                                                      '-0',
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .labelSmall),
+                                                Text(
+                                                    dateTimeFormat(
+                                                      "relative",
+                                                      personItem
+                                                          .lastTransaction,
+                                                      locale:
+                                                          FFLocalizations.of(
+                                                                  context)
+                                                              .languageCode,
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodySmall),
+                                              ]
+                                                  .map((c) => DataCell(c))
+                                                  .toList(),
                                             ),
                                             onPageChanged:
                                                 (currentRowIndex) async {
@@ -366,9 +461,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             paginated: true,
                                             selectable: false,
                                             hidePaginator: false,
-                                            headingRowHeight: 56.0,
-                                            dataRowHeight: 48.0,
-                                            columnSpacing: 10.0,
+                                            headingRowHeight: 60.0,
+                                            dataRowHeight: 60.0,
+                                            columnSpacing: 5.0,
                                             headingRowColor:
                                                 FlutterFlowTheme.of(context)
                                                     .primary,

@@ -9,7 +9,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart'
-    show databaseFactory, databaseFactoryFfi, sqfliteFfiInit;
+    show databaseFactory;
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 void main() async {
@@ -19,9 +19,6 @@ void main() async {
 
   if (kIsWeb) {
     databaseFactory = databaseFactoryFfiWeb;
-  } else {
-    sqfliteFfiInit();
-    databaseFactory = databaseFactoryFfi;
   }
 
   await FlutterFlowTheme.initialize();
