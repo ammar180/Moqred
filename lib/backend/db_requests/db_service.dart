@@ -57,6 +57,13 @@ class DbReader<T extends BaseModel> {
       pageSize: pageSize,
     );
   }
+
+  Future<List<T>> fromSql(String sql, [List<Object?> params = const []]) async {
+    final db = await SQLiteHelper.db;
+
+    final result = await db.rawQuery(sql, params);
+    return result.map(fromMap).toList();
+  }
 }
 
 class DbWriter<T extends BaseModel> {

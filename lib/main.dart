@@ -8,8 +8,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart'
-    show databaseFactory;
+import 'package:sqflite_common_ffi/sqflite_ffi.dart' show databaseFactory;
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 void main() async {

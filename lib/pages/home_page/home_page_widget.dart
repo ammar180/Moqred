@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_data_table.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:ui';
+import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 
 import 'home_page_model.dart';
@@ -160,106 +161,187 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 12.0, 0.0, 12.0),
-                                        child: Wrap(
-                                          spacing: 12.0,
-                                          runSpacing: 0.0,
-                                          alignment: WrapAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              WrapCrossAlignment.end,
-                                          direction: Axis.horizontal,
-                                          runAlignment:
-                                              WrapAlignment.spaceBetween,
-                                          verticalDirection:
-                                              VerticalDirection.down,
-                                          clipBehavior: Clip.none,
-                                          children: [
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  'المبلغ المتوافر',
+                                        child: FutureBuilder<Balance>(
+                                          future:
+                                              FetchElQardBalancesCall.call(),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return Wrap(
+                                                spacing: 12.0,
+                                                runSpacing: 0.0,
+                                                alignment:
+                                                    WrapAlignment.spaceBetween,
+                                                crossAxisAlignment:
+                                                    WrapCrossAlignment.end,
+                                                children:
+                                                    List.generate(3, (index) {
+                                                  return Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        width: 80,
+                                                        height: 16,
+                                                        color: Colors.grey[300],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 16),
+                                                      Shimmer.fromColors(
+                                                        baseColor:
+                                                            Colors.grey[300]!,
+                                                        highlightColor:
+                                                            Colors.grey[100]!,
+                                                        child: Container(
+                                                          width: 100,
+                                                          height: 24,
+                                                          color:
+                                                              Colors.grey[300],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                }),
+                                              );
+                                            }
+
+                                            if (snapshot.hasError) {
+                                              return Text(
+                                                  "Error loading balances",
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .labelMedium,
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 16.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    '3,502',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .headlineSmall
-                                                        .override(
+                                                      .labelMedium
+                                                      .override(
                                                           fontFamily: 'Sora',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .success,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  'المبلغ الاجمالي',
+                                                              .error));
+                                            }
+
+                                            if (!snapshot.hasData) {
+                                              return Text("No data available",
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .labelMedium,
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 16.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    '42,592',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .headlineSmall,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
+                                                      .labelMedium);
+                                            }
+
+                                            var balanceData = snapshot.data!;
+                                            return Wrap(
+                                              spacing: 12.0,
+                                              runSpacing: 0.0,
+                                              alignment:
+                                                  WrapAlignment.spaceBetween,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                                  WrapCrossAlignment.end,
                                               children: [
-                                                Text(
-                                                  'المبلغ الخارج',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .labelMedium,
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'المبلغ المتوافر',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(0.0,
+                                                              16.0, 0.0, 0.0),
+                                                      child: Text(
+                                                        "${balanceData.TotalIn}",
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .headlineSmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Sora',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .success,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 16.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    '2,201-',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .headlineSmall
-                                                        .override(
-                                                          fontFamily: 'Sora',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                  ),
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'المبلغ الاجمالي',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(0.0,
+                                                              16.0, 0.0, 0.0),
+                                                      child: Text(
+                                                        '${balanceData.CurrentBalance}',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .headlineSmall,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'المبلغ الخارج',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(0.0,
+                                                              16.0, 0.0, 0.0),
+                                                      child: Text(
+                                                        '${balanceData.TotalOut}',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .headlineSmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Sora',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
-                                            ),
-                                          ],
+                                            );
+                                          },
                                         ),
                                       ),
                                     ),
@@ -292,9 +374,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       builder: (context, snapshot) {
                                         if (snapshot.connectionState ==
                                             ConnectionState.waiting) {
-                                          return const Center(
-                                              child:
-                                                  CircularProgressIndicator());
+                                          return Center(
+                                              child: CircularProgressIndicator(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .error));
                                         } else if (snapshot.hasError) {
                                           return Center(
                                             child: Text(
