@@ -58,7 +58,7 @@ class PersonOverviewStruct extends BaseModel {
         name: data['name'] as String?,
         loan: data['loan'] as int?,
         remainder: data['remainder'] as int?,
-        lastTransaction: data['lastTransaction'] as DateTime?,
+        lastTransaction: DateTime.tryParse(data['last_transaction'] as String),
       );
 
   PersonOverviewStruct? maybeFromMap(dynamic data) =>
@@ -69,7 +69,7 @@ class PersonOverviewStruct extends BaseModel {
         'name': _name,
         'loan': _loan,
         'remainder': _remainder,
-        'lastTransaction': _lastTransaction,
+        'last_transaction': _lastTransaction,
       }.withoutNulls;
 
   Map<String, dynamic> toSerializableMap() => {
@@ -89,7 +89,7 @@ class PersonOverviewStruct extends BaseModel {
           _remainder,
           ParamType.int,
         ),
-        'lastTransaction': serializeParam(
+        'last_transaction': serializeParam(
           _lastTransaction,
           ParamType.String,
         ),
@@ -118,7 +118,7 @@ class PersonOverviewStruct extends BaseModel {
           false,
         ),
         lastTransaction: deserializeParam(
-          data['lastTransaction'],
+          data['last_transaction'],
           ParamType.String,
           false,
         ),
