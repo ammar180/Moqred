@@ -35,5 +35,6 @@ INNER JOIN persons AS p on p.id = t.person
 INNER JOIN transaction_types AS type on type.id = t.type
 WHERE type.type = 'payment' OR type.type = 'loan'
 GROUP BY person
-HAVING remainder < 0);
+HAVING remainder < 0)
+ORDER BY last_transaction DESC;
 

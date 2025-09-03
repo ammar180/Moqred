@@ -12,4 +12,7 @@ class PaginatedResult<T> {
   });
 
   bool get hasNextPage => (currentPage + 1) * pageSize < totalCount;
+
+  @override
+  String toString() => 'PagingParams(totalCount:$totalCount, currentPage:$currentPage, pageSize: $pageSize)';
 }

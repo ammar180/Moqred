@@ -1,5 +1,6 @@
 import 'package:moqred/backend/db_requests/db_manager.dart';
 import 'package:moqred/backend/db_requests/db_service.dart';
+import 'package:moqred/backend/schema/models/transaction.dart';
 import 'package:moqred/backend/schema/structs/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
 
@@ -14,6 +15,21 @@ class FetchPersonsOverviewCall {
     );
 
     return await serviceReader.getPaginated(page: page, pageSize: perPage);
+  }
+}
+
+class FetchTransactionsCall {
+  static Future<PaginatedResult<Transaction>> call({
+    required int page,
+    required int perPage,
+  }) async {
+    final serviceReader = DbReader<Transaction>(
+      tableName: Transaction.TABLE_NAME,
+      fromMap: (map) => Transaction.fromMap(map),
+    );
+
+    return await serviceReader.getPaginated(
+        page: page, pageSize: perPage, orderBy: 'created', descending: true);
   }
 }
 
