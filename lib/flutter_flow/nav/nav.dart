@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:moqred/main.dart' show NavBarPage;
 import 'package:provider/provider.dart';
 
 import '/backend/schema/structs/index.dart';
@@ -57,30 +58,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) => HomePageWidget(),
+      errorBuilder: (context, state) => NavBarPage(),
       routes: [
         FFRoute(
-            name: '_initialize',
-            path: '/',
-            builder: (context, _) => HomePageWidget()),
+          name: '_initialize',
+          path: '/',
+          builder: (context, _) =>
+              NavBarPage(initialPage: HomePageWidget.routeName),
+        ),
         FFRoute(
           name: HomePageWidget.routeName,
           path: HomePageWidget.routePath,
           requireAuth: true,
           builder: (context, params) => HomePageWidget(),
         ),
-        // FFRoute(
-        //   name: EditRequestWidget.routeName,
-        //   path: EditRequestWidget.routePath,
-        //   builder: (context, params) => EditRequestWidget(
-        //     requestInfo: params.getParam(
-        //       'requestInfo',
-        //       ParamType.DataStruct,
-        //       isList: false,
-        //       structBuilder: TransactionDetailsStruct.fromSerializableMap,
-        //     ),
-        //   ),
-        // )
+        FFRoute(
+          name: TransactionsPageWidget.routeName,
+          path: TransactionsPageWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => TransactionsPageWidget(),
+        ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
@@ -158,6 +155,7 @@ extension _GoRouterStateExtensions on GoRouterState {
     ..addAll(pathParameters)
     ..addAll(uri.queryParameters)
     ..addAll(extraMap);
+
   TransitionInfo get transitionInfo => extraMap.containsKey(kTransitionInfoKey)
       ? extraMap[kTransitionInfoKey] as TransitionInfo
       : TransitionInfo.appDefault();

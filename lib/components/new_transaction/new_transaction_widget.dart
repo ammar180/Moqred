@@ -4,19 +4,18 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'message_bottom_sheet_model.dart';
-export 'message_bottom_sheet_model.dart';
+import 'new_transaction_model.dart';
+export 'new_transaction_model.dart';
 
-class MessageBottomSheetWidget extends StatefulWidget {
-  const MessageBottomSheetWidget({super.key});
+class NewTransactionWidget extends StatefulWidget {
+  const NewTransactionWidget({super.key});
 
   @override
-  State<MessageBottomSheetWidget> createState() =>
-      _MessageBottomSheetWidgetState();
+  State<NewTransactionWidget> createState() => _NewTransactionWidgetState();
 }
 
-class _MessageBottomSheetWidgetState extends State<MessageBottomSheetWidget> {
-  late MessageBottomSheetModel _model;
+class _NewTransactionWidgetState extends State<NewTransactionWidget> {
+  late NewTransactionModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -27,7 +26,7 @@ class _MessageBottomSheetWidgetState extends State<MessageBottomSheetWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => MessageBottomSheetModel());
+    _model = createModel(context, () => NewTransactionModel());
   }
 
   @override

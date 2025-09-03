@@ -1,7 +1,8 @@
 import 'package:moqred/backend/db_requests/db_calls.dart';
 import 'package:moqred/backend/schema/structs/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
-import '/components/mobile_nav/mobile_nav_widget.dart';
+import 'package:moqred/components/new_transaction/new_transaction_widget.dart';
+import 'package:moqred/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/flutter_flow_data_table.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -15,7 +16,7 @@ export 'home_page_model.dart';
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({super.key});
 
-  static String routeName = 'HomePage';
+  static String routeName = 'home_page';
   static String routePath = '/homePage';
 
   @override
@@ -361,6 +362,140 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
+                                    // Generated code for this Row Widget...
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 10.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Expanded(
+                                            child: FFButtonWidget(
+                                              onPressed: () async {
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(context)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child:
+                                                            NewTransactionWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
+                                              },
+                                              text: 'قرض',
+                                              options: FFButtonOptions(
+                                                height: 40.0,
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 16.0, 0.0),
+                                                iconPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          color: Colors.white,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                elevation: 0.0,
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: FFButtonWidget(
+                                              onPressed: () {
+                                                print('Button pressed ...');
+                                              },
+                                              text: 'سداد',
+                                              options: FFButtonOptions(
+                                                height: 40.0,
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 16.0, 0.0),
+                                                iconPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .success,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          color: Colors.white,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                elevation: 0.0,
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: FFButtonWidget(
+                                              onPressed: () {
+                                                print('Button pressed ...');
+                                              },
+                                              text: 'تبرع',
+                                              options: FFButtonOptions(
+                                                height: 40.0,
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 16.0, 0.0),
+                                                iconPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .warning,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          color: Colors.white,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                elevation: 0.0,
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                            ),
+                                          ),
+                                        ].divide(SizedBox(width: 5.0)),
+                                      ),
+                                    ),
+
                                     FutureBuilder<
                                         PaginatedResult<PersonOverviewStruct>>(
                                       future: FetchPersonsOverviewCall.call(
@@ -563,20 +698,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                  ),
-                  wrapWithModel(
-                    model: _model.mobileNavModel,
-                    updateCallback: () => safeSetState(() {}),
-                    child: MobileNavWidget(
-                      navOneIcon: Icon(
-                        Icons.home_rounded,
-                        color: FlutterFlowTheme.of(context).primary,
-                      ),
-                      navTwoIcon: Icon(
-                        Icons.person,
-                        color: FlutterFlowTheme.of(context).secondaryText,
                       ),
                     ),
                   ),

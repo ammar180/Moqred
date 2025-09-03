@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import '/index.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
@@ -145,6 +146,81 @@ class _MyAppState extends State<MyApp> {
       ),
       themeMode: _themeMode,
       routerConfig: _router,
+    );
+  }
+}
+
+class NavBarPage extends StatefulWidget {
+  NavBarPage({Key? key, this.initialPage, this.page}) : super(key: key);
+
+  final String? initialPage;
+  final Widget? page;
+
+  @override
+  _NavBarPageState createState() => _NavBarPageState();
+}
+
+/// This is the private State class that goes with NavBarPage.
+class _NavBarPageState extends State<NavBarPage> {
+  String _currentPageName = HomePageWidget.routeName;
+  late Widget? _currentPage;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentPageName = widget.initialPage ?? _currentPageName;
+    _currentPage = widget.page;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tabs = {
+      'HomePage': HomePageWidget(),
+      'TransactionsPage': TransactionsPageWidget(),
+    };
+    final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
+
+    return Scaffold(
+      body: _currentPage ?? tabs[_currentPageName],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (i) => safeSetState(() {
+          _currentPage = null;
+          _currentPageName = tabs.keys.toList()[i];
+        }),
+        backgroundColor: Color(0xFF131313),
+        selectedItemColor: FlutterFlowTheme.of(context).primary,
+        unselectedItemColor: Color(0xCCD9D9D9),
+        showSelectedLabels: true,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_rounded,
+              color: FlutterFlowTheme.of(context).secondaryText,
+            ),
+            activeIcon: Icon(
+              Icons.home_rounded,
+              color: FlutterFlowTheme.of(context).primary,
+            ),
+            label: 'الرئيسية',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              color: FlutterFlowTheme.of(context).secondaryText,
+            ),
+            activeIcon: Icon(
+              Icons.person,
+              color: FlutterFlowTheme.of(context).primary,
+            ),
+            label: 'الأشخاص',
+            tooltip: '',
+          ),
+        ],
+      ),
     );
   }
 }

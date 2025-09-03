@@ -1,6 +1,5 @@
 import 'package:moqred/backend/schema/structs/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
-import '/components/mobile_nav/mobile_nav_widget.dart';
 import '/flutter_flow/flutter_flow_data_table.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'home_page_widget.dart' show HomePageWidget;
@@ -18,17 +17,13 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   // State field(s) for PaginatedDataTable widget.
   final paginatedDataTableController =
       FlutterFlowDataTableController<PersonOverviewStruct>();
-  // Model for mobileNav component.
-  late MobileNavModel mobileNavModel;
 
   @override
   void initState(BuildContext context) {
-    mobileNavModel = createModel(context, () => MobileNavModel());
   }
 
   @override
   void dispose() {
     paginatedDataTableController.dispose();
-    mobileNavModel.dispose();
   }
 }
