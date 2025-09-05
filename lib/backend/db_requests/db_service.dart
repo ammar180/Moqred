@@ -49,6 +49,7 @@ class DbReader<T extends BaseModel> {
     );
 
     final items = result.map(fromMap).toList();
+    print(items);
 
     return PaginatedResult<T>(
       items: items,

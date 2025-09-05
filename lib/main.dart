@@ -114,15 +114,6 @@ class _MyAppState extends State<MyApp> {
           thumbVisibility: WidgetStateProperty.all(false),
           interactive: true,
           thickness: WidgetStateProperty.all(3.0),
-          thumbColor: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.dragged)) {
-              return Color(4294458182);
-            }
-            if (states.contains(WidgetState.hovered)) {
-              return Color(4294458182);
-            }
-            return Color(4294458182);
-          }),
         ),
         useMaterial3: false,
       ),
@@ -175,8 +166,8 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'HomePage': HomePageWidget(),
-      'TransactionsPage': TransactionsPageWidget(),
+      HomePageWidget.routeName: HomePageWidget(),
+      TransactionsPageWidget.routeName: TransactionsPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -192,12 +183,12 @@ class _NavBarPageState extends State<NavBarPage> {
         selectedItemColor: FlutterFlowTheme.of(context).primary,
         unselectedItemColor: Color(0xCCD9D9D9),
         showSelectedLabels: true,
-        showUnselectedLabels: false,
+        showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.home_rounded,
+              Icons.home_outlined,
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
             activeIcon: Icon(
@@ -209,14 +200,14 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.person,
+              Icons.data_usage_outlined,
               color: FlutterFlowTheme.of(context).secondaryText,
             ),
             activeIcon: Icon(
-              Icons.person,
+              Icons.data_usage_rounded,
               color: FlutterFlowTheme.of(context).primary,
             ),
-            label: 'الأشخاص',
+            label: 'المعاملات',
             tooltip: '',
           ),
         ],
