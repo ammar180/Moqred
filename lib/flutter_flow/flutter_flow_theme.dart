@@ -32,11 +32,8 @@ abstract class FlutterFlowTheme {
         : LightModeTheme();
   }
 
-  @Deprecated('Use primary instead')
   Color get primaryColor => primary;
-  @Deprecated('Use secondary instead')
   Color get secondaryColor => secondary;
-  @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
   late Color primary;
@@ -60,33 +57,19 @@ abstract class FlutterFlowTheme {
 
   late Color lineColor;
 
-  @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
-  @Deprecated('Use displaySmall instead')
   TextStyle get title1 => typography.displaySmall;
-  @Deprecated('Use headlineMediumFamily instead')
   String get title2Family => typography.headlineMediumFamily;
-  @Deprecated('Use headlineMedium instead')
   TextStyle get title2 => typography.headlineMedium;
-  @Deprecated('Use headlineSmallFamily instead')
   String get title3Family => typography.headlineSmallFamily;
-  @Deprecated('Use headlineSmall instead')
   TextStyle get title3 => typography.headlineSmall;
-  @Deprecated('Use titleMediumFamily instead')
   String get subtitle1Family => typography.titleMediumFamily;
-  @Deprecated('Use titleMedium instead')
   TextStyle get subtitle1 => typography.titleMedium;
-  @Deprecated('Use titleSmallFamily instead')
   String get subtitle2Family => typography.titleSmallFamily;
-  @Deprecated('Use titleSmall instead')
   TextStyle get subtitle2 => typography.titleSmall;
-  @Deprecated('Use bodyMediumFamily instead')
   String get bodyText1Family => typography.bodyMediumFamily;
-  @Deprecated('Use bodyMedium instead')
   TextStyle get bodyText1 => typography.bodyMedium;
-  @Deprecated('Use bodySmallFamily instead')
   String get bodyText2Family => typography.bodySmallFamily;
-  @Deprecated('Use bodySmall instead')
   TextStyle get bodyText2 => typography.bodySmall;
 
   String get displayLargeFamily => typography.displayLargeFamily;
@@ -124,25 +107,22 @@ abstract class FlutterFlowTheme {
 }
 
 class LightModeTheme extends FlutterFlowTheme {
-  @Deprecated('Use primary instead')
   Color get primaryColor => primary;
-  @Deprecated('Use secondary instead')
   Color get secondaryColor => secondary;
-  @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
   late Color primary = const Color(0xFF8377f3);
-  late Color secondary = const Color(0xFFFF6A73);
-  late Color tertiary = const Color(0xFF0299FF);
-  late Color alternate = const Color(0xFFE3E7ED);
-  late Color primaryText = const Color(0xFF14181B);
-  late Color secondaryText = const Color(0xFF677681);
-  late Color primaryBackground = const Color(0xFFF1F4F8);
+  late Color secondary = const Color(0xFF5cc1b4);
+  late Color tertiary = const Color(0xFFec5685);
+  late Color alternate = const Color(0xFFfd6570);
+  late Color primaryText = const Color(0xFF101213);
+  late Color secondaryText = const Color(0xFF57636c);
+  late Color primaryBackground = const Color(0xFFf1f4f8);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
-  late Color accent1 = const Color(0x4CF83B46);
-  late Color accent2 = const Color(0x4CFF6A73);
-  late Color accent3 = const Color(0x4D0299FF);
-  late Color accent4 = const Color(0xB2FFFFFF);
+  late Color accent1 = const Color(0xFFeeeeee);
+  late Color accent2 = const Color(0xFFe0e0e0);
+  late Color accent3 = const Color(0xFF757575);
+  late Color accent4 = const Color(0xFF616161);
   late Color success = const Color(0xFF6BBD78);
   late Color warning = const Color(0xFFEC9C4B);
   late Color error = const Color(0xFFF83B46);
@@ -282,25 +262,22 @@ class ThemeTypography extends Typography {
 }
 
 class DarkModeTheme extends FlutterFlowTheme {
-  @Deprecated('Use primary instead')
   Color get primaryColor => primary;
-  @Deprecated('Use secondary instead')
   Color get secondaryColor => secondary;
-  @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFFF83B46);
-  late Color secondary = const Color(0xFFFF6A73);
-  late Color tertiary = const Color(0xFF0299FF);
-  late Color alternate = const Color(0xFF262D34);
+  late Color primary = const Color(0xFF8377f3);
+  late Color secondary = const Color(0xFF5cc1b4);
+  late Color tertiary = const Color(0xFFec5685);
+  late Color alternate = const Color(0xFFfd6570);
   late Color primaryText = const Color(0xFFFFFFFF);
-  late Color secondaryText = const Color(0xFFA5B0BE);
+  late Color secondaryText = const Color(0xFF95a1ac);
   late Color primaryBackground = const Color(0xFF1A1F24);
-  late Color secondaryBackground = const Color(0xFF0F1316);
-  late Color accent1 = const Color(0x4CF83B46);
-  late Color accent2 = const Color(0x4CFF6A73);
-  late Color accent3 = const Color(0x4D0299FF);
-  late Color accent4 = const Color(0xB20B191E);
+  late Color secondaryBackground = const Color(0xFF101213);
+  late Color accent1 = const Color(0xFFeeeeee);
+  late Color accent2 = const Color(0xFFe0e0e0);
+  late Color accent3 = const Color(0xFF757575);
+  late Color accent4 = const Color(0xFF616161);
   late Color success = const Color(0xFF6BBD78);
   late Color warning = const Color(0xFFEC9C4B);
   late Color error = const Color(0xFFF83B46);
