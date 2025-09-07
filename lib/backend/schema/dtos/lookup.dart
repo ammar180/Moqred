@@ -4,4 +4,7 @@ class Lookup {
   Lookup({required this.id, required this.name});
   factory Lookup.fromMap(Map<String, dynamic> data) =>
       Lookup(id: data['id'], name: data['name']);
+
+  static String getQuery(String tableName) =>
+      "SELECT id, name FROM $tableName ORDER BY name ASC";
 }

@@ -1,9 +1,9 @@
-import 'package:moqred/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'new_transaction_widget.dart' show NewTransactionWidget;
+import '/flutter_flow/form_field_controller.dart';
+import 'add_person_widget.dart' show AddPersonWidget;
 import 'package:flutter/material.dart';
 
-class NewTransactionModel extends FlutterFlowModel<NewTransactionWidget> {
+class AddPersonModel extends FlutterFlowModel<AddPersonWidget> {
   ///  State fields for stateful widgets in this component.
 
   final formKey = GlobalKey<FormState>();
