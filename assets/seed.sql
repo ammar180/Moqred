@@ -1,4 +1,4 @@
-INSERT INTO transaction_types (id, sign, type, created, updated)
+INSERT INTO transaction_types (id, sign, name, created, updated)
 VALUES
 ('a3791c76', -1, 'loan', datetime('now'), datetime('now')),
 ('b7a4dbfa', 1, 'payment', datetime('now'), datetime('now')),

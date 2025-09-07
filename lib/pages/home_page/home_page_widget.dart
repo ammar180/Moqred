@@ -1,4 +1,5 @@
 import 'package:moqred/backend/db_requests/db_calls.dart';
+import 'package:moqred/backend/schema/dtos/balance.dart';
 import 'package:moqred/backend/schema/structs/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
 import 'package:moqred/components/new_transaction/new_transaction_widget.dart';

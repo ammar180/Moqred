@@ -10,10 +10,10 @@ CREATE TABLE `persons` (
 CREATE TABLE `transaction_types` (
     `id` TEXT PRIMARY KEY DEFAULT ('r'||lower(hex(randomblob(7)))) NOT NULL, 
     `sign` NUMERIC DEFAULT 0 NOT NULL, 
-    `type` TEXT DEFAULT '' NOT NULL, 
+    `name` TEXT DEFAULT '' NOT NULL, 
     `created` TEXT DEFAULT '' NOT NULL, 
     `updated` TEXT DEFAULT '' NOT NULL);
-CREATE UNIQUE INDEX `idx_mGmeyhxXgI` ON `transaction_types` (`type`);
+CREATE UNIQUE INDEX `idx_mGmeyhxXgI` ON `transaction_types` (`name`);
 
 CREATE TABLE `transactions` (
     `amount` NUMERIC DEFAULT 0 NOT NULL,
@@ -33,7 +33,7 @@ CREATE VIEW `persons_overview` AS SELECT * FROM (SELECT
 FROM transactions AS t
 INNER JOIN persons AS p on p.id = t.person
 INNER JOIN transaction_types AS type on type.id = t.type
-WHERE type.type = 'payment' OR type.type = 'loan'
+WHERE type.name = 'payment' OR type.name = 'loan'
 GROUP BY person
 HAVING remainder < 0)
 ORDER BY last_transaction DESC;
