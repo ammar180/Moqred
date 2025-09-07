@@ -59,3 +59,16 @@ JOIN transaction_types AS tt ON t.type = tt.id;
     return result.map(Balance.fromMap).first;
   }
 }
+
+class InsertTransaction {
+  static Future<int> call(
+      {required String notes,
+      required int amount,
+      required String person,
+      required String type}) async {
+    final serviceWriter = DbWriter<Transaction>();
+    final transaction = Map<String, dynamic>.from(
+        {'notes': notes, 'amount': amount, 'person': person, 'type': type});
+    return await serviceWriter.insertMap(Transaction.TABLE_NAME, transaction);
+  }
+}

@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart' show FilteringTextInputFormatter;
 import 'package:moqred/backend/db_requests/db_calls.dart';
 import 'package:moqred/backend/schema/dtos/lookup.dart';
 import '/components/add_person/add_person_widget.dart';
@@ -32,6 +33,14 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => NewTransactionModel());
+
+
+
+    _model.transactionAmountTextController ??= TextEditingController();
+    _model.transactionAmountFocusNode ??= FocusNode();
+
+    _model.transactionPersonNotesTextController ??= TextEditingController();
+    _model.transactionPersonNotesFocusNode ??= FocusNode();
   }
 
   @override
@@ -131,7 +140,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                             width: double.infinity,
                             child: Form(
                               key: _model.formKey,
-                              autovalidateMode: AutovalidateMode.disabled,
+                              autovalidateMode: AutovalidateMode.onUnfocus,
                               child: Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: Column(
@@ -158,6 +167,116 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
                                       ),
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'المبلغ:',
+                                          style: FlutterFlowTheme.of(context)
+                                              .titleMedium
+                                              .override(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                              ),
+                                        ),
+                                        Container(
+                                          width: 170.0,
+                                          child: TextFormField(
+                                            controller: _model
+                                                .transactionAmountTextController,
+                                            focusNode: _model
+                                                .transactionAmountFocusNode,
+                                            autofocus: false,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            obscureText: false,
+                                            decoration: InputDecoration(
+                                              isDense: true,
+                                              labelText: 'المبلغ',
+                                              labelStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                              hintText: '0 ج.م',
+                                              hintStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .error,
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .error,
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ),
+                                              filled: true,
+                                              fillColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              contentPadding:
+                                                  EdgeInsets.all(12.0),
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
+                                                ),
+                                            textAlign: TextAlign.center,
+                                            keyboardType: TextInputType.number,
+                                            cursorColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primaryText,
+                                            validator: _model
+                                                .transactionAmountTextControllerValidator
+                                                .asValidator(context),
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.allow(
+                                                  RegExp('[0-9]'))
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -382,21 +501,153 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                         ),
                                       ],
                                     ),
+                                    Container(
+                                      width: double.infinity,
+                                      child: TextFormField(
+                                        controller: _model
+                                            .transactionPersonNotesTextController,
+                                        focusNode: _model
+                                            .transactionPersonNotesFocusNode,
+                                        autofocus: false,
+                                        textInputAction: TextInputAction.next,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          hintText: 'ملاحظات',
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Sora',
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          filled: true,
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                          prefixIcon: Icon(
+                                            Icons.sticky_note_2_outlined,
+                                          ),
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
+                                        maxLines: null,
+                                        cursorColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                        validator: _model
+                                            .transactionPersonNotesTextControllerValidator
+                                            .asValidator(context),
+                                      ),
+                                    ),
                                     FFButtonWidget(
                                       onPressed: () async {
                                         if (_model.formKey.currentState ==
                                                 null ||
                                             !_model.formKey.currentState!
                                                 .validate()) {
+                                          safeSetState(() => ());
                                           return;
                                         }
-                                        if (_model.transactionTypeValue ==
-                                            null) {
+                                        if (_model.transactionTypeValue == null)
                                           return;
-                                        }
                                         if (_model.transactionPersonValue ==
-                                            null) {
-                                          return;
+                                            null) return;
+
+                                        try {
+                                          var id = await InsertTransaction.call(
+                                            type: _model.transactionTypeValue!,
+                                            person:
+                                                _model.transactionPersonValue!,
+                                            amount: int.parse(_model
+                                                .transactionAmountTextController!
+                                                .text),
+                                            notes: _model
+                                                .transactionPersonNotesTextController!
+                                                .text,
+                                          );
+                                          print(id);
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'تم إضافة المعاملة بنجاح',
+                                                style: TextStyle(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 4000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                            ),
+                                          );
+
+                                          Navigator.pop(context);
+                                        } catch (e) {
+                                          print(e);
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'حدث خطأ أثناء إضافة المعاملة',
+                                                style: TextStyle(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 4000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                            ),
+                                          );
                                         }
                                       },
                                       text: 'إضافة',
@@ -413,13 +664,17 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                         textStyle: FlutterFlowTheme.of(context)
                                             .titleSmall
                                             .override(
-                                              fontFamily: 'Inter',
                                               color: Colors.white,
-                                              letterSpacing: 0.0,
                                             ),
                                         elevation: 0.0,
                                         borderRadius:
                                             BorderRadius.circular(8.0),
+                                        disabledColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                        disabledTextColor:
+                                            FlutterFlowTheme.of(context)
+                                                .alternate,
                                       ),
                                     ),
                                   ]

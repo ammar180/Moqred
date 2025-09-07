@@ -72,6 +72,11 @@ class DbWriter<T extends BaseModel> {
     return await db.insert(item.tableName, item.toMap());
   }
 
+  Future<int> insertMap(String tableName, Map<String, dynamic> map) async {
+    final db = await SQLiteHelper.db;
+    return await db.insert(tableName, map);
+  }
+
   Future<int> update(T item) async {
     if (item.id == null) throw Exception("Cannot update without ID");
     final db = await SQLiteHelper.db;

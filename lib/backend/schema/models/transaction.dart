@@ -17,7 +17,7 @@ class Transaction extends BaseModel {
   final DateTime updated;
 
   Transaction({
-    required this.id,
+    this.id,
     required this.amount,
     required this.created,
     required this.updated,
@@ -29,9 +29,10 @@ class Transaction extends BaseModel {
   static const String TABLE_NAME = 'transactions';
   @override
   String get tableName => TABLE_NAME;
-  
+
   @override
   Transaction fromMap(Map<String, dynamic> map) => Transaction.fromMap(map);
+
   /// Connect the generated [_$TransactionFromJson] function to the `fromJson` factory.
   factory Transaction.fromMap(Map<String, dynamic> map) =>
       _$TransactionFromJson(map);
