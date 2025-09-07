@@ -9,6 +9,7 @@ part of 'transaction_type.dart';
 TransactionType _$TransactionTypeFromJson(Map<String, dynamic> json) =>
     TransactionType(
       id: json['id'] as String,
+      type: json['type'] as String,
       name: json['name'] as String,
       sign: (json['sign'] as num).toInt(),
       collectionId: json['collectionId'] as String,
@@ -20,6 +21,7 @@ TransactionType _$TransactionTypeFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$TransactionTypeToJson(TransactionType instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'type': instance.type,
       'name': instance.name,
       'sign': instance.sign,
       'collectionId': instance.collectionId,

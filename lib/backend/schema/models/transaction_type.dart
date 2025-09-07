@@ -6,6 +6,7 @@ part 'transaction_type.g.dart';
 @JsonSerializable()
 class TransactionType extends BaseModel {
   final String id;
+  final String type;
   final String name;
   final int sign;
   final String collectionId;
@@ -15,6 +16,7 @@ class TransactionType extends BaseModel {
 
   TransactionType({
     required this.id,
+    required this.type,
     required this.name,
     required this.sign,
     required this.collectionId,

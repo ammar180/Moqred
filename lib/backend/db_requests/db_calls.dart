@@ -37,7 +37,7 @@ class FetchTransactionsCall {
 class LoadLookupCall {
   static Future<List<Lookup>> call({required String tableName}) async {
     return await SQLiteHelper.db.then((db) async {
-      final result = await db.query(Lookup.getQuery(tableName));
+      final result = await db.rawQuery(Lookup.getQuery(tableName));
       return result.map(Lookup.fromMap).toList();
     });
   }
@@ -48,8 +48,8 @@ class FetchElQardBalancesCall {
     final sql = '''
 SELECT
   SUM(t.amount * tt.sign) AS total_in,
-  SUM(CASE WHEN tt.name = 'loan' THEN t.amount ELSE 0 END) 
-    - SUM(CASE WHEN tt.name = 'payment' THEN t.amount ELSE 0 END) AS total_out
+  SUM(CASE WHEN tt.type = 'loan' THEN t.amount ELSE 0 END) 
+    - SUM(CASE WHEN tt.type = 'payment' THEN t.amount ELSE 0 END) AS total_out
 FROM transactions AS t
 JOIN transaction_types AS tt ON t.type = tt.id;
 ''';

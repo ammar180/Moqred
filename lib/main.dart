@@ -123,15 +123,7 @@ class _MyAppState extends State<MyApp> {
           thumbVisibility: WidgetStateProperty.all(false),
           interactive: true,
           thickness: WidgetStateProperty.all(3.0),
-          thumbColor: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.dragged)) {
-              return Color(4294458182);
-            }
-            if (states.contains(WidgetState.hovered)) {
-              return Color(4294458182);
-            }
-            return Color(4294458182);
-          }),
+          thumbColor: WidgetStateProperty.resolveWith((states) => FlutterFlowTheme.of(context).secondary),
         ),
         useMaterial3: false,
       ),
