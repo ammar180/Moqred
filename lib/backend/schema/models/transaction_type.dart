@@ -9,8 +9,6 @@ class TransactionType extends BaseModel {
   final String type;
   final String name;
   final int sign;
-  final String collectionId;
-  final String collectionName;
   final DateTime created;
   final DateTime updated;
 
@@ -19,8 +17,6 @@ class TransactionType extends BaseModel {
     required this.type,
     required this.name,
     required this.sign,
-    required this.collectionId,
-    required this.collectionName,
     required this.created,
     required this.updated,
   });
@@ -40,4 +36,14 @@ class TransactionType extends BaseModel {
   /// Connect the generated [_$TransactionTypeToJson] function to the `toJson` method.
   @override
   Map<String, dynamic> toMap() => _$TransactionTypeToJson(this);
+
+  static List<String> get fields => [
+        'id',
+        'type',
+        'name',
+        'sign',
+        'created',
+        'updated',
+      ];
+
 }

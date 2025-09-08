@@ -32,6 +32,8 @@ class NewTransactionModel extends FlutterFlowModel<NewTransactionWidget> {
   String? Function(BuildContext, String?)?
       transactionPersonNotesTextControllerValidator;
 
+  String? errorMessage;
+
   @override
   void initState(BuildContext context) {
     transactionAmountTextControllerValidator =

@@ -12,8 +12,6 @@ TransactionType _$TransactionTypeFromJson(Map<String, dynamic> json) =>
       type: json['type'] as String,
       name: json['name'] as String,
       sign: (json['sign'] as num).toInt(),
-      collectionId: json['collectionId'] as String,
-      collectionName: json['collectionName'] as String,
       created: DateTime.parse(json['created'] as String),
       updated: DateTime.parse(json['updated'] as String),
     );
@@ -24,8 +22,6 @@ Map<String, dynamic> _$TransactionTypeToJson(TransactionType instance) =>
       'type': instance.type,
       'name': instance.name,
       'sign': instance.sign,
-      'collectionId': instance.collectionId,
-      'collectionName': instance.collectionName,
       'created': instance.created.toIso8601String(),
       'updated': instance.updated.toIso8601String(),
     };

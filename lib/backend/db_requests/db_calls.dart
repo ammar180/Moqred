@@ -1,7 +1,7 @@
 import 'package:moqred/backend/db_requests/db_manager.dart';
 import 'package:moqred/backend/db_requests/db_service.dart';
 import 'package:moqred/backend/schema/dtos/index.dart';
-import 'package:moqred/backend/schema/models/transaction.dart';
+import 'package:moqred/backend/schema/models/index.dart';
 import 'package:moqred/backend/schema/structs/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
 
@@ -29,8 +29,16 @@ class FetchTransactionsCall {
       fromMap: (map) => Transaction.fromMap(map),
     );
 
-    return await serviceReader.getPaginated(
-        page: page, pageSize: perPage, orderBy: 'created', descending: true);
+    return await serviceReader.getPaginatedWithRelation(includes: [
+      Include(
+          fields: Person.fields,
+          referenceName: Person.TABLE_NAME,
+          foreignKey: 'person'),
+      Include(
+          fields: TransactionType.fields,
+          referenceName: TransactionType.TABLE_NAME,
+          foreignKey: 'type'),
+    ], page: page, pageSize: perPage, orderBy: 'created', descending: true);
   }
 }
 
@@ -40,6 +48,16 @@ class LoadLookupCall {
       final result = await db.rawQuery(Lookup.getQuery(tableName));
       return result.map(Lookup.fromMap).toList();
     });
+  }
+
+  static Future<Lookup?> callById(
+      {required String tableName, required String id}) async {
+    final serviceReader = DbReader<Lookup>(
+      tableName: tableName,
+      fromMap: (map) => Lookup.fromMap(map),
+    );
+
+    return await serviceReader.getById(id);
   }
 }
 
@@ -67,8 +85,12 @@ class InsertTransaction {
       required String person,
       required String type}) async {
     final serviceWriter = DbWriter<Transaction>();
-    final transaction = Map<String, dynamic>.from(
-        {'notes': notes, 'amount': amount, 'person': person, 'type': type});
-    return await serviceWriter.insertMap(Transaction.TABLE_NAME, transaction);
+    try {
+      final transaction = Map<String, dynamic>.from(
+          {'notes': notes, 'amount': amount, 'person': person, 'type': type});
+      return await serviceWriter.insertMap(Transaction.TABLE_NAME, transaction);
+    } catch (e) {
+      throw Exception('حدث خطأ أثناء إضافة المعاملة');
+    }
   }
 }

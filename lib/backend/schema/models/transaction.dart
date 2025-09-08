@@ -24,11 +24,22 @@ class Transaction extends BaseModel {
     required this.notes,
     required this.person,
     required this.type,
+    this.personDetails,
+    this.typeDetails,
   });
 
   static const String TABLE_NAME = 'transactions';
   @override
   String get tableName => TABLE_NAME;
+
+  String get formattedAmount {
+    final absAmount = amount.abs();
+    final sign = amount < 0 ? '-' : '';
+    return '$sign\$${(absAmount / 100).toStringAsFixed(2)}';
+  }
+
+  final Person? personDetails;
+  final TransactionType? typeDetails;
 
   @override
   Transaction fromMap(Map<String, dynamic> map) => Transaction.fromMap(map);

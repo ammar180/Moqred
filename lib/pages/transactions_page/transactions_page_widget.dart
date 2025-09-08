@@ -2,7 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:moqred/backend/schema/models/transaction.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-import '../../utils/app_theme.dart';
+import '/utils/internationalization.dart';
+import '/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'transactions_page_model.dart';
@@ -178,7 +179,9 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                             children: [
                                               Expanded(
                                                 child: AutoSizeText(
-                                                  transaction.person
+                                                  (transaction.personDetails
+                                                              ?.name ??
+                                                          'غير معروف')
                                                       .maybeHandleOverflow(
                                                     maxChars: 32,
                                                     replacement: '…',
@@ -199,10 +202,28 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                                 ),
                                               ),
                                               Expanded(
-                                                child: Text(
-                                                  transaction.type,
-                                                  style: AppTheme.of(context)
-                                                      .bodyMedium,
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 2,
+                                                      vertical: 2),
+                                                  decoration: BoxDecoration(
+                                                    color: typeColor(transaction
+                                                            .typeDetails
+                                                            ?.type ??
+                                                        ''),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  child: Text(
+                                                    transaction.typeDetails
+                                                            ?.name ??
+                                                        "غير معروف",
+                                                    style: AppTheme.of(context)
+                                                        .bodyMedium,
+                                                  ),
                                                 ),
                                               ),
                                               Expanded(
@@ -210,7 +231,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                                   dateTimeFormat(
                                                     "yMd",
                                                     transaction.created,
-                                                    locale: FFLocalizations.of(
+                                                    locale: AppLocalizations.of(
                                                             context)
                                                         .languageCode,
                                                   ),
@@ -261,4 +282,11 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
       ),
     );
   }
+
+  Color typeColor(String type) => switch (type) {
+        'loan' => Colors.red,
+        'payment' => Colors.green,
+        'filling' => Colors.blue,
+        _ => Colors.grey,
+      };
 }

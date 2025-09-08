@@ -8,12 +8,10 @@ part of 'person.dart';
 
 Person _$PersonFromJson(Map<String, dynamic> json) => Person(
       id: json['id'] as String,
-      name: json['name'] as String,
-      bio: json['bio'] as String,
-      phone: json['phone'] as String,
-      relatedTo: json['relatedTo'] as String,
-      collectionId: json['collectionId'] as String,
-      collectionName: json['collectionName'] as String,
+      name: (json['name'] ?? "") as String,
+      bio: (json['bio'] ?? "") as String,
+      phone: (json['phone'] ?? "") as String,
+      relatedTo: (json['relatedTo'] ?? "") as String,
       created: DateTime.parse(json['created'] as String),
       updated: DateTime.parse(json['updated'] as String),
     );
@@ -24,8 +22,6 @@ Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
       'bio': instance.bio,
       'phone': instance.phone,
       'relatedTo': instance.relatedTo,
-      'collectionId': instance.collectionId,
-      'collectionName': instance.collectionName,
       'created': instance.created.toIso8601String(),
       'updated': instance.updated.toIso8601String(),
     };

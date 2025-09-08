@@ -11,9 +11,16 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       amount: (json['amount'] as num).toInt(),
       created: DateTime.parse(json['created'] as String),
       updated: DateTime.parse(json['updated'] as String),
-      notes: json['notes'] as String,
+      notes: (json['notes'] ?? "") as String,
       person: json['person'] as String,
       type: json['type'] as String,
+      personDetails: json[Person.TABLE_NAME] == null
+          ? null
+          : Person.fromMap(json[Person.TABLE_NAME]),
+      typeDetails: json[TransactionType.TABLE_NAME] == null
+          ? null
+          : TransactionType.fromMap(
+              json[TransactionType.TABLE_NAME]),
     );
 
 Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
@@ -25,4 +32,6 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
       'notes': instance.notes,
       'created': instance.created.toIso8601String(),
       'updated': instance.updated.toIso8601String(),
+      Person.TABLE_NAME: instance.personDetails,
+      TransactionType.TABLE_NAME: instance.typeDetails,
     };

@@ -10,8 +10,6 @@ class Person extends BaseModel {
   final String bio;
   final String phone;
   final String relatedTo;
-  final String collectionId;
-  final String collectionName;
   final DateTime created;
   final DateTime updated;
 
@@ -21,8 +19,6 @@ class Person extends BaseModel {
     required this.bio,
     required this.phone,
     required this.relatedTo,
-    required this.collectionId,
-    required this.collectionName,
     required this.created,
     required this.updated,
   });
@@ -35,10 +31,20 @@ class Person extends BaseModel {
   Person fromMap(Map<String, dynamic> map) => Person.fromMap(map);
 
   /// Connect the generated [_$PersonFromJson] function to the `fromJson` factory.
-  factory Person.fromMap(Map<String, dynamic> map) =>
-      _$PersonFromJson(map);
+  factory Person.fromMap(Map<String, dynamic> map) => _$PersonFromJson(map);
 
   /// Connect the generated [_$PersonToJson] function to the `toJson` method.
   @override
   Map<String, dynamic> toMap() => _$PersonToJson(this);
+
+  /// default implementation: keys from toMap()
+  static List<String> get fields => [
+        'id',
+        'name',
+        'bio',
+        'phone',
+        'related_to',
+        'created',
+        'updated',
+      ];
 }

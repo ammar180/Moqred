@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart' show FilteringTextInputFormatter;
 import 'package:moqred/backend/db_requests/db_calls.dart';
 import 'package:moqred/backend/schema/dtos/lookup.dart';
+import '/utils/internationalization.dart';
 import '/components/add_person/add_person_widget.dart';
 import '../../utils/app_theme.dart';
 import 'dart:ui';
@@ -141,7 +142,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                       dateTimeFormat(
                                         "MMMEd",
                                         getCurrentTimestamp,
-                                        locale: FFLocalizations.of(context)
+                                        locale: AppLocalizations.of(context)
                                             .languageCode,
                                       ),
                                       style: AppTheme.of(context)
@@ -255,7 +256,8 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                                 .asValidator(context),
                                             inputFormatters: [
                                               FilteringTextInputFormatter.allow(
-                                                  RegExp('[0-9]'))
+                                                RegExp(r'^[1-9][0-9]*$'),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -559,7 +561,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                             null) return;
 
                                         try {
-                                          var id = await InsertTransaction.call(
+                                          await InsertTransaction.call(
                                             type: _model.transactionTypeValue!,
                                             person:
                                                 _model.transactionPersonValue!,
@@ -590,22 +592,9 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
 
                                           Navigator.pop(context);
                                         } catch (e) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                'حدث خطأ أثناء إضافة المعاملة',
-                                                style: TextStyle(
-                                                  color: AppTheme.of(context)
-                                                      .primaryText,
-                                                ),
-                                              ),
-                                              duration:
-                                                  Duration(milliseconds: 4000),
-                                              backgroundColor:
-                                                  AppTheme.of(context).error,
-                                            ),
-                                          );
+                                          setState(() {
+                                            _model.errorMessage = e.toString();
+                                          });
                                         }
                                       },
                                       text: 'إضافة',
@@ -632,6 +621,20 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                             AppTheme.of(context).alternate,
                                       ),
                                     ),
+                                    if (_model.errorMessage != null)
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 8.0),
+                                        child: Text(
+                                          _model.errorMessage!,
+                                          style: AppTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                color:
+                                                    AppTheme.of(context).error,
+                                              ),
+                                        ),
+                                      ),
                                   ]
                                       .divide(SizedBox(height: 19.0))
                                       .addToStart(SizedBox(height: 5.0)),

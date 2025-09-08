@@ -59,7 +59,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => HomePageWidget(),
+          builder: (context, _) => NavBarPage(),
         ),
         FFRoute(
           name: HomePageWidget.routeName,
@@ -255,7 +255,6 @@ class FFRoute {
                   builder: (context, _) => builder(context, ffParams),
                 )
               : builder(context, ffParams);
-          print("from body ${appStateNotifier.loading}");
           final child = /*appStateNotifier.loading
               ? Container(
                   color: Colors.transparent,
