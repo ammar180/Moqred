@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 
-import '../../flutter_flow/lat_lng.dart';
-import '../../flutter_flow/place.dart';
-import '../../flutter_flow/uploaded_file.dart';
+import 'package:flutterflow_ui/flutterflow_ui.dart';
 
 /// SERIALIZATION HELPERS
 
@@ -221,4 +219,18 @@ dynamic deserializeParam<T>(
     print('Error deserializing parameter: $e');
     return null;
   }
+}
+
+
+
+extension ListFilterExt<T> on Iterable<T?> {
+  List<T> get withoutNulls => where((s) => s != null).map((e) => e!).toList();
+}
+
+extension MapFilterExtensions<T> on Map<String, T?> {
+  Map<String, T> get withoutNulls => Map.fromEntries(
+        entries
+            .where((e) => e.value != null)
+            .map((e) => MapEntry(e.key, e.value as T)),
+      );
 }

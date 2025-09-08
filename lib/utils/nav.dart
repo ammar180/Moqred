@@ -1,17 +1,13 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:moqred/main.dart' show NavBarPage;
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
+import 'package:moqred/main.dart' show NavBarPage;
+import 'package:flutterflow_ui/flutterflow_ui.dart';
+import 'serialization_util.dart';
 import '/backend/schema/structs/index.dart';
-
-import '/flutter_flow/flutter_flow_util.dart';
-
 import '/index.dart';
-
-export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
+export 'package:go_router/go_router.dart';
 
 const kTransitionInfoKey = '__transition_info__';
 
@@ -63,8 +59,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              NavBarPage(initialPage: HomePageWidget.routeName),
+          builder: (context, _) => HomePageWidget(),
         ),
         FFRoute(
           name: HomePageWidget.routeName,
@@ -253,7 +248,6 @@ class FFRoute {
           return null;
         },
         pageBuilder: (context, state) {
-          fixStatusBarOniOS16AndBelow(context);
           final ffParams = FFParameters(state, asyncParams);
           final page = ffParams.hasFutures
               ? FutureBuilder(
@@ -261,7 +255,8 @@ class FFRoute {
                   builder: (context, _) => builder(context, ffParams),
                 )
               : builder(context, ffParams);
-          final child = appStateNotifier.loading
+          print("from body ${appStateNotifier.loading}");
+          final child = /*appStateNotifier.loading
               ? Container(
                   color: Colors.transparent,
                   child: Image.asset(
@@ -269,7 +264,8 @@ class FFRoute {
                     fit: BoxFit.contain,
                   ),
                 )
-              : page;
+              : */
+              page;
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition

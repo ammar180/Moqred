@@ -1,9 +1,5 @@
-import '/flutter_flow/flutter_flow_drop_down.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/form_field_controller.dart';
+import 'package:flutterflow_ui/flutterflow_ui.dart';
+import '/utils/app_util.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
@@ -65,7 +61,7 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                     maxWidth: 530.0,
                   ),
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryBackground,
+                    color: AppTheme.of(context).primaryBackground,
                     boxShadow: [
                       BoxShadow(
                         blurRadius: 4.0,
@@ -90,12 +86,11 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                           children: [
                             Text(
                               'إضافة شخص لقاعدة البيانات',
-                              style: FlutterFlowTheme.of(context)
-                                  .headlineSmall
-                                  .override(
-                                    fontFamily: 'Sora',
-                                    letterSpacing: 0.0,
-                                  ),
+                              style:
+                                  AppTheme.of(context).headlineSmall.override(
+                                        fontFamily: 'Sora',
+                                        letterSpacing: 0.0,
+                                      ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(8.0),
@@ -109,8 +104,7 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                 },
                                 child: Icon(
                                   Icons.close_rounded,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
+                                  color: AppTheme.of(context).secondaryText,
                                   size: 24.0,
                                 ),
                               ),
@@ -122,11 +116,10 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                               0.0, 4.0, 0.0, 0.0),
                           child: Text(
                             'من الضروري ان يكون الشخص مسجل حتى يتم تسجيل العمليات عليه',
-                            style:
-                                FlutterFlowTheme.of(context).bodySmall.override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                            style: AppTheme.of(context).bodySmall.override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
                           ),
                         ),
                         Padding(
@@ -145,10 +138,10 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                       dateTimeFormat(
                                         "MMMEd",
                                         getCurrentTimestamp,
-                                        locale: FFLocalizations.of(context)
+                                        locale: AppLocalizations.of(context)
                                             .languageCode,
                                       ),
-                                      style: FlutterFlowTheme.of(context)
+                                      style: AppTheme.of(context)
                                           .titleLarge
                                           .override(
                                             fontFamily: 'Sora',
@@ -159,8 +152,7 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                       width: 200.0,
                                       child: Divider(
                                         thickness: 3.0,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
+                                        color: AppTheme.of(context).primary,
                                       ),
                                     ),
                                     Row(
@@ -170,13 +162,12 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                       children: [
                                         Text(
                                           'نوع المعاملة: ',
-                                          style: FlutterFlowTheme.of(context)
+                                          style: AppTheme.of(context)
                                               .titleMedium
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
                                                 letterSpacing: 0.0,
                                               ),
                                         ),
@@ -191,21 +182,18 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                                   val),
                                           width: 171.4,
                                           height: 40.0,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Inter',
-                                                    letterSpacing: 0.0,
-                                                  ),
+                                          textStyle: AppTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                letterSpacing: 0.0,
+                                              ),
                                           hintText: 'اختر نوع المعاملة',
-                                          fillColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondaryBackground,
+                                          fillColor: AppTheme.of(context)
+                                              .secondaryBackground,
                                           elevation: 2.0,
                                           borderColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .alternate,
+                                              AppTheme.of(context).alternate,
                                           borderWidth: 1.0,
                                           borderRadius: 8.0,
                                           margin:
@@ -224,13 +212,12 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                       children: [
                                         Text(
                                           'الشخص:',
-                                          style: FlutterFlowTheme.of(context)
+                                          style: AppTheme.of(context)
                                               .titleMedium
                                               .override(
                                                 fontFamily: 'Inter',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
                                                 letterSpacing: 0.0,
                                               ),
                                         ),
@@ -253,24 +240,21 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                               width: 228.1,
                                               height: 40.0,
                                               searchTextStyle: TextStyle(),
-                                              textStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                              textStyle: AppTheme.of(context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
                                               hintText: 'اختر صاحب العملية',
                                               searchCursorColor:
-                                                  FlutterFlowTheme.of(context)
+                                                  AppTheme.of(context)
                                                       .primaryText,
-                                              fillColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
+                                              fillColor: AppTheme.of(context)
+                                                  .secondaryBackground,
                                               elevation: 2.0,
-                                              borderColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
+                                              borderColor: AppTheme.of(context)
+                                                  .alternate,
                                               borderWidth: 1.0,
                                               borderRadius: 8.0,
                                               margin: EdgeInsetsDirectional
@@ -287,14 +271,12 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                               child: FlutterFlowIconButton(
                                                 borderRadius: 8.0,
                                                 buttonSize: 40.0,
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
+                                                fillColor: AppTheme.of(context)
+                                                    .secondary,
                                                 icon: Icon(
                                                   Icons.add,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .info,
+                                                  color:
+                                                      AppTheme.of(context).info,
                                                   size: 24.0,
                                                 ),
                                                 onPressed: () {
@@ -320,9 +302,8 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                         iconPadding:
                                             EdgeInsetsDirectional.fromSTEB(
                                                 0.0, 0.0, 0.0, 0.0),
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        textStyle: FlutterFlowTheme.of(context)
+                                        color: AppTheme.of(context).primary,
+                                        textStyle: AppTheme.of(context)
                                             .titleSmall
                                             .override(
                                               fontFamily: 'Inter',

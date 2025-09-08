@@ -1,6 +1,5 @@
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import '../../utils/app_theme.dart';
+import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'alert_dialog_model.dart';
@@ -69,7 +68,7 @@ class _AlertDialogWidgetState extends State<AlertDialogWidget> {
               maxWidth: 530.0,
             ),
             decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).primaryBackground,
+              color: AppTheme.of(context).primaryBackground,
               borderRadius: BorderRadius.circular(24.0),
             ),
             child: Padding(
@@ -82,21 +81,17 @@ class _AlertDialogWidgetState extends State<AlertDialogWidget> {
                       widget.title,
                       'Title',
                     ),
-                    style: FlutterFlowTheme.of(context).titleLarge.override(
+                    style: AppTheme.of(context).titleLarge.override(
                           font: GoogleFonts.sora(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .titleLarge
-                                .fontStyle,
+                            fontWeight:
+                                AppTheme.of(context).titleLarge.fontWeight,
+                            fontStyle:
+                                AppTheme.of(context).titleLarge.fontStyle,
                           ),
                           letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .titleLarge
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).titleLarge.fontStyle,
+                          fontWeight:
+                              AppTheme.of(context).titleLarge.fontWeight,
+                          fontStyle: AppTheme.of(context).titleLarge.fontStyle,
                         ),
                   ),
                   Text(
@@ -104,20 +99,15 @@ class _AlertDialogWidgetState extends State<AlertDialogWidget> {
                       widget.description,
                       'Description',
                     ),
-                    style: FlutterFlowTheme.of(context).bodyLarge.override(
+                    style: AppTheme.of(context).bodyLarge.override(
                           font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyLarge
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyLarge
-                                .fontStyle,
+                            fontWeight:
+                                AppTheme.of(context).bodyLarge.fontWeight,
+                            fontStyle: AppTheme.of(context).bodyLarge.fontStyle,
                           ),
                           letterSpacing: 0.0,
-                          fontWeight:
-                              FlutterFlowTheme.of(context).bodyLarge.fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                          fontWeight: AppTheme.of(context).bodyLarge.fontWeight,
+                          fontStyle: AppTheme.of(context).bodyLarge.fontStyle,
                         ),
                   ),
                   Row(
@@ -140,31 +130,27 @@ class _AlertDialogWidgetState extends State<AlertDialogWidget> {
                                 0.0, 0.0, 0.0, 0.0),
                             iconPadding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).alternate,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
+                            color: AppTheme.of(context).alternate,
+                            textStyle: AppTheme.of(context).titleSmall.override(
                                   font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
+                                    fontWeight: AppTheme.of(context)
                                         .titleSmall
                                         .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
+                                    fontStyle: AppTheme.of(context)
                                         .titleSmall
                                         .fontStyle,
                                   ),
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
+                                  color: AppTheme.of(context).secondaryText,
                                   letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
+                                  fontWeight: AppTheme.of(context)
                                       .titleSmall
                                       .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontStyle,
+                                  fontStyle:
+                                      AppTheme.of(context).titleSmall.fontStyle,
                                 ),
                             elevation: 1.0,
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).secondaryText,
+                              color: AppTheme.of(context).secondaryText,
                               width: 1.0,
                             ),
                             borderRadius: BorderRadius.circular(12.0),
@@ -186,29 +172,25 @@ class _AlertDialogWidgetState extends State<AlertDialogWidget> {
                               0.0, 0.0, 0.0, 0.0),
                           iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).accent1,
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontStyle,
-                                    ),
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontStyle,
-                                  ),
+                          color: AppTheme.of(context).accent1,
+                          textStyle: AppTheme.of(context).titleSmall.override(
+                                font: GoogleFonts.inter(
+                                  fontWeight: AppTheme.of(context)
+                                      .titleSmall
+                                      .fontWeight,
+                                  fontStyle:
+                                      AppTheme.of(context).titleSmall.fontStyle,
+                                ),
+                                color: AppTheme.of(context).primary,
+                                letterSpacing: 0.0,
+                                fontWeight:
+                                    AppTheme.of(context).titleSmall.fontWeight,
+                                fontStyle:
+                                    AppTheme.of(context).titleSmall.fontStyle,
+                              ),
                           elevation: 0.0,
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primary,
+                            color: AppTheme.of(context).primary,
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(12.0),

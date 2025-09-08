@@ -1,7 +1,6 @@
 import 'package:moqred/backend/schema/structs/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
-import '/flutter_flow/flutter_flow_data_table.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'home_page_widget.dart' show HomePageWidget;
 import 'package:flutter/material.dart';
 
@@ -19,8 +18,7 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
       FlutterFlowDataTableController<PersonOverviewStruct>();
 
   @override
-  void initState(BuildContext context) {
-  }
+  void initState(BuildContext context) {}
 
   @override
   void dispose() {

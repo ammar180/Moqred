@@ -1,6 +1,5 @@
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+import '/utils/app_util.dart';
+import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'drawer_model.dart';
@@ -45,7 +44,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         width: 165.77,
         height: 240.4,
         decoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).secondaryBackground,
+          color: AppTheme.of(context).secondaryBackground,
         ),
         child: Padding(
           padding: EdgeInsets.all(8.0),
@@ -62,21 +61,17 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).primary,
-                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                  color: AppTheme.of(context).primary,
+                  textStyle: AppTheme.of(context).titleSmall.override(
                         font: GoogleFonts.inter(
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .titleSmall
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                          fontWeight:
+                              AppTheme.of(context).titleSmall.fontWeight,
+                          fontStyle: AppTheme.of(context).titleSmall.fontStyle,
                         ),
                         color: Colors.white,
                         letterSpacing: 0.0,
-                        fontWeight:
-                            FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                        fontWeight: AppTheme.of(context).titleSmall.fontWeight,
+                        fontStyle: AppTheme.of(context).titleSmall.fontStyle,
                       ),
                   elevation: 0.0,
                   borderRadius: BorderRadius.circular(8.0),
@@ -88,20 +83,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 children: [
                   Text(
                     "الوضع المظلم",
-                    style: FlutterFlowTheme.of(context).bodyLarge.override(
+                    style: AppTheme.of(context).bodyLarge.override(
                           font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyLarge
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyLarge
-                                .fontStyle,
+                            fontWeight:
+                                AppTheme.of(context).bodyLarge.fontWeight,
+                            fontStyle: AppTheme.of(context).bodyLarge.fontStyle,
                           ),
                           letterSpacing: 0.0,
-                          fontWeight:
-                              FlutterFlowTheme.of(context).bodyLarge.fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyLarge.fontStyle,
+                          fontWeight: AppTheme.of(context).bodyLarge.fontWeight,
+                          fontStyle: AppTheme.of(context).bodyLarge.fontStyle,
                         ),
                   ),
                   Switch.adaptive(
@@ -125,11 +115,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         );
                       }
                     },
-                    activeColor: FlutterFlowTheme.of(context).primary,
-                    activeTrackColor: FlutterFlowTheme.of(context).primary,
-                    inactiveTrackColor: FlutterFlowTheme.of(context).alternate,
+                    activeColor: AppTheme.of(context).primary,
+                    activeTrackColor: AppTheme.of(context).primary,
+                    inactiveTrackColor: AppTheme.of(context).alternate,
                     inactiveThumbColor:
-                        FlutterFlowTheme.of(context).secondaryBackground,
+                        AppTheme.of(context).secondaryBackground,
                   ),
                 ],
               ),
@@ -138,7 +128,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 text: "تحديث كلمة المرور",
                 icon: Icon(
                   Icons.lock,
-                  color: FlutterFlowTheme.of(context).primaryBackground,
+                  color: AppTheme.of(context).primaryBackground,
                   size: 15.0,
                 ),
                 options: FFButtonOptions(
@@ -146,21 +136,17 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).primary,
-                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                  color: AppTheme.of(context).primary,
+                  textStyle: AppTheme.of(context).titleSmall.override(
                         font: GoogleFonts.inter(
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .titleSmall
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                          fontWeight:
+                              AppTheme.of(context).titleSmall.fontWeight,
+                          fontStyle: AppTheme.of(context).titleSmall.fontStyle,
                         ),
                         color: Colors.white,
                         letterSpacing: 0.0,
-                        fontWeight:
-                            FlutterFlowTheme.of(context).titleSmall.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                        fontWeight: AppTheme.of(context).titleSmall.fontWeight,
+                        fontStyle: AppTheme.of(context).titleSmall.fontStyle,
                       ),
                   elevation: 0.0,
                   borderRadius: BorderRadius.circular(8.0),

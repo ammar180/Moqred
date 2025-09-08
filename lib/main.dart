@@ -1,14 +1,18 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '/index.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-import '/flutter_flow/flutter_flow_theme.dart';
-import 'flutter_flow/flutter_flow_util.dart';
-import 'flutter_flow/internationalization.dart';
+import 'utils/app_theme.dart';
+import 'utils/nav.dart';
+import 'utils/app_state.dart';
+import 'utils/app_util.dart' show initializeAppLocales;
+import 'package:flutterflow_ui/flutterflow_ui.dart';
+import 'utils/internationalization.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart' show databaseFactory;
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
@@ -21,11 +25,15 @@ void main() async {
     databaseFactory = databaseFactoryFfiWeb;
   }
 
-  await FlutterFlowTheme.initialize();
+  await AppTheme.initialize();
 
-  await FFLocalizations.initialize();
+  final appState = AppState();
+  await AppLocalizations.initialize();
 
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => appState,
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -46,14 +54,14 @@ class MyAppScrollBehavior extends MaterialScrollBehavior {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale? _locale = FFLocalizations.getStoredLocale();
+  Locale? _locale = AppLocalizations.getStoredLocale();
 
-  ThemeMode _themeMode = FlutterFlowTheme.themeMode;
+  ThemeMode _themeMode = AppTheme.themeMode;
 
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
-  String getRoute([RouteMatch? routeMatch]) {
-    final RouteMatch lastMatch =
+  String getRoute([RouteMatchBase? routeMatch]) {
+    final RouteMatchBase lastMatch =
         routeMatch ?? _router.routerDelegate.currentConfiguration.last;
     final RouteMatchList matchList = lastMatch is ImperativeRouteMatch
         ? lastMatch.matches
@@ -72,6 +80,7 @@ class _MyAppState extends State<MyApp> {
 
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
+    initializeAppLocales();
 
     Future.delayed(
       Duration(milliseconds: 1000),
@@ -81,12 +90,12 @@ class _MyAppState extends State<MyApp> {
 
   void setLocale(String language) {
     safeSetState(() => _locale = createLocale(language));
-    FFLocalizations.storeLocale(language);
+    AppLocalizations.storeLocale(language);
   }
 
   void setThemeMode(ThemeMode mode) => safeSetState(() {
         _themeMode = mode;
-        FlutterFlowTheme.saveThemeMode(mode);
+        AppTheme.saveThemeMode(mode);
       });
 
   @override
@@ -96,7 +105,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Moqred',
       scrollBehavior: MyAppScrollBehavior(),
       localizationsDelegates: [
-        FFLocalizationsDelegate(),
+        AppLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -123,7 +132,8 @@ class _MyAppState extends State<MyApp> {
           thumbVisibility: WidgetStateProperty.all(false),
           interactive: true,
           thickness: WidgetStateProperty.all(3.0),
-          thumbColor: WidgetStateProperty.resolveWith((states) => FlutterFlowTheme.of(context).secondary),
+          thumbColor: WidgetStateProperty.resolveWith(
+              (states) => AppTheme.of(context).secondary),
         ),
         useMaterial3: false,
       ),
@@ -172,7 +182,7 @@ class _NavBarPageState extends State<NavBarPage> {
           _currentPageName = tabs.keys.toList()[i];
         }),
         backgroundColor: Color(0xFF131313),
-        selectedItemColor: FlutterFlowTheme.of(context).primary,
+        selectedItemColor: AppTheme.of(context).primary,
         unselectedItemColor: Color(0xCCD9D9D9),
         showSelectedLabels: true,
         showUnselectedLabels: true,
@@ -181,11 +191,11 @@ class _NavBarPageState extends State<NavBarPage> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_outlined,
-              color: FlutterFlowTheme.of(context).secondaryText,
+              color: AppTheme.of(context).secondaryText,
             ),
             activeIcon: Icon(
               Icons.home_rounded,
-              color: FlutterFlowTheme.of(context).primary,
+              color: AppTheme.of(context).primary,
             ),
             label: 'الرئيسية',
             tooltip: '',
@@ -193,11 +203,11 @@ class _NavBarPageState extends State<NavBarPage> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.data_usage_outlined,
-              color: FlutterFlowTheme.of(context).secondaryText,
+              color: AppTheme.of(context).secondaryText,
             ),
             activeIcon: Icon(
               Icons.data_usage_rounded,
-              color: FlutterFlowTheme.of(context).primary,
+              color: AppTheme.of(context).primary,
             ),
             label: 'المعاملات',
             tooltip: '',

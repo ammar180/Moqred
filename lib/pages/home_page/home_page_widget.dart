@@ -3,10 +3,8 @@ import 'package:moqred/backend/schema/dtos/balance.dart';
 import 'package:moqred/backend/schema/structs/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
 import 'package:moqred/components/new_transaction/new_transaction_widget.dart';
-import 'package:moqred/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/flutter_flow_data_table.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '../../utils/app_theme.dart';
+import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'dart:ui';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +49,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        backgroundColor: AppTheme.of(context).secondaryBackground,
         body: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -80,7 +78,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     width: double.infinity,
                                     height: 44.0,
                                     decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
+                                      color: AppTheme.of(context)
                                           .secondaryBackground,
                                     ),
                                   ),
@@ -101,17 +99,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           children: [
                                             Text(
                                               'القروض الحالية',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .displaySmall,
+                                              style: AppTheme.of(context)
+                                                  .displaySmall,
                                             ),
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 4.0, 0.0, 0.0),
                                               child: Text(
                                                   'يتيح معاينة الرصيد الحالي بالاضافة لقائمة بالاشخاص والقروض الحالية',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
+                                                  style: AppTheme.of(context)
                                                       .bodySmall),
                                             ),
                                           ],
@@ -128,8 +124,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   Divider(
                                     height: 44.0,
                                     thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).lineColor,
+                                    color: AppTheme.of(context).lineColor,
                                   ),
                                 if (responsiveVisibility(
                                   context: context,
@@ -139,8 +134,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   Divider(
                                     height: 24.0,
                                     thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).lineColor,
+                                    color: AppTheme.of(context).lineColor,
                                   ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
@@ -148,12 +142,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   child: Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
+                                      color: AppTheme.of(context)
                                           .secondaryBackground,
                                       borderRadius: BorderRadius.circular(8.0),
                                       border: Border.all(
-                                        color: FlutterFlowTheme.of(context)
-                                            .lineColor,
+                                        color: AppTheme.of(context).lineColor,
                                         width: 1.0,
                                       ),
                                     ),
@@ -213,20 +206,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             if (snapshot.hasError) {
                                               return Text(
                                                   "Error loading balances",
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
+                                                  style: AppTheme.of(context)
                                                       .labelMedium
                                                       .override(
                                                           fontFamily: 'Sora',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
+                                                          color: AppTheme.of(
+                                                                  context)
                                                               .error));
                                             }
 
                                             if (!snapshot.hasData) {
                                               return Text("No data available",
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
+                                                  style: AppTheme.of(context)
                                                       .labelMedium);
                                             }
 
@@ -248,8 +239,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     Text(
                                                       'المبلغ المتوافر',
                                                       style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                          AppTheme.of(context)
                                                               .labelMedium,
                                                     ),
                                                     Padding(
@@ -260,13 +250,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       child: Text(
                                                         "${balanceData.TotalIn}",
                                                         style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
+                                                            AppTheme.of(context)
                                                                 .headlineSmall
                                                                 .override(
                                                                   fontFamily:
                                                                       'Sora',
-                                                                  color: FlutterFlowTheme.of(
+                                                                  color: AppTheme.of(
                                                                           context)
                                                                       .success,
                                                                   letterSpacing:
@@ -285,8 +274,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     Text(
                                                       'المبلغ الاجمالي',
                                                       style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                          AppTheme.of(context)
                                                               .labelMedium,
                                                     ),
                                                     Padding(
@@ -297,8 +285,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       child: Text(
                                                         '${balanceData.CurrentBalance}',
                                                         style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
+                                                            AppTheme.of(context)
                                                                 .headlineSmall,
                                                       ),
                                                     ),
@@ -313,8 +300,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     Text(
                                                       'المبلغ الخارج',
                                                       style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                          AppTheme.of(context)
                                                               .labelMedium,
                                                     ),
                                                     Padding(
@@ -325,13 +311,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       child: Text(
                                                         '${balanceData.TotalOut}',
                                                         style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
+                                                            AppTheme.of(context)
                                                                 .headlineSmall
                                                                 .override(
                                                                   fontFamily:
                                                                       'Sora',
-                                                                  color: FlutterFlowTheme.of(
+                                                                  color: AppTheme.of(
                                                                           context)
                                                                       .error,
                                                                   letterSpacing:
@@ -357,8 +342,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   Divider(
                                     height: 24.0,
                                     thickness: 1.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).lineColor,
+                                    color: AppTheme.of(context).lineColor,
                                   ),
                                 Column(
                                   mainAxisSize: MainAxisSize.max,
@@ -402,16 +386,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           iconPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Inter',
-                                                    color: Colors.white,
-                                                    letterSpacing: 0.0,
-                                                  ),
+                                          color: AppTheme.of(context).primary,
+                                          textStyle: AppTheme.of(context)
+                                              .titleSmall
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                color: Colors.white,
+                                                letterSpacing: 0.0,
+                                              ),
                                           elevation: 0.0,
                                           borderRadius:
                                               BorderRadius.circular(8.0),
@@ -433,23 +415,19 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             ConnectionState.waiting) {
                                           return Center(
                                               child: CircularProgressIndicator(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
+                                                  color: AppTheme.of(context)
                                                       .primary));
                                         } else if (snapshot.hasError) {
                                           return Center(
                                             child: Text(
                                               'Error: ${snapshot.error}',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .headlineSmall
-                                                      .override(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                              style: AppTheme.of(context)
+                                                  .headlineSmall
+                                                  .override(
+                                                    color: AppTheme.of(context)
+                                                        .error,
+                                                    letterSpacing: 0.0,
+                                                  ),
                                             ),
                                           );
                                         } else if (!snapshot.hasData ||
@@ -476,8 +454,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                          AppTheme.of(context)
                                                               .bodyLarge),
                                                 ),
                                                 fixedWidth:
@@ -492,8 +469,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                          AppTheme.of(context)
                                                               .bodyLarge),
                                                 ),
                                               ),
@@ -504,8 +480,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                          AppTheme.of(context)
                                                               .bodyLarge),
                                                 ),
                                               ),
@@ -516,8 +491,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                          AppTheme.of(context)
                                                               .bodyLarge),
                                                 ),
                                                 fixedWidth:
@@ -533,11 +507,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                 DataRow(
                                               color: WidgetStateProperty.all(
                                                 personIndex % 2 == 0
-                                                    ? FlutterFlowTheme.of(
-                                                            context)
+                                                    ? AppTheme.of(context)
                                                         .secondaryBackground
-                                                    : FlutterFlowTheme.of(
-                                                            context)
+                                                    : AppTheme.of(context)
                                                         .primaryBackground,
                                               ),
                                               cells: [
@@ -546,8 +518,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       personItem.name,
                                                       'المقترض',
                                                     ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
+                                                    style: AppTheme.of(context)
                                                         .labelSmall),
                                                 Text(
                                                     valueOrDefault<String>(
@@ -555,8 +526,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                           .toString(),
                                                       '0',
                                                     ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
+                                                    style: AppTheme.of(context)
                                                         .labelSmall),
                                                 Text(
                                                     valueOrDefault<String>(
@@ -564,8 +534,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                           .toString(),
                                                       '-0',
                                                     ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
+                                                    style: AppTheme.of(context)
                                                         .labelSmall),
                                                 Text(
                                                     dateTimeFormat(
@@ -577,8 +546,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                   context)
                                                               .languageCode,
                                                     ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
+                                                    style: AppTheme.of(context)
                                                         .bodySmall),
                                               ]
                                                   .map((c) => DataCell(c))
@@ -606,8 +574,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             dataRowHeight: 60.0,
                                             columnSpacing: 5.0,
                                             headingRowColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .primary,
+                                                AppTheme.of(context).primary,
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
                                           ),

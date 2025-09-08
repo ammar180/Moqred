@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:moqred/backend/schema/models/transaction.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import 'package:flutterflow_ui/flutterflow_ui.dart';
+import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'transactions_page_model.dart';
@@ -44,7 +44,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        backgroundColor: AppTheme.of(context).secondaryBackground,
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -56,7 +56,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
               ))
                 Container(
                   height: 44.0,
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  color: AppTheme.of(context).secondaryBackground,
                 ),
 
               // Page title
@@ -64,7 +64,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                 padding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 0.0),
                 child: Text(
                   'سجل كل المعاملات',
-                  style: FlutterFlowTheme.of(context).displaySmall.override(
+                  style: AppTheme.of(context).displaySmall.override(
                         fontFamily: 'Sora',
                         letterSpacing: 0.0,
                       ),
@@ -73,7 +73,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
               Divider(
                 height: 24.0,
                 thickness: 1.0,
-                color: FlutterFlowTheme.of(context).lineColor,
+                color: AppTheme.of(context).lineColor,
               ),
 
               // Main content area (takes all remaining space)
@@ -82,10 +82,10 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                   padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 12.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      color: AppTheme.of(context).secondaryBackground,
                       borderRadius: BorderRadius.circular(8.0),
                       border: Border.all(
-                        color: FlutterFlowTheme.of(context).lineColor,
+                        color: AppTheme.of(context).lineColor,
                         width: 1.0,
                       ),
                     ),
@@ -100,45 +100,41 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                               Expanded(
                                 child: Text(
                                   'الشخص',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodySmall
-                                      .override(
-                                        fontFamily: 'Inter',
-                                        letterSpacing: 0.0,
-                                      ),
+                                  style:
+                                      AppTheme.of(context).bodySmall.override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
                                 ),
                               ),
                               Expanded(
                                 child: Text(
                                   'المبلغ',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodySmall
-                                      .override(
-                                        fontFamily: 'Inter',
-                                        letterSpacing: 0.0,
-                                      ),
+                                  style:
+                                      AppTheme.of(context).bodySmall.override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
                                 ),
                               ),
                               Expanded(
                                 child: Text(
                                   'النوع',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodySmall
-                                      .override(
-                                        fontFamily: 'Inter',
-                                        letterSpacing: 0.0,
-                                      ),
+                                  style:
+                                      AppTheme.of(context).bodySmall.override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
                                 ),
                               ),
                               Expanded(
                                 child: Text(
                                   'تاريخ',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodySmall
-                                      .override(
-                                        fontFamily: 'Inter',
-                                        letterSpacing: 0.0,
-                                      ),
+                                  style:
+                                      AppTheme.of(context).bodySmall.override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
                                 ),
                               ),
                             ],
@@ -165,14 +161,13 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                       child: Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
+                                          color: AppTheme.of(context)
                                               .secondaryBackground,
                                           boxShadow: [
                                             BoxShadow(
                                               blurRadius: 0.0,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .lineColor,
+                                              color: AppTheme.of(context)
+                                                  .lineColor,
                                               offset: const Offset(0.0, 1.0),
                                             ),
                                           ],
@@ -188,8 +183,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                                     maxChars: 32,
                                                     replacement: '…',
                                                   ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
+                                                  style: AppTheme.of(context)
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Inter',
@@ -200,16 +194,14 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                               Expanded(
                                                 child: Text(
                                                   transaction.amount.toString(),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
+                                                  style: AppTheme.of(context)
                                                       .bodyMedium,
                                                 ),
                                               ),
                                               Expanded(
                                                 child: Text(
                                                   transaction.type,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
+                                                  style: AppTheme.of(context)
                                                       .bodyMedium,
                                                 ),
                                               ),
@@ -222,8 +214,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                                             context)
                                                         .languageCode,
                                                   ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
+                                                  style: AppTheme.of(context)
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Inter',
@@ -240,8 +231,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                   firstPageProgressIndicatorBuilder: (_) =>
                                       Center(
                                     child: CircularProgressIndicator(
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
+                                      color: AppTheme.of(context).primary,
                                     ),
                                   ),
                                   newPageProgressIndicatorBuilder: (_) =>

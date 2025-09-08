@@ -2,13 +2,9 @@ import 'package:flutter/services.dart' show FilteringTextInputFormatter;
 import 'package:moqred/backend/db_requests/db_calls.dart';
 import 'package:moqred/backend/schema/dtos/lookup.dart';
 import '/components/add_person/add_person_widget.dart';
-import '/flutter_flow/flutter_flow_drop_down.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/form_field_controller.dart';
+import '../../utils/app_theme.dart';
 import 'dart:ui';
+import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'new_transaction_model.dart';
 export 'new_transaction_model.dart';
@@ -33,8 +29,6 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => NewTransactionModel());
-
-
 
     _model.transactionAmountTextController ??= TextEditingController();
     _model.transactionAmountFocusNode ??= FocusNode();
@@ -76,7 +70,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                     maxWidth: 530.0,
                   ),
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryBackground,
+                    color: AppTheme.of(context).primaryBackground,
                     boxShadow: [
                       BoxShadow(
                         blurRadius: 4.0,
@@ -100,8 +94,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('بيانات المعاملة الجديدة',
-                                style:
-                                    FlutterFlowTheme.of(context).headlineSmall),
+                                style: AppTheme.of(context).headlineSmall),
                             Padding(
                               padding: EdgeInsets.all(8.0),
                               child: InkWell(
@@ -114,8 +107,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                 },
                                 child: Icon(
                                   Icons.close_rounded,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
+                                  color: AppTheme.of(context).secondaryText,
                                   size: 24.0,
                                 ),
                               ),
@@ -127,11 +119,10 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                               0.0, 4.0, 0.0, 0.0),
                           child: Text(
                             'أدخل تفاصيل المعاملة ونوعها: قرض، سداد، تبرع ',
-                            style:
-                                FlutterFlowTheme.of(context).bodySmall.override(
-                                      fontFamily: 'Inter',
-                                      letterSpacing: 0.0,
-                                    ),
+                            style: AppTheme.of(context).bodySmall.override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
                           ),
                         ),
                         Padding(
@@ -153,7 +144,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                         locale: FFLocalizations.of(context)
                                             .languageCode,
                                       ),
-                                      style: FlutterFlowTheme.of(context)
+                                      style: AppTheme.of(context)
                                           .titleLarge
                                           .override(
                                             fontFamily: 'Sora',
@@ -164,8 +155,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                       width: 200.0,
                                       child: Divider(
                                         thickness: 3.0,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
+                                        color: AppTheme.of(context).primary,
                                       ),
                                     ),
                                     Row(
@@ -175,12 +165,11 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                       children: [
                                         Text(
                                           'المبلغ:',
-                                          style: FlutterFlowTheme.of(context)
+                                          style: AppTheme.of(context)
                                               .titleMedium
                                               .override(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
                                               ),
                                         ),
                                         Container(
@@ -197,21 +186,19 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                             decoration: InputDecoration(
                                               isDense: true,
                                               labelText: 'المبلغ',
-                                              labelStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                              labelStyle: AppTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
                                               hintText: '0 ج.م',
-                                              hintStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                              hintStyle: AppTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
                                               enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
                                                   color: Color(0x00000000),
@@ -230,8 +217,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                               ),
                                               errorBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
+                                                  color: AppTheme.of(context)
                                                       .error,
                                                   width: 1.0,
                                                 ),
@@ -241,8 +227,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                               focusedErrorBorder:
                                                   OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
+                                                  color: AppTheme.of(context)
                                                       .error,
                                                   width: 1.0,
                                                 ),
@@ -250,13 +235,12 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                                     BorderRadius.circular(10.0),
                                               ),
                                               filled: true,
-                                              fillColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
+                                              fillColor: AppTheme.of(context)
+                                                  .secondaryBackground,
                                               contentPadding:
                                                   EdgeInsets.all(12.0),
                                             ),
-                                            style: FlutterFlowTheme.of(context)
+                                            style: AppTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Inter',
@@ -264,9 +248,8 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                                 ),
                                             textAlign: TextAlign.center,
                                             keyboardType: TextInputType.number,
-                                            cursorColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .primaryText,
+                                            cursorColor: AppTheme.of(context)
+                                                .primaryText,
                                             validator: _model
                                                 .transactionAmountTextControllerValidator
                                                 .asValidator(context),
@@ -285,12 +268,11 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                       children: [
                                         Text(
                                           'نوع المعاملة: ',
-                                          style: FlutterFlowTheme.of(context)
+                                          style: AppTheme.of(context)
                                               .titleMedium
                                               .override(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
                                               ),
                                         ),
                                         FutureBuilder<List<Lookup>>(
@@ -308,8 +290,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                                     valueColor:
                                                         AlwaysStoppedAnimation<
                                                             Color>(
-                                                      FlutterFlowTheme.of(
-                                                              context)
+                                                      AppTheme.of(context)
                                                           .primary,
                                                     ),
                                                   ),
@@ -338,17 +319,14 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                                       val),
                                               width: 171.4,
                                               height: 40.0,
-                                              textStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium,
+                                              textStyle: AppTheme.of(context)
+                                                  .bodyMedium,
                                               hintText: 'اختر نوع المعاملة',
-                                              fillColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
+                                              fillColor: AppTheme.of(context)
+                                                  .secondaryBackground,
                                               elevation: 2.0,
-                                              borderColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondary,
+                                              borderColor: AppTheme.of(context)
+                                                  .secondary,
                                               borderWidth: 1.0,
                                               borderRadius: 8.0,
                                               margin: EdgeInsetsDirectional
@@ -369,12 +347,11 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                       children: [
                                         Text(
                                           'الشخص:',
-                                          style: FlutterFlowTheme.of(context)
+                                          style: AppTheme.of(context)
                                               .titleMedium
                                               .override(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
+                                                color: AppTheme.of(context)
+                                                    .primaryText,
                                               ),
                                         ),
                                         Row(
@@ -395,8 +372,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                                         valueColor:
                                                             AlwaysStoppedAnimation<
                                                                 Color>(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
+                                                          AppTheme.of(context)
                                                               .primary,
                                                         ),
                                                       ),
@@ -431,22 +407,18 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                                   height: 40.0,
                                                   searchTextStyle: TextStyle(),
                                                   textStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
+                                                      AppTheme.of(context)
                                                           .bodyMedium,
                                                   hintText: 'اختر صاحب العملية',
                                                   searchCursorColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
+                                                      AppTheme.of(context)
                                                           .primaryText,
                                                   fillColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
+                                                      AppTheme.of(context)
                                                           .secondaryBackground,
                                                   elevation: 2.0,
                                                   borderColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
+                                                      AppTheme.of(context)
                                                           .secondary,
                                                   borderWidth: 1.0,
                                                   borderRadius: 8.0,
@@ -466,14 +438,12 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                               child: FlutterFlowIconButton(
                                                 borderRadius: 8.0,
                                                 buttonSize: 40.0,
-                                                fillColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
+                                                fillColor: AppTheme.of(context)
+                                                    .secondary,
                                                 icon: Icon(
                                                   Icons.add,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .info,
+                                                  color:
+                                                      AppTheme.of(context).info,
                                                   size: 24.0,
                                                 ),
                                                 onPressed: () async {
@@ -514,13 +484,12 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                         decoration: InputDecoration(
                                           isDense: true,
                                           hintText: 'ملاحظات',
-                                          hintStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Sora',
-                                                    letterSpacing: 0.0,
-                                                  ),
+                                          hintStyle: AppTheme.of(context)
+                                              .labelMedium
+                                              .override(
+                                                fontFamily: 'Sora',
+                                                letterSpacing: 0.0,
+                                              ),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                               color: Color(0x00000000),
@@ -539,9 +508,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                           ),
                                           errorBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
+                                              color: AppTheme.of(context).error,
                                               width: 1.0,
                                             ),
                                             borderRadius:
@@ -550,23 +517,20 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                           focusedErrorBorder:
                                               OutlineInputBorder(
                                             borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
+                                              color: AppTheme.of(context).error,
                                               width: 1.0,
                                             ),
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
                                           ),
                                           filled: true,
-                                          fillColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondaryBackground,
+                                          fillColor: AppTheme.of(context)
+                                              .secondaryBackground,
                                           prefixIcon: Icon(
                                             Icons.sticky_note_2_outlined,
                                           ),
                                         ),
-                                        style: FlutterFlowTheme.of(context)
+                                        style: AppTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Inter',
@@ -574,8 +538,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                             ),
                                         maxLines: null,
                                         cursorColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primaryText,
+                                            AppTheme.of(context).primaryText,
                                         validator: _model
                                             .transactionPersonNotesTextControllerValidator
                                             .asValidator(context),
@@ -607,45 +570,40 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                                 .transactionPersonNotesTextController!
                                                 .text,
                                           );
-                                          print(id);
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
                                                 'تم إضافة المعاملة بنجاح',
                                                 style: TextStyle(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
+                                                  color: AppTheme.of(context)
                                                       .primaryText,
                                                 ),
                                               ),
                                               duration:
                                                   Duration(milliseconds: 4000),
                                               backgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
+                                                  AppTheme.of(context)
+                                                      .secondary,
                                             ),
                                           );
 
                                           Navigator.pop(context);
                                         } catch (e) {
-                                          print(e);
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
                                                 'حدث خطأ أثناء إضافة المعاملة',
                                                 style: TextStyle(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
+                                                  color: AppTheme.of(context)
                                                       .primaryText,
                                                 ),
                                               ),
                                               duration:
                                                   Duration(milliseconds: 4000),
                                               backgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
+                                                  AppTheme.of(context).error,
                                             ),
                                           );
                                         }
@@ -659,9 +617,8 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                         iconPadding:
                                             EdgeInsetsDirectional.fromSTEB(
                                                 0.0, 0.0, 0.0, 0.0),
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        textStyle: FlutterFlowTheme.of(context)
+                                        color: AppTheme.of(context).secondary,
+                                        textStyle: AppTheme.of(context)
                                             .titleSmall
                                             .override(
                                               color: Colors.white,
@@ -670,11 +627,9 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                         disabledColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondaryText,
+                                            AppTheme.of(context).secondaryText,
                                         disabledTextColor:
-                                            FlutterFlowTheme.of(context)
-                                                .alternate,
+                                            AppTheme.of(context).alternate,
                                       ),
                                     ),
                                   ]
