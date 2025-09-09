@@ -1,4 +1,4 @@
-import 'package:flutterflow_ui/flutterflow_ui.dart';
+import '/flutter_flow/flutterflow_ui.dart';
 import 'package:moqred/backend/db_requests/db_service.dart';
 import 'package:moqred/backend/schema/enums/enums.dart';
 import 'package:moqred/backend/schema/structs/person_overview_struct.dart';
@@ -65,7 +65,8 @@ class NewTransactionModel extends FlutterFlowModel<NewTransactionWidget> {
           throw Exception("المبلغ المتوفر غير كافي لعمل قرض");
         break;
       case TransactionType.payment: // payment i.e. to Old loan
-        var personLoanRemainder = await DbReader( // in negative ex. '-100'
+        var personLoanRemainder = await DbReader(
+                // in negative ex. '-100'
                 fromMap: (map) => PersonOverviewStruct.fromMap(map),
                 tableName: PersonOverviewStruct.TABLE_NAME)
             .getById(personId)

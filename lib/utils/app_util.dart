@@ -4,18 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:collection/collection.dart';
 import 'dart:math' show pow, pi, sin;
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutterflow_ui/flutterflow_ui.dart';
+import '/flutter_flow/flutterflow_ui.dart';
 
 import '../main.dart';
-
-export 'dart:math' show min, max;
-export 'dart:typed_data' show Uint8List;
-export 'dart:convert' show jsonEncode, jsonDecode;
-export 'package:intl/intl.dart';
-export 'package:page_transition/page_transition.dart';
 export 'internationalization.dart' show AppLocalizations;
 export 'nav.dart';
 export 'app_theme.dart';
+export '/flutter_flow/flutterflow_ui.dart';
 
 void initializeAppLocales() {
   timeago.setLocaleMessages('ar', timeago.ArMessages());
@@ -108,9 +103,6 @@ Theme wrapInMaterialDatePickerTheme(
   );
 }
 
-extension ColorOpacityExt on Color {
-  Color applyAlpha(double val) => withValues(alpha: val);
-}
 
 Theme wrapInMaterialTimePickerTheme(
   BuildContext context,

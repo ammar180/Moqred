@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:moqred/backend/db_requests/db_calls.dart';
 import 'package:moqred/backend/schema/models/transaction.dart';
-import 'package:flutterflow_ui/flutterflow_ui.dart';
+import '/flutter_flow/flutterflow_ui.dart';
 import '/utils/internationalization.dart';
 import '/utils/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -145,7 +145,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                   style: AppTheme.of(context)
                                       .bodySmall
                                       .override(
-                                          color: AppTheme.of(context).error),
+                                          color: AppTheme.of(context).primary),
                                 ),
                               ),
                             ],
@@ -266,7 +266,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                                   icon: Icon(
                                                     Icons.delete,
                                                     color: AppTheme.of(context)
-                                                        .info,
+                                                        .error,
                                                     size: 24.0,
                                                   ),
                                                   onPressed: () async {

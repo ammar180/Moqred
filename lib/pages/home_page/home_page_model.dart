@@ -1,6 +1,6 @@
 import 'package:moqred/backend/schema/structs/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
-import 'package:flutterflow_ui/flutterflow_ui.dart';
+import '/flutter_flow/flutterflow_ui.dart';
 import 'home_page_widget.dart' show HomePageWidget;
 import 'package:flutter/material.dart';
 

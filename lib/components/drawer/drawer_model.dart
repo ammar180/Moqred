@@ -1,4 +1,4 @@
-import 'package:flutterflow_ui/flutterflow_ui.dart';
+import '/flutter_flow/flutterflow_ui.dart';
 import 'drawer_widget.dart' show DrawerWidget;
 import 'package:flutter/material.dart';
 

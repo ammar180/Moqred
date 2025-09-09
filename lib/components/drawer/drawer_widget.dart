@@ -1,5 +1,5 @@
 import '/utils/app_util.dart';
-import 'package:flutterflow_ui/flutterflow_ui.dart';
+import '/flutter_flow/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'drawer_model.dart';

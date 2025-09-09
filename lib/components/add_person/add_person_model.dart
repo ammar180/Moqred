@@ -1,9 +1,8 @@
-import 'package:flutterflow_ui/flutterflow_ui.dart';
+import '/flutter_flow/flutterflow_ui.dart';
 import 'add_person_widget.dart' show AddPersonWidget;
 import 'package:flutter/material.dart';
 
 class AddPersonModel extends FlutterFlowModel<AddPersonWidget> {
-  
   final formKey = GlobalKey<FormState>();
   // State field(s) for personName widget.
   FocusNode? personNameFocusNode;

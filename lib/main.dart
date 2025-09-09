@@ -11,7 +11,7 @@ import 'utils/app_theme.dart';
 import 'utils/nav.dart';
 import 'utils/app_state.dart';
 import 'utils/app_util.dart' show initializeAppLocales;
-import 'package:flutterflow_ui/flutterflow_ui.dart';
+import '/flutter_flow/flutterflow_ui.dart';
 import 'utils/internationalization.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart' show databaseFactory;
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';

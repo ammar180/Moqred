@@ -3,9 +3,8 @@ import 'package:moqred/backend/schema/dtos/balance.dart';
 import 'package:moqred/backend/schema/structs/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
 import 'package:moqred/components/new_transaction/new_transaction_widget.dart';
+import '/utils/app_util.dart';
 import '/utils/app_state.dart';
-import '/utils/app_theme.dart';
-import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 
@@ -541,11 +540,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                         .labelSmall),
                                                 Text(
                                                     dateTimeFormat(
-                                                      "relative",
+                                                      "d/M h:mm a",
                                                       personItem
                                                           .lastTransaction,
                                                       locale:
-                                                          FFLocalizations.of(
+                                                          AppLocalizations.of(
                                                                   context)
                                                               .languageCode,
                                                     ),

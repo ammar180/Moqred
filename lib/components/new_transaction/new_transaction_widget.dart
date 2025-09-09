@@ -5,7 +5,7 @@ import '/utils/internationalization.dart';
 import '/components/add_person/add_person_widget.dart';
 import '../../utils/app_theme.dart';
 import 'dart:ui';
-import 'package:flutterflow_ui/flutterflow_ui.dart';
+import '/flutter_flow/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'new_transaction_model.dart';
 export 'new_transaction_model.dart';

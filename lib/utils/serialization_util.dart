@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 
-import 'package:flutterflow_ui/flutterflow_ui.dart';
+import '/flutter_flow/flutterflow_ui.dart';
+export '/flutter_flow/flutterflow_ui.dart';
 
 /// SERIALIZATION HELPERS
 
@@ -219,12 +220,6 @@ dynamic deserializeParam<T>(
     print('Error deserializing parameter: $e');
     return null;
   }
-}
-
-
-
-extension ListFilterExt<T> on Iterable<T?> {
-  List<T> get withoutNulls => where((s) => s != null).map((e) => e!).toList();
 }
 
 extension MapFilterExtensions<T> on Map<String, T?> {

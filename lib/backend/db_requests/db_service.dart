@@ -1,7 +1,7 @@
 import 'package:moqred/backend/db_requests/db_manager.dart';
 import 'package:moqred/backend/schema/models/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
-import '/utils/app_util.dart';
+import 'dart:convert' show jsonDecode;
 import 'package:sqflite/sqflite.dart';
 
 class DbReader<T> {
