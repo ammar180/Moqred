@@ -567,7 +567,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                               ))
                                                           .toInt() +
                                                       1;
-                                              safeSetState(() {});
                                             },
                                             paginated: true,
                                             selectable: false,

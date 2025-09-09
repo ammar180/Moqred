@@ -140,13 +140,8 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                 ),
                               ),
                               Expanded(
-                                child: Text(
-                                  'حذف',
-                                  style: AppTheme.of(context)
-                                      .bodySmall
-                                      .override(
-                                          color: AppTheme.of(context).primary),
-                                ),
+                                child: Text('حذف',
+                                    style: AppTheme.of(context).bodySmall),
                               ),
                             ],
                           ),

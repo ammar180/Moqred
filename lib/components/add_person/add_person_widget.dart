@@ -378,7 +378,7 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                                     safeSetState(() => _model
                                                             .personRelatedToValue =
                                                         val),
-                                                width: 270.0,
+                                                width: 200.0,
                                                 height: 40.0,
                                                 searchTextStyle: TextStyle(),
                                                 textStyle: AppTheme.of(context)

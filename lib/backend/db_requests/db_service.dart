@@ -1,7 +1,6 @@
 import 'package:moqred/backend/db_requests/db_manager.dart';
 import 'package:moqred/backend/schema/models/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
-import 'dart:convert' show jsonDecode;
 import 'package:sqflite/sqflite.dart';
 
 class DbReader<T> {
@@ -77,13 +76,14 @@ class DbReader<T> {
         ? 'ORDER BY tb.$orderBy ${descending ? 'DESC' : 'ASC'}'
         : '';
 
+    // Select all table columns
     final selectParts = ['tb.*'];
 
-    // Relations as JSON objects
+    // Select relation fields (with aliasing to avoid collisions)
     for (final inc in includes) {
-      final fields =
-          inc.fields.map((f) => "'$f', ${inc.referenceName}.$f").join(', ');
-      selectParts.add('JSON_OBJECT($fields) as ${inc.referenceName}');
+      for (final f in inc.fields) {
+        selectParts.add('${inc.referenceName}.$f AS ${inc.referenceName}_$f');
+      }
     }
 
     final sql = '''
@@ -96,20 +96,32 @@ class DbReader<T> {
 
     final result = await db.rawQuery(sql, [pageSize, (page - 1) * pageSize]);
 
-    // Deserialize result rows into models
     final items = result.map((row) {
       // make row mutable
       final map = Map<String, dynamic>.from(row);
 
-      // decode all included JSON objects
+      // Build relation maps manually
       for (final inc in includes) {
-        if (map[inc.referenceName] != null) {
-          map[inc.referenceName] =
-              jsonDecode(map[inc.referenceName].toString());
+        final rel = <String, dynamic>{};
+        var hasValue = false;
+
+        for (final f in inc.fields) {
+          final key = '${inc.referenceName}_$f';
+          if (map.containsKey(key)) {
+            rel[f] = map[key];
+            if (map[key] != null) {
+              hasValue = true;
+            }
+            map.remove(key); // clean up flat alias
+          }
+        }
+
+        // Only assign if relation is not empty
+        if (hasValue) {
+          map[inc.referenceName] = rel;
         }
       }
 
-      // call the provided fromMap to create T
       return fromMap(map);
     }).toList();
 

@@ -19,8 +19,7 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
           : Person.fromMap(json[Person.TABLE_NAME]),
       typeDetails: json[TransactionType.TABLE_NAME] == null
           ? null
-          : TransactionType.fromMap(
-              json[TransactionType.TABLE_NAME]),
+          : TransactionType.fromMap(json[TransactionType.TABLE_NAME]),
     );
 
 Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
@@ -32,6 +31,6 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
       'notes': instance.notes,
       'created': instance.created.toIso8601String(),
       'updated': instance.updated.toIso8601String(),
-      Person.TABLE_NAME: instance.personDetails,
-      TransactionType.TABLE_NAME: instance.typeDetails,
+      Person.TABLE_NAME: instance.personDetails?.toMap(),
+      TransactionType.TABLE_NAME: instance.typeDetails?.toMap(),
     };

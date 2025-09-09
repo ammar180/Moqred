@@ -405,7 +405,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                                       safeSetState(() => _model
                                                               .transactionPersonValue =
                                                           val),
-                                                  width: 228.1,
+                                                  width: 200.1,
                                                   height: 40.0,
                                                   searchTextStyle: TextStyle(),
                                                   textStyle:
@@ -436,7 +436,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      0.0, 0.0, 10.0, 0.0),
+                                                      10.0, 0.0, 0.0, 0.0),
                                               child: FlutterFlowIconButton(
                                                 borderRadius: 8.0,
                                                 buttonSize: 40.0,
@@ -602,7 +602,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                           });
                                         }
                                       },
-                                      text: 'إضافة',
+                                      text: 'تنفيذ',
                                       options: FFButtonOptions(
                                         width: double.infinity,
                                         height: 40.0,
