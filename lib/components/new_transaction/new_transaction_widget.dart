@@ -594,7 +594,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
 
                                           Navigator.pop(context);
                                         } on Exception catch (e) {
-                                          setState(() {
+                                          safeSetState(() {
                                             _model.errorMessage = e
                                                 .toString()
                                                 .replaceFirst(

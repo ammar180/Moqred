@@ -94,3 +94,24 @@ class InsertTransaction {
     }
   }
 }
+
+class InsertPerson {
+  static Future<int> call(
+      {required String name,
+      required String phone,
+      required String relatedTo,
+      required String bio}) async {
+    final serviceWriter = DbWriter<Person>();
+    try {
+      final person = {
+        'name': name,
+        'phone': phone,
+        'related_to': relatedTo,
+        'bio': bio,
+      };
+      return await serviceWriter.insertMap(Person.TABLE_NAME, person);
+    } catch (e) {
+      throw Exception('حدث خطأ أثناء إضافة الشخص');
+    }
+  }
+}

@@ -3,19 +3,50 @@ import 'add_person_widget.dart' show AddPersonWidget;
 import 'package:flutter/material.dart';
 
 class AddPersonModel extends FlutterFlowModel<AddPersonWidget> {
-  ///  State fields for stateful widgets in this component.
-
+  
   final formKey = GlobalKey<FormState>();
-  // State field(s) for transactionType widget.
-  String? transactionTypeValue;
-  FormFieldController<String>? transactionTypeValueController;
-  // State field(s) for transactionPerson widget.
-  String? transactionPersonValue;
-  FormFieldController<String>? transactionPersonValueController;
+  // State field(s) for personName widget.
+  FocusNode? personNameFocusNode;
+  TextEditingController? personNameTextController;
+  String? Function(BuildContext, String?)? personNameTextControllerValidator;
+  String? _personNameTextControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'الاسم أساسي';
+    }
+
+    return null;
+  }
+
+  // State field(s) for personPhone widget.
+  FocusNode? personPhoneFocusNode;
+  TextEditingController? personPhoneTextController;
+  String? Function(BuildContext, String?)? personPhoneTextControllerValidator;
+  // State field(s) for personRelatedTo widget.
+  String? personRelatedToValue;
+  FormFieldController<String>? personRelatedToValueController;
+  // State field(s) for personBio widget.
+  FocusNode? personBioFocusNode;
+  TextEditingController? personBioTextController;
+  String? Function(BuildContext, String?)? personBioTextControllerValidator;
+  // Stores action output result for [Validate Form] action in addButton widget.
+
+  String? errorMessage;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    personNameTextControllerValidator = _personNameTextControllerValidator;
+  }
 
   @override
-  void dispose() {}
+  void dispose() {
+    personNameFocusNode?.dispose();
+    personNameTextController?.dispose();
+
+    personPhoneFocusNode?.dispose();
+    personPhoneTextController?.dispose();
+
+    personBioFocusNode?.dispose();
+    personBioTextController?.dispose();
+  }
 }
