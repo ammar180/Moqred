@@ -16,11 +16,8 @@ class TransactionsPageModel extends FlutterFlowModel<TransactionsPageWidget> {
       fetchPage: (pageKey) async =>
           await FetchTransactionsCall.call(page: pageKey, perPage: _pageSize)
               .then((value) => value.items),
-      getNextPageKey: (state) {
-        if (!state.hasNextPage) return null;
-        final lastKey = state.keys?.isEmpty ?? true ? 0 : state.keys?.last ?? 0;
-        return lastKey + 1;
-      },
+      getNextPageKey: (state) =>
+          state.lastPageIsEmpty ? null : state.nextIntPageKey,
     );
   }
 

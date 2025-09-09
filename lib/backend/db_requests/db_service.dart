@@ -96,7 +96,7 @@ class DbReader<T> {
 
     final result = await db.rawQuery(sql, [pageSize, (page - 1) * pageSize]);
 
-    // ✅ Deserialize result rows into models
+    // Deserialize result rows into models
     final items = result.map((row) {
       // make row mutable
       final map = Map<String, dynamic>.from(row);

@@ -23,4 +23,8 @@ class AppState extends ChangeNotifier {
   // Add your state variables and methods here
   Balance _balance = Balance(TotalIn: 0, TotalOut: 0);
   Balance get balance => _balance;
+  set balance(Balance value) {
+    _balance = value;
+    notifyListeners();
+  }
 }

@@ -261,11 +261,11 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                   noItemsFoundIndicatorBuilder: (_) =>
                                       const Center(
                                           child:
-                                              Text("No transactions found.")),
+                                              Text("لا يوجد اي معاملات حتى الان.")),
                                   firstPageErrorIndicatorBuilder: (context) =>
                                       const Center(
                                           child: Text(
-                                              "Error loading transactions.")),
+                                              "خطأ غير متوقع في تحميل المعاملات.")),
                                 ),
                               ),
                             ),

@@ -291,7 +291,7 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                     ),
                                     FFButtonWidget(
                                       onPressed: () {
-                                        print('Button pressed ...');
+                                        // print('Button pressed ...');
                                       },
                                       text: 'إضافة',
                                       options: FFButtonOptions(

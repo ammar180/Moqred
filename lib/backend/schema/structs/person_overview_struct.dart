@@ -53,6 +53,9 @@ class PersonOverviewStruct extends BaseModel {
 
   @override
   PersonOverviewStruct fromMap(Map<String, dynamic> data) =>
+      PersonOverviewStruct.fromMap(data);
+
+  factory PersonOverviewStruct.fromMap(Map<String, dynamic> data) =>
       PersonOverviewStruct(
         id: castToType<String>(data['id']),
         name: data['name'] as String?,

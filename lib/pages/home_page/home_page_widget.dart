@@ -3,9 +3,9 @@ import 'package:moqred/backend/schema/dtos/balance.dart';
 import 'package:moqred/backend/schema/structs/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
 import 'package:moqred/components/new_transaction/new_transaction_widget.dart';
-import '../../utils/app_theme.dart';
+import '/utils/app_state.dart';
+import '/utils/app_theme.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-import 'dart:ui';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 
@@ -205,7 +205,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
                                             if (snapshot.hasError) {
                                               return Text(
-                                                  "Error loading balances",
+                                                  "عذرا، خطأ في تحميل تفاصيل الرصيد",
                                                   style: AppTheme.of(context)
                                                       .labelMedium
                                                       .override(
@@ -216,12 +216,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             }
 
                                             if (!snapshot.hasData) {
-                                              return Text("No data available",
+                                              return Text(
+                                                  "لا يوجد بيانات حتى الان",
                                                   style: AppTheme.of(context)
                                                       .labelMedium);
                                             }
 
                                             var balanceData = snapshot.data!;
+                                            AppState().balance = balanceData;
                                             return Wrap(
                                               spacing: 12.0,
                                               runSpacing: 0.0,
@@ -433,7 +435,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         } else if (!snapshot.hasData ||
                                             snapshot.data!.items.isEmpty) {
                                           return const Center(
-                                              child: Text('No data available'));
+                                              child: Text(
+                                                  'لا يوجد قروض قائمة حتى الان'));
                                         }
                                         final person = snapshot.data!.items;
                                         return SizedBox(

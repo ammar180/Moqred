@@ -561,6 +561,8 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                             null) return;
 
                                         try {
+                                          await _model.verifyAmount();
+
                                           await InsertTransaction.call(
                                             type: _model.transactionTypeValue!,
                                             person:
@@ -591,9 +593,12 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                           );
 
                                           Navigator.pop(context);
-                                        } catch (e) {
+                                        } on Exception catch (e) {
                                           setState(() {
-                                            _model.errorMessage = e.toString();
+                                            _model.errorMessage = e
+                                                .toString()
+                                                .replaceFirst(
+                                                    'Exception: ', '');
                                           });
                                         }
                                       },

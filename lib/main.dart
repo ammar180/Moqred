@@ -177,10 +177,13 @@ class _NavBarPageState extends State<NavBarPage> {
       body: _currentPage ?? tabs[_currentPageName],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
-        onTap: (i) => safeSetState(() {
-          _currentPage = null;
-          _currentPageName = tabs.keys.toList()[i];
-        }),
+        onTap: (i) {
+          if (_currentPageName == tabs.keys.toList()[i]) return;
+          safeSetState(() {
+            _currentPage = null;
+            _currentPageName = tabs.keys.toList()[i];
+          });
+        },
         backgroundColor: Color(0xFF131313),
         selectedItemColor: AppTheme.of(context).primary,
         unselectedItemColor: Color(0xCCD9D9D9),
