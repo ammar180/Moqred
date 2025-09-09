@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:moqred/backend/db_requests/db_calls.dart';
 import 'package:moqred/backend/schema/models/transaction.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import '/utils/internationalization.dart';
@@ -138,6 +139,15 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                           ),
                                 ),
                               ),
+                              Expanded(
+                                child: Text(
+                                  'حذف',
+                                  style: AppTheme.of(context)
+                                      .bodySmall
+                                      .override(
+                                          color: AppTheme.of(context).error),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -243,6 +253,58 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                                       ),
                                                 ),
                                               ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        10.0, 0.0, 0.0, 0.0),
+                                                child: FlutterFlowIconButton(
+                                                  borderRadius: 8.0,
+                                                  buttonSize: 40.0,
+                                                  fillColor:
+                                                      AppTheme.of(context)
+                                                          .secondary,
+                                                  icon: Icon(
+                                                    Icons.delete,
+                                                    color: AppTheme.of(context)
+                                                        .info,
+                                                    size: 24.0,
+                                                  ),
+                                                  onPressed: () async {
+                                                    try {
+                                                      await RemoveRecord.call(
+                                                          tableName: Transaction
+                                                              .TABLE_NAME,
+                                                          id: transaction.id ??
+                                                              '');
+
+                                                      _model.pagingController
+                                                          .refresh();
+                                                    } catch (e) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            e.toString(),
+                                                            style: TextStyle(
+                                                              color: AppTheme.of(
+                                                                      context)
+                                                                  .error,
+                                                            ),
+                                                          ),
+                                                          duration: Duration(
+                                                              milliseconds:
+                                                                  4000),
+                                                          backgroundColor:
+                                                              AppTheme.of(
+                                                                      context)
+                                                                  .secondary,
+                                                        ),
+                                                      );
+                                                    }
+                                                  },
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -260,8 +322,8 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                                           child: CircularProgressIndicator()),
                                   noItemsFoundIndicatorBuilder: (_) =>
                                       const Center(
-                                          child:
-                                              Text("لا يوجد اي معاملات حتى الان.")),
+                                          child: Text(
+                                              "لا يوجد اي معاملات حتى الان.")),
                                   firstPageErrorIndicatorBuilder: (context) =>
                                       const Center(
                                           child: Text(

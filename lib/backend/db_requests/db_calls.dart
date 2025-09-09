@@ -115,3 +115,15 @@ class InsertPerson {
     }
   }
 }
+
+class RemoveRecord {
+  static Future<void> call(
+      {required String tableName, required String id}) async {
+    final serviceWriter = DbWriter<BaseModel>();
+    try {
+      await serviceWriter.deleteById(tableName, id);
+    } catch (e) {
+      throw Exception('حدث خطأ أثناء الحذف');
+    }
+  }
+}
