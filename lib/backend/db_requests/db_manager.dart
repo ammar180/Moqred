@@ -1,3 +1,4 @@
+import 'package:moqred/backend/schema/enums/enums.dart' show TransactionType;
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +24,7 @@ class SQLiteHelper {
         await _runSqlFile(db, 'assets/schema.sql');
 
         print("Seeding initial data from seed.sql...");
-        await _runSqlFile(db, 'assets/seed.sql');
+        await DataSeeding.seed(db);
       },
       onOpen: (Database db) async {
         // Check if transaction_types table is empty
@@ -33,7 +34,7 @@ class SQLiteHelper {
 
         if (count == 0) {
           print("No data found in transaction_types. Running seed.sql...");
-          await _runSqlFile(db, 'assets/seed.sql');
+          await DataSeeding.seed(db);
         } else {
           print("Data already present. Skipping seed.");
         }
@@ -56,6 +57,57 @@ class SQLiteHelper {
           print("Error running statement: $stmt");
           print("Error: $e");
         }
+      }
+    });
+  }
+}
+
+/// Represents a single seed entry (table + row data)
+class SeedEntry {
+  final String tableName;
+  final Map<String, dynamic> data;
+
+  SeedEntry(this.tableName, this.data);
+}
+
+/// Holds all seed data
+class DataSeeding {
+  static final List<SeedEntry> entries = [
+    SeedEntry('transaction_types', {
+      'id': TransactionType.loan.value,
+      'sign': -1,
+      'type': TransactionType.loan.name,
+      'name': 'قرض',
+      'created': DateTime.now().toIso8601String(),
+      'updated': DateTime.now().toIso8601String(),
+    }),
+    SeedEntry('transaction_types', {
+      'id': TransactionType.payment.value,
+      'sign': 1,
+      'type': TransactionType.payment.name,
+      'name': 'سداد',
+      'created': DateTime.now().toIso8601String(),
+      'updated': DateTime.now().toIso8601String(),
+    }),
+    SeedEntry('transaction_types', {
+      'id': TransactionType.filling.value,
+      'sign': 1,
+      'type': TransactionType.filling.name,
+      'name': 'ملئ الرصيد',
+      'created': DateTime.now().toIso8601String(),
+      'updated': DateTime.now().toIso8601String(),
+    }),
+  ];
+
+  /// Seeds all defined entries into the database
+  static Future<void> seed(Database db) async {
+    await db.transaction((txn) async {
+      for (final entry in entries) {
+        await txn.insert(
+          entry.tableName,
+          entry.data,
+          conflictAlgorithm: ConflictAlgorithm.ignore,
+        );
       }
     });
   }
