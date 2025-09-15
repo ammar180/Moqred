@@ -344,6 +344,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
         'loan' => Colors.red,
         'payment' => Colors.green,
         'filling' => Colors.blue,
+        'donate' => Colors.yellowAccent,
         _ => Colors.grey,
       };
 }

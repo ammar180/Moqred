@@ -1,7 +1,6 @@
 import 'package:moqred/backend/db_requests/db_calls.dart';
 import 'package:moqred/backend/schema/dtos/balance.dart';
 import 'package:moqred/backend/schema/structs/index.dart';
-import 'package:moqred/backend/schema/util/pagination_util.dart';
 import 'package:moqred/components/new_transaction/new_transaction_widget.dart';
 import '/utils/app_util.dart';
 import '/utils/app_state.dart';
@@ -401,23 +400,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         ),
                                       ),
                                     ),
-                                    FutureBuilder<
-                                        PaginatedResult<PersonOverviewStruct>>(
-                                      future: FetchPersonsOverviewCall.call(
-                                        page: _model.dtCurrentPage,
-                                        perPage: valueOrDefault<int>(
-                                          _model.paginatedDataTableController
-                                              .rowsPerPage,
-                                          _model.dtCurrentPage,
-                                        ),
-                                      ),
+                                    FutureBuilder<List<PersonOverviewStruct>>(
+                                      future: FetchPersonsOverviewCall.call(),
                                       builder: (context, snapshot) {
                                         if (snapshot.connectionState ==
                                             ConnectionState.waiting) {
                                           return Center(
-                                              child: CircularProgressIndicator(
-                                                  color: AppTheme.of(context)
-                                                      .primary));
+                                            child: CircularProgressIndicator(
+                                              color:
+                                                  AppTheme.of(context).primary,
+                                            ),
+                                          );
                                         } else if (snapshot.hasError) {
                                           return Center(
                                             child: Text(
@@ -431,18 +424,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   ),
                                             ),
                                           );
-                                        } else if (!snapshot.hasData ||
-                                            snapshot.data!.items.isEmpty) {
-                                          return const Center(
-                                              child: Text(
-                                                  'لا يوجد قروض قائمة حتى الان'));
                                         }
-                                        final person = snapshot.data!.items;
+                                        final person = snapshot.data!;
                                         return SizedBox(
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height *
-                                              0.5, // finite height for table
+                                              0.5,
                                           child: FlutterFlowDataTable<
                                               PersonOverviewStruct>(
                                             controller: _model
@@ -452,12 +440,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               DataColumn2(
                                                 label: DefaultTextStyle.merge(
                                                   softWrap: true,
-                                                  child: Text('المقترض',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          AppTheme.of(context)
-                                                              .bodyLarge),
+                                                  child: Text(
+                                                    'المقترض',
+                                                    textAlign: TextAlign.center,
+                                                    style: AppTheme.of(context)
+                                                        .bodyLarge,
+                                                  ),
                                                 ),
                                                 fixedWidth:
                                                     MediaQuery.sizeOf(context)
@@ -467,34 +455,23 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               DataColumn2(
                                                 label: DefaultTextStyle.merge(
                                                   softWrap: true,
-                                                  child: Text('القرض',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          AppTheme.of(context)
-                                                              .bodyLarge),
+                                                  child: Text(
+                                                    'المتبقي',
+                                                    textAlign: TextAlign.center,
+                                                    style: AppTheme.of(context)
+                                                        .bodyLarge,
+                                                  ),
                                                 ),
                                               ),
                                               DataColumn2(
                                                 label: DefaultTextStyle.merge(
                                                   softWrap: true,
-                                                  child: Text('المتبقي',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          AppTheme.of(context)
-                                                              .bodyLarge),
-                                                ),
-                                              ),
-                                              DataColumn2(
-                                                label: DefaultTextStyle.merge(
-                                                  softWrap: true,
-                                                  child: Text('اخر دفع',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          AppTheme.of(context)
-                                                              .bodyLarge),
+                                                  child: Text(
+                                                    'تاريخ',
+                                                    textAlign: TextAlign.center,
+                                                    style: AppTheme.of(context)
+                                                        .bodyLarge,
+                                                  ),
                                                 ),
                                                 fixedWidth:
                                                     MediaQuery.sizeOf(context)
@@ -516,58 +493,39 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               ),
                                               cells: [
                                                 Text(
-                                                    valueOrDefault<String>(
+                                                  valueOrDefault<String>(
                                                       personItem.name,
-                                                      'المقترض',
-                                                    ),
-                                                    style: AppTheme.of(context)
-                                                        .labelSmall),
+                                                      'المقترض'),
+                                                  style: AppTheme.of(context)
+                                                      .labelSmall,
+                                                ),
                                                 Text(
-                                                    valueOrDefault<String>(
-                                                      personItem.loan
-                                                          .toString(),
-                                                      '0',
-                                                    ),
-                                                    style: AppTheme.of(context)
-                                                        .labelSmall),
+                                                  valueOrDefault<String>(
+                                                    personItem.remainder
+                                                        .toString(),
+                                                    '-0',
+                                                  ),
+                                                  style: AppTheme.of(context)
+                                                      .labelSmall,
+                                                ),
                                                 Text(
-                                                    valueOrDefault<String>(
-                                                      personItem.remainder
-                                                          .toString(),
-                                                      '-0',
-                                                    ),
-                                                    style: AppTheme.of(context)
-                                                        .labelSmall),
-                                                Text(
-                                                    dateTimeFormat(
-                                                      "d/M h:mm a",
-                                                      personItem
-                                                          .lastTransaction,
-                                                      locale:
-                                                          AppLocalizations.of(
-                                                                  context)
-                                                              .languageCode,
-                                                    ),
-                                                    style: AppTheme.of(context)
-                                                        .bodySmall),
+                                                  dateTimeFormat(
+                                                    "d/M h:mm a",
+                                                    personItem.lastTransaction,
+                                                    locale: AppLocalizations.of(
+                                                            context)
+                                                        .languageCode,
+                                                  ),
+                                                  style: AppTheme.of(context)
+                                                      .bodySmall,
+                                                ),
                                               ]
                                                   .map((c) => DataCell(c))
                                                   .toList(),
                                             ),
-                                            onPageChanged:
-                                                (currentRowIndex) async {
-                                              _model.dtCurrentPage =
-                                                  (currentRowIndex /
-                                                              valueOrDefault<
-                                                                  int>(
-                                                                _model
-                                                                    .paginatedDataTableController
-                                                                    .rowsPerPage,
-                                                                10,
-                                                              ))
-                                                          .toInt() +
-                                                      1;
-                                            },
+                                            emptyBuilder: () => const Center(
+                                                child: Text(
+                                                    'لا يوجد قروض قائمة حتى الان')),
                                             paginated: true,
                                             selectable: false,
                                             hidePaginator: false,

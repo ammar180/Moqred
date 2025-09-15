@@ -6,9 +6,6 @@ import 'package:flutter/material.dart';
 
 class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   ///  Local state fields for this page.
-
-  int dtCurrentPage = 0;
-
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - SQLite (FetchPersonsOverviewCall)] action in HomePage widget.
@@ -18,7 +15,9 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
       FlutterFlowDataTableController<PersonOverviewStruct>();
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    paginatedDataTableController.rowsPerPage = 4;
+  }
 
   @override
   void dispose() {

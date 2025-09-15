@@ -73,6 +73,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           requireAuth: true,
           builder: (context, params) => TransactionsPageWidget(),
         ),
+        FFRoute(
+          name: SettingsPageWidget.routeName,
+          path: SettingsPageWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => SettingsPageWidget(),
+        ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 

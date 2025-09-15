@@ -3,7 +3,9 @@ import 'package:collection/collection.dart';
 enum TransactionType {
   loan('a3791c76'),
   payment('b7a4dbfa'),
-  filling('bcf40d21');
+  filling('bcf40d21'),
+  donate('e918d94f'),
+  none('none');
 
   final String value;
   const TransactionType(this.value);
@@ -11,8 +13,7 @@ enum TransactionType {
   static TransactionType? fromValue(String value) {
     return TransactionType.values.firstWhere(
       (e) => e.value == value,
-      // ignore: cast_from_null_always_fails
-      orElse: () => null as TransactionType, // returns null if not found
+      orElse: () => TransactionType.none, // returns none if not found
     );
   }
 }

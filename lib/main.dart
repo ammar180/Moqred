@@ -170,6 +170,7 @@ class _NavBarPageState extends State<NavBarPage> {
     final tabs = {
       HomePageWidget.routeName: HomePageWidget(),
       TransactionsPageWidget.routeName: TransactionsPageWidget(),
+      SettingsPageWidget.routeName: SettingsPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -213,6 +214,18 @@ class _NavBarPageState extends State<NavBarPage> {
               color: AppTheme.of(context).primary,
             ),
             label: 'المعاملات',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.settings_outlined,
+              color: AppTheme.of(context).secondaryText,
+            ),
+            activeIcon: Icon(
+              Icons.settings,
+              color: AppTheme.of(context).primary,
+            ),
+            label: 'الإعدادات',
             tooltip: '',
           ),
         ],

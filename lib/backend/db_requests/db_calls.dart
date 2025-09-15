@@ -4,18 +4,16 @@ import 'package:moqred/backend/schema/dtos/index.dart';
 import 'package:moqred/backend/schema/models/index.dart';
 import 'package:moqred/backend/schema/structs/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
+import 'package:moqred/backend/schema/models/transaction_type.dart';
 
 class FetchPersonsOverviewCall {
-  static Future<PaginatedResult<PersonOverviewStruct>> call({
-    required int page,
-    required int perPage,
-  }) async {
+  static Future<List<PersonOverviewStruct>> call() async {
     final serviceReader = DbReader<PersonOverviewStruct>(
       tableName: 'persons_overview',
       fromMap: (map) => PersonOverviewStruct().fromMap(map),
     );
 
-    return await serviceReader.getPaginated(page: page, pageSize: perPage);
+    return await serviceReader.getAll();
   }
 }
 
@@ -29,7 +27,7 @@ class FetchTransactionsCall {
       fromMap: (map) => Transaction.fromMap(map),
     );
 
-    return await serviceReader.getPaginatedWithRelation(includes: [
+    return await serviceReader.getPaginated(includes: [
       Include(
           fields: Person.fields,
           referenceName: Person.TABLE_NAME,
@@ -63,17 +61,9 @@ class LoadLookupCall {
 
 class FetchElQardBalancesCall {
   static Future<Balance> call() async {
-    final sql = '''
-SELECT
-  SUM(t.amount * tt.sign) AS total_in,
-  SUM(CASE WHEN tt.type = 'loan' THEN t.amount ELSE 0 END) 
-    - SUM(CASE WHEN tt.type = 'payment' THEN t.amount ELSE 0 END) AS total_out
-FROM transactions AS t
-JOIN transaction_types AS tt ON t.type = tt.id;
-''';
 
     final db = await SQLiteHelper.db;
-    final result = await db.rawQuery(sql);
+    final result = await db.rawQuery(Balance.sql);
     return result.map(Balance.fromMap).first;
   }
 }
@@ -124,6 +114,36 @@ class RemoveRecord {
       await serviceWriter.deleteById(tableName, id);
     } catch (e) {
       throw Exception('حدث خطأ أثناء الحذف');
+    }
+  }
+}
+
+class FetchTransactionTypesCall {
+  static Future<List<TransactionType>> call() async {
+    final reader = DbReader<TransactionType>(
+      tableName: TransactionType.TABLE_NAME,
+      fromMap: (map) => TransactionType.fromMap(map),
+    );
+    return await reader.getAll();
+  }
+}
+
+class InsertTransactionTypeCall {
+  static Future<int> call({
+    required String type,
+    required String name,
+    required int sign,
+  }) async {
+    final writer = DbWriter<TransactionType>();
+    try {
+      final data = {
+        'type': type,
+        'name': name,
+        'sign': sign,
+      };
+      return await writer.insertMap(TransactionType.TABLE_NAME, data);
+    } catch (e) {
+      throw Exception('حدث خطأ أثناء إضافة نوع المعاملة');
     }
   }
 }

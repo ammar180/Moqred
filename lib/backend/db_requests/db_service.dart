@@ -32,37 +32,6 @@ class DbReader<T> {
     int pageSize = 10,
     String? orderBy,
     bool descending = false,
-  }) async {
-    final db = await SQLiteHelper.db;
-
-    final total = Sqflite.firstIntValue(
-          await db.rawQuery('SELECT COUNT(*) FROM $tableName'),
-        ) ??
-        0;
-
-    final result = await db.query(
-      tableName,
-      orderBy:
-          orderBy != null ? '$orderBy ${descending ? 'DESC' : 'ASC'}' : null,
-      limit: pageSize,
-      offset: page * pageSize,
-    );
-
-    final items = result.map(fromMap).toList();
-
-    return PaginatedResult<T>(
-      items: items,
-      totalCount: total,
-      currentPage: page,
-      pageSize: pageSize,
-    );
-  }
-
-  Future<PaginatedResult<T>> getPaginatedWithRelation({
-    required int page,
-    int pageSize = 10,
-    String? orderBy,
-    bool descending = false,
     List<Include> includes = const [],
   }) async {
     final db = await SQLiteHelper.db;
@@ -72,65 +41,80 @@ class DbReader<T> {
         ) ??
         0;
 
-    final orderClause = orderBy != null
-        ? 'ORDER BY tb.$orderBy ${descending ? 'DESC' : 'ASC'}'
-        : '';
+    if (includes.isEmpty) {
+      // Simple query
+      final result = await db.query(
+        tableName,
+        orderBy:
+            orderBy != null ? '$orderBy ${descending ? 'DESC' : 'ASC'}' : null,
+        limit: pageSize,
+        offset: page * pageSize,
+      );
 
-    // Select all table columns
-    final selectParts = ['tb.*'];
+      final items = result.map(fromMap).toList();
 
-    // Select relation fields (with aliasing to avoid collisions)
-    for (final inc in includes) {
-      for (final f in inc.fields) {
-        selectParts.add('${inc.referenceName}.$f AS ${inc.referenceName}_$f');
-      }
-    }
+      return PaginatedResult<T>(
+        items: items,
+        totalCount: total,
+        currentPage: page,
+        pageSize: pageSize,
+      );
+    } else {
+      // Join query
+      final orderClause = orderBy != null
+          ? 'ORDER BY tb.$orderBy ${descending ? 'DESC' : 'ASC'}'
+          : '';
 
-    final sql = '''
-    SELECT ${selectParts.join(', ')}
-    FROM $tableName tb
-    ${includes.map((inc) => 'LEFT JOIN ${inc.referenceName} ON tb.${inc.foreignKey} = ${inc.referenceName}.id').join('\n')}
-    $orderClause
-    LIMIT ? OFFSET ?
-  ''';
-
-    final result = await db.rawQuery(sql, [pageSize, (page - 1) * pageSize]);
-
-    final items = result.map((row) {
-      // make row mutable
-      final map = Map<String, dynamic>.from(row);
-
-      // Build relation maps manually
+      final selectParts = ['tb.*'];
       for (final inc in includes) {
-        final rel = <String, dynamic>{};
-        var hasValue = false;
-
         for (final f in inc.fields) {
-          final key = '${inc.referenceName}_$f';
-          if (map.containsKey(key)) {
-            rel[f] = map[key];
-            if (map[key] != null) {
-              hasValue = true;
+          selectParts.add('${inc.referenceName}.$f AS ${inc.referenceName}_$f');
+        }
+      }
+
+      final sql = '''
+      SELECT ${selectParts.join(', ')}
+      FROM $tableName tb
+      ${includes.map((inc) => 'LEFT JOIN ${inc.referenceName} ON tb.${inc.foreignKey} = ${inc.referenceName}.id').join('\n')}
+      $orderClause
+      LIMIT ? OFFSET ?
+      ''';
+
+      final result = await db.rawQuery(sql, [pageSize, (page - 1) * pageSize]);
+
+      final items = result.map((row) {
+        final map = Map<String, dynamic>.from(row);
+
+        for (final inc in includes) {
+          final rel = <String, dynamic>{};
+          var hasValue = false;
+
+          for (final f in inc.fields) {
+            final key = '${inc.referenceName}_$f';
+            if (map.containsKey(key)) {
+              rel[f] = map[key];
+              if (map[key] != null) {
+                hasValue = true;
+              }
+              map.remove(key);
             }
-            map.remove(key); // clean up flat alias
+          }
+
+          if (hasValue) {
+            map[inc.referenceName] = rel;
           }
         }
 
-        // Only assign if relation is not empty
-        if (hasValue) {
-          map[inc.referenceName] = rel;
-        }
-      }
+        return fromMap(map);
+      }).toList();
 
-      return fromMap(map);
-    }).toList();
-
-    return PaginatedResult<T>(
-      items: items,
-      totalCount: total,
-      currentPage: page,
-      pageSize: pageSize,
-    );
+      return PaginatedResult<T>(
+        items: items,
+        totalCount: total,
+        currentPage: page,
+        pageSize: pageSize,
+      );
+    }
   }
 
   Future<List<T>> fromSql(String sql, [List<Object?> params = const []]) async {
