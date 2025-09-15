@@ -23,12 +23,12 @@ class FetchTransactionsCall {
     required int perPage,
     String? orderBy,
     bool descending = true,
+    Map<String, String>? filters,
   }) async {
     final serviceReader = DbReader<Transaction>(
       tableName: Transaction.TABLE_NAME,
       fromMap: (map) => Transaction.fromMap(map),
     );
-
 
     return await serviceReader.getPaginated(
         includes: [
@@ -44,7 +44,8 @@ class FetchTransactionsCall {
         page: page,
         pageSize: perPage,
         orderBy: orderBy ?? 'created',
-        descending: descending);
+        descending: descending,
+        filters: filters);
   }
 }
 

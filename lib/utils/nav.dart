@@ -65,19 +65,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: HomePageWidget.routeName,
           path: HomePageWidget.routePath,
           requireAuth: true,
-          builder: (context, params) => HomePageWidget(),
+          builder: (context, params) => NavBarPage(initialPage: HomePageWidget.routeName),
         ),
         FFRoute(
           name: TransactionsPageWidget.routeName,
           path: TransactionsPageWidget.routePath,
           requireAuth: true,
-          builder: (context, params) => TransactionsPageWidget(),
+          builder: (context, params) => NavBarPage(initialPage:TransactionsPageWidget.routeName),
         ),
         FFRoute(
           name: SettingsPageWidget.routeName,
           path: SettingsPageWidget.routePath,
           requireAuth: true,
-          builder: (context, params) => SettingsPageWidget(),
+          builder: (context, params) => NavBarPage(initialPage:SettingsPageWidget.routeName),
         ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

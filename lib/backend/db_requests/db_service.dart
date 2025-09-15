@@ -37,18 +37,34 @@ class DbReader<T> {
     String? orderBy,
     bool descending = false,
     List<Include> includes = const [],
+    Map<String, String>? filters,
   }) async {
     final db = await SQLiteHelper.db;
+
+    final whereClauses = <String>[];
+    final whereArgs = <Object>[];
+
+    if (filters != null) {
+      filters.forEach((key, value) {
+        whereClauses.add('$key LIKE ?');
+        whereArgs.add('%$value%');
+      });
+    }
 
     final total = Sqflite.firstIntValue(
           await db.rawQuery('SELECT COUNT(*) FROM $tableName'),
         ) ??
         0;
 
+    final whereString =
+        whereClauses.isNotEmpty ? 'WHERE ${whereClauses.join(' AND ')}' : '';
+
     if (includes.isEmpty) {
       // Simple query
       final result = await db.query(
         tableName,
+        where: whereString,
+        whereArgs: whereArgs.isNotEmpty ? whereArgs : null,
         orderBy:
             orderBy != null ? '$orderBy ${descending ? 'DESC' : 'ASC'}' : null,
         limit: pageSize,
@@ -80,11 +96,13 @@ class DbReader<T> {
       SELECT ${selectParts.join(', ')}
       FROM $tableName tb
       ${includes.map((inc) => 'LEFT JOIN ${inc.referenceName} ON tb.${inc.foreignKey} = ${inc.referenceName}.id').join('\n')}
+      $whereString
       $orderClause
       LIMIT ? OFFSET ?
       ''';
 
-      final result = await db.rawQuery(sql, [pageSize, (page - 1) * pageSize]);
+      final result = await db
+          .rawQuery(sql, [...whereArgs, pageSize, (page - 1) * pageSize]);
 
       final items = result.map((row) {
         final map = Map<String, dynamic>.from(row);

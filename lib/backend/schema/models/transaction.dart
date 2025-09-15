@@ -32,6 +32,9 @@ class Transaction extends BaseModel {
   @override
   String get tableName => TABLE_NAME;
 
+  String get personName => personDetails?.name ?? 'غير معروف';
+  String get typeName => typeDetails?.name ?? 'غير معروف';
+
   String get formattedAmount {
     final absAmount = amount.abs();
     final sign = amount < 0 ? '-' : '';

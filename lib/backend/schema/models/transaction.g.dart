@@ -9,8 +9,12 @@ part of 'transaction.dart';
 Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       id: json['id'] as String?,
       amount: (json['amount'] as num).toInt(),
-      created: DateTime.parse(json['created'] as String),
-      updated: DateTime.parse(json['updated'] as String),
+      created: json['created'].runtimeType == DateTime
+          ? json['created']
+          : DateTime.parse(json['created'] as String),
+      updated: json['updated'].runtimeType == DateTime
+          ? json['updated']
+          : DateTime.parse(json['updated'] as String),
       notes: (json['notes'] ?? "") as String,
       person: json['person'] as String,
       type: json['type'] as String,
@@ -29,8 +33,10 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
       'type': instance.type,
       'person': instance.person,
       'notes': instance.notes,
-      'created': instance.created.toIso8601String(),
-      'updated': instance.updated.toIso8601String(),
+      'created': instance.created,
+      'updated': instance.updated,
+      'personName': instance.personName,
+      'typeName': instance.typeName,
       Person.TABLE_NAME: instance.personDetails?.toMap(),
       TransactionType.TABLE_NAME: instance.typeDetails?.toMap(),
     };

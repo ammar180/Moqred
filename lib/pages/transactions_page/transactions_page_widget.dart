@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart' show AutoSizeText;
 import 'package:moqred/backend/db_requests/db_calls.dart';
 import 'package:moqred/backend/schema/models/transaction.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
@@ -14,6 +15,7 @@ class TransactionsDataSource extends DataGridSource {
     int pageSize,
     String? orderBy,
     bool descending,
+    Map<String, String>? filters,
   ) loadPage;
 
   final List<DataGridRow> _rows = [];
@@ -22,19 +24,31 @@ class TransactionsDataSource extends DataGridSource {
   bool _hasMore = true;
   String? _orderBy;
   bool _descending = true;
+  Map<String, String> _filters = {};
 
   TransactionsDataSource({required this.loadPage});
 
+  @override
   List<DataGridRow> get rows => _rows;
 
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
-    final tx = row.getCells()[0].value as Transaction;
+    final rowMap = {
+      for (final cell in row.getCells()) cell.columnName: cell.value,
+    };
+    final tx = Transaction.fromMap(rowMap);
     return DataGridRowAdapter(cells: [
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
         alignment: Alignment.center,
-        child: Text(tx.personDetails?.name ?? 'غير معروف'),
+        child: Tooltip(
+          child: AutoSizeText(
+            tx.personName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          message: tx.personName,
+        ),
       ),
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
@@ -49,11 +63,11 @@ class TransactionsDataSource extends DataGridSource {
           color: _typeColor(tx.typeDetails?.type ?? ''),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Text(tx.typeDetails?.name ?? 'غير معروف'),
+        child: Text(tx.typeName),
       ),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-        child: Text(dateTimeFormat('yMd', tx.created,
+        child: Text(dateTimeFormat('d/M h:mm a', tx.created,
             locale: AppLocalizations.of(appNavigatorKey.currentContext!)
                 .languageCode)),
       ),
@@ -78,7 +92,7 @@ class TransactionsDataSource extends DataGridSource {
         'loan' => Colors.red,
         'payment' => Colors.green,
         'filling' => Colors.blue,
-        'donate' => Colors.yellowAccent,
+        'donate' => Colors.indigo,
         _ => Colors.grey,
       };
 
@@ -93,12 +107,16 @@ class TransactionsDataSource extends DataGridSource {
   Future<void> _loadMore() async {
     if (_isLoading || !_hasMore) return;
     _isLoading = true;
-    final result = await loadPage(
-        _currentPage, TransactionsPageModel.pageSize, _orderBy, _descending);
+    final result = await loadPage(_currentPage, TransactionsPageModel.pageSize,
+        _orderBy, _descending, _filters);
     final items = result.items;
     _rows.addAll(items
-        .map((e) => DataGridRow(
-            cells: [DataGridCell<Transaction>(columnName: 'tx', value: e)]))
+        .map((dataGridRow) => DataGridRow(
+            cells: dataGridRow
+                .toMap()
+                .entries
+                .map((c) => DataGridCell(columnName: c.key, value: c.value))
+                .toList()))
         .toList());
     _currentPage += 1;
     _hasMore = _rows.length < result.totalCount;
@@ -119,9 +137,11 @@ class TransactionsDataSource extends DataGridSource {
   Future<void> updateDataSource({
     String? orderBy,
     bool? descending,
+    Map<String, String>? filters,
   }) async {
     _orderBy = orderBy ?? _orderBy;
     _descending = descending ?? _descending;
+    _filters = filters ?? _filters;
     _currentPage = 1;
     _hasMore = true;
     _rows.clear();
@@ -151,12 +171,13 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
     super.initState();
     _model = createModel(context, () => TransactionsPageModel());
     _dataSource = TransactionsDataSource(
-      loadPage: (page, pageSize, orderBy, descending) async {
+      loadPage: (page, pageSize, orderBy, descending, filters) async {
         final pageResult = await FetchTransactionsCall.call(
           page: page,
           perPage: pageSize,
           orderBy: orderBy,
           descending: descending,
+          filters: filters,
         );
         return pageResult;
       },
@@ -230,9 +251,10 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                     child: SfDataGrid(
                       source: _dataSource,
                       controller: _gridController,
-                      frozenColumnsCount: 2,
+                      frozenColumnsCount: 1,
                       allowSorting: true,
                       allowFiltering: true,
+                      allowPullToRefresh: true,
                       loadMoreViewBuilder: (context, loadMoreRows) {
                         return FutureBuilder<void>(
                           future: loadMoreRows(),
@@ -251,7 +273,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                       },
                       columns: [
                         GridColumn(
-                          columnName: 'person',
+                          columnName: 'personName',
                           columnWidthMode: ColumnWidthMode.auto,
                           label: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -269,7 +291,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                           ),
                         ),
                         GridColumn(
-                          columnName: 'type',
+                          columnName: 'typeName',
                           label: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text('النوع',
