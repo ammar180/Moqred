@@ -61,10 +61,12 @@ class NewTransactionModel extends FlutterFlowModel<NewTransactionWidget> {
 
     switch (tType) {
       case TransactionType.loan: // loan i.e. '-1'
+        if (personId.isEmpty) throw Exception("يجب تعيين من المقترض");
         if (balance.TotalIn < amount)
           throw Exception("المبلغ المتوفر غير كافي لعمل قرض");
         break;
       case TransactionType.payment: // payment i.e. to Old loan
+        if (personId.isEmpty) throw Exception("يجب تعيين من يسدد القرض");
         var personLoanRemainder = await DbReader(
                 // in negative ex. '-100'
                 fromMap: (map) => PersonOverviewStruct.fromMap(map),

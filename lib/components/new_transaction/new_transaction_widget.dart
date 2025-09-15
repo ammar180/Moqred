@@ -389,10 +389,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                                   controller: _model
                                                           .transactionPersonValueController ??=
                                                       FormFieldController<
-                                                          String>(
-                                                    _model.transactionPersonValue ??=
-                                                        '',
-                                                  ),
+                                                          String>(''),
                                                   options: List<String>.from(
                                                       transactionPersonLoadPersonsRowList
                                                           .map((e) => e.id)
@@ -555,10 +552,9 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                           safeSetState(() => ());
                                           return;
                                         }
-                                        if (_model.transactionTypeValue == null)
-                                          return;
-                                        if (_model.transactionPersonValue ==
-                                            null) return;
+                                        if (_model.transactionTypeValue
+                                                ?.isEmpty ??
+                                            true) return;
 
                                         try {
                                           await _model.verifyAmount();
@@ -566,7 +562,8 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                           await InsertTransaction.call(
                                             type: _model.transactionTypeValue!,
                                             person:
-                                                _model.transactionPersonValue!,
+                                                _model.transactionPersonValue ??
+                                                    '',
                                             amount: int.parse(_model
                                                 .transactionAmountTextController!
                                                 .text),
