@@ -1,14 +1,133 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:moqred/backend/db_requests/db_calls.dart';
 import 'package:moqred/backend/schema/models/transaction.dart';
-import '/flutter_flow/flutterflow_ui.dart';
-import '/utils/internationalization.dart';
-import '/utils/app_theme.dart';
+import 'package:moqred/backend/schema/util/pagination_util.dart';
+import '/utils/app_util.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import 'transactions_page_model.dart';
 export 'transactions_page_model.dart';
+
+class TransactionsDataSource extends DataGridSource {
+  final Future<PaginatedResult<Transaction>> Function(
+    int page,
+    int pageSize,
+    String? orderBy,
+    bool descending,
+  ) loadPage;
+
+  final List<DataGridRow> _rows = [];
+  int _currentPage = 1;
+  bool _isLoading = false;
+  bool _hasMore = true;
+  String? _orderBy;
+  bool _descending = true;
+
+  TransactionsDataSource({required this.loadPage});
+
+  List<DataGridRow> get rows => _rows;
+
+  @override
+  DataGridRowAdapter buildRow(DataGridRow row) {
+    final tx = row.getCells()[0].value as Transaction;
+    return DataGridRowAdapter(cells: [
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+        alignment: Alignment.center,
+        child: Text(tx.personDetails?.name ?? 'غير معروف'),
+      ),
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+        alignment: Alignment.center,
+        child: Text(tx.amount.toString()),
+      ),
+      Container(
+        alignment: Alignment.center,
+        margin: const EdgeInsets.all(6),
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+        decoration: BoxDecoration(
+          color: _typeColor(tx.typeDetails?.type ?? ''),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(tx.typeDetails?.name ?? 'غير معروف'),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+        child: Text(dateTimeFormat('yMd', tx.created,
+            locale: AppLocalizations.of(appNavigatorKey.currentContext!)
+                .languageCode)),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+        child: IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: () async {
+            await RemoveRecord.call(
+              tableName: Transaction.TABLE_NAME,
+              id: tx.id ?? '',
+            );
+            _rows.remove(row);
+            notifyListeners();
+          },
+        ),
+      ),
+    ]);
+  }
+
+  Color _typeColor(String type) => switch (type) {
+        'loan' => Colors.red,
+        'payment' => Colors.green,
+        'filling' => Colors.blue,
+        'donate' => Colors.yellowAccent,
+        _ => Colors.grey,
+      };
+
+  Future<void> initialLoad() async {
+    if (_rows.isNotEmpty) return;
+    _currentPage = 1;
+    _hasMore = true;
+    _rows.clear();
+    await _loadMore();
+  }
+
+  Future<void> _loadMore() async {
+    if (_isLoading || !_hasMore) return;
+    _isLoading = true;
+    final result = await loadPage(
+        _currentPage, TransactionsPageModel.pageSize, _orderBy, _descending);
+    final items = result.items;
+    _rows.addAll(items
+        .map((e) => DataGridRow(
+            cells: [DataGridCell<Transaction>(columnName: 'tx', value: e)]))
+        .toList());
+    _currentPage += 1;
+    _hasMore = _rows.length < result.totalCount;
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  @override
+  Future<void> handleLoadMoreRows() async {
+    await _loadMore();
+  }
+
+  @override
+  Future<void> performSorting(List<DataGridRow> rows) async {
+    // Sorting delegated to DB via orderBy; update order and reload
+  }
+
+  Future<void> updateDataSource({
+    String? orderBy,
+    bool? descending,
+  }) async {
+    _orderBy = orderBy ?? _orderBy;
+    _descending = descending ?? _descending;
+    _currentPage = 1;
+    _hasMore = true;
+    _rows.clear();
+    await _loadMore();
+  }
+}
 
 class TransactionsPageWidget extends StatefulWidget {
   const TransactionsPageWidget({super.key});
@@ -22,6 +141,8 @@ class TransactionsPageWidget extends StatefulWidget {
 
 class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
   late TransactionsPageModel _model;
+  late TransactionsDataSource _dataSource;
+  final DataGridController _gridController = DataGridController();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -29,6 +150,21 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => TransactionsPageModel());
+    _dataSource = TransactionsDataSource(
+      loadPage: (page, pageSize, orderBy, descending) async {
+        final pageResult = await FetchTransactionsCall.call(
+          page: page,
+          perPage: pageSize,
+          orderBy: orderBy,
+          descending: descending,
+        );
+        return pageResult;
+      },
+    );
+    // Initial data load
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _dataSource.initialLoad();
+    });
   }
 
   @override
@@ -91,244 +227,85 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                         width: 1.0,
                       ),
                     ),
-                    child: Column(
-                      children: [
-                        // Header row
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 12.0),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'الشخص',
-                                  style:
-                                      AppTheme.of(context).bodySmall.override(
-                                            fontFamily: 'Inter',
-                                            letterSpacing: 0.0,
-                                          ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'المبلغ',
-                                  style:
-                                      AppTheme.of(context).bodySmall.override(
-                                            fontFamily: 'Inter',
-                                            letterSpacing: 0.0,
-                                          ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'النوع',
-                                  style:
-                                      AppTheme.of(context).bodySmall.override(
-                                            fontFamily: 'Inter',
-                                            letterSpacing: 0.0,
-                                          ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'تاريخ',
-                                  style:
-                                      AppTheme.of(context).bodySmall.override(
-                                            fontFamily: 'Inter',
-                                            letterSpacing: 0.0,
-                                          ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text('حذف',
-                                    style: AppTheme.of(context).bodySmall),
-                              ),
-                            ],
+                    child: SfDataGrid(
+                      source: _dataSource,
+                      controller: _gridController,
+                      frozenColumnsCount: 2,
+                      allowSorting: true,
+                      allowFiltering: true,
+                      loadMoreViewBuilder: (context, loadMoreRows) {
+                        return FutureBuilder<void>(
+                          future: loadMoreRows(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child:
+                                    Center(child: CircularProgressIndicator()),
+                              );
+                            }
+                            return const SizedBox.shrink();
+                          },
+                        );
+                      },
+                      columns: [
+                        GridColumn(
+                          columnName: 'person',
+                          columnWidthMode: ColumnWidthMode.auto,
+                          label: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('الشخص',
+                                style: AppTheme.of(context).bodySmall),
                           ),
                         ),
-
-                        // Transactions list
-                        Expanded(
-                          child: RefreshIndicator(
-                            onRefresh: () async =>
-                                _model.pagingController.refresh(),
-                            child: PagingListener(
-                              controller: _model.pagingController,
-                              builder: (context, state, fetchNextPage) =>
-                                  PagedListView<int, Transaction>(
-                                state: state,
-                                fetchNextPage: fetchNextPage,
-                                builderDelegate:
-                                    PagedChildBuilderDelegate<Transaction>(
-                                  itemBuilder: (context, transaction, index) {
-                                    return Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 2.0),
-                                      child: Container(
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: AppTheme.of(context)
-                                              .secondaryBackground,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 0.0,
-                                              color: AppTheme.of(context)
-                                                  .lineColor,
-                                              offset: const Offset(0.0, 1.0),
-                                            ),
-                                          ],
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                child: AutoSizeText(
-                                                  (transaction.personDetails
-                                                              ?.name ??
-                                                          'غير معروف')
-                                                      .maybeHandleOverflow(
-                                                    maxChars: 32,
-                                                    replacement: '…',
-                                                  ),
-                                                  style: AppTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  transaction.amount.toString(),
-                                                  style: AppTheme.of(context)
-                                                      .bodyMedium,
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Container(
-                                                  alignment: Alignment.center,
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 2,
-                                                      vertical: 2),
-                                                  decoration: BoxDecoration(
-                                                    color: typeColor(transaction
-                                                            .typeDetails
-                                                            ?.type ??
-                                                        ''),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                  child: Text(
-                                                    transaction.typeDetails
-                                                            ?.name ??
-                                                        "غير معروف",
-                                                    style: AppTheme.of(context)
-                                                        .bodyMedium,
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  dateTimeFormat(
-                                                    "yMd",
-                                                    transaction.created,
-                                                    locale: AppLocalizations.of(
-                                                            context)
-                                                        .languageCode,
-                                                  ),
-                                                  style: AppTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        10.0, 0.0, 0.0, 0.0),
-                                                child: FlutterFlowIconButton(
-                                                  borderRadius: 8.0,
-                                                  buttonSize: 40.0,
-                                                  fillColor:
-                                                      AppTheme.of(context)
-                                                          .secondary,
-                                                  icon: Icon(
-                                                    Icons.delete,
-                                                    color: AppTheme.of(context)
-                                                        .error,
-                                                    size: 24.0,
-                                                  ),
-                                                  onPressed: () async {
-                                                    try {
-                                                      await RemoveRecord.call(
-                                                          tableName: Transaction
-                                                              .TABLE_NAME,
-                                                          id: transaction.id ??
-                                                              '');
-
-                                                      _model.pagingController
-                                                          .refresh();
-                                                    } catch (e) {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        SnackBar(
-                                                          content: Text(
-                                                            e.toString(),
-                                                            style: TextStyle(
-                                                              color: AppTheme.of(
-                                                                      context)
-                                                                  .error,
-                                                            ),
-                                                          ),
-                                                          duration: Duration(
-                                                              milliseconds:
-                                                                  4000),
-                                                          backgroundColor:
-                                                              AppTheme.of(
-                                                                      context)
-                                                                  .secondary,
-                                                        ),
-                                                      );
-                                                    }
-                                                  },
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  firstPageProgressIndicatorBuilder: (_) =>
-                                      Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppTheme.of(context).primary,
-                                    ),
-                                  ),
-                                  newPageProgressIndicatorBuilder: (_) =>
-                                      const Center(
-                                          child: CircularProgressIndicator()),
-                                  noItemsFoundIndicatorBuilder: (_) =>
-                                      const Center(
-                                          child: Text(
-                                              "لا يوجد اي معاملات حتى الان.")),
-                                  firstPageErrorIndicatorBuilder: (context) =>
-                                      const Center(
-                                          child: Text(
-                                              "خطأ غير متوقع في تحميل المعاملات.")),
-                                ),
-                              ),
-                            ),
+                        GridColumn(
+                          columnName: 'amount',
+                          columnWidthMode: ColumnWidthMode.auto,
+                          label: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('المبلغ',
+                                style: AppTheme.of(context).bodySmall),
+                          ),
+                        ),
+                        GridColumn(
+                          columnName: 'type',
+                          label: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('النوع',
+                                style: AppTheme.of(context).bodySmall),
+                          ),
+                        ),
+                        GridColumn(
+                          columnName: 'created',
+                          label: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('تاريخ',
+                                style: AppTheme.of(context).bodySmall),
+                          ),
+                        ),
+                        GridColumn(
+                          columnName: 'actions',
+                          allowSorting: false,
+                          label: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('حذف',
+                                style: AppTheme.of(context).bodySmall),
                           ),
                         ),
                       ],
+                      onColumnSortChanged:
+                          (newSortedColumn, oldSortedColumn) async {
+                        if (newSortedColumn == null || oldSortedColumn == null)
+                          return;
+                        final columnName = newSortedColumn.name;
+                        final descending = newSortedColumn.sortDirection ==
+                            DataGridSortDirection.descending;
+                        await _dataSource.updateDataSource(
+                          orderBy: columnName,
+                          descending: descending,
+                        );
+                      },
                     ),
                   ),
                 ),

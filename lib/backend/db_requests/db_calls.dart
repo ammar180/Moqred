@@ -4,7 +4,6 @@ import 'package:moqred/backend/schema/dtos/index.dart';
 import 'package:moqred/backend/schema/models/index.dart';
 import 'package:moqred/backend/schema/structs/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
-import 'package:moqred/backend/schema/models/transaction_type.dart';
 
 class FetchPersonsOverviewCall {
   static Future<List<PersonOverviewStruct>> call() async {
@@ -13,7 +12,8 @@ class FetchPersonsOverviewCall {
       fromMap: (map) => PersonOverviewStruct().fromMap(map),
     );
 
-    return await serviceReader.getAll();
+    return await serviceReader.getAll(
+        orderBy: 'last_transaction', descending: false);
   }
 }
 
@@ -21,22 +21,30 @@ class FetchTransactionsCall {
   static Future<PaginatedResult<Transaction>> call({
     required int page,
     required int perPage,
+    String? orderBy,
+    bool descending = true,
   }) async {
     final serviceReader = DbReader<Transaction>(
       tableName: Transaction.TABLE_NAME,
       fromMap: (map) => Transaction.fromMap(map),
     );
 
-    return await serviceReader.getPaginated(includes: [
-      Include(
-          fields: Person.fields,
-          referenceName: Person.TABLE_NAME,
-          foreignKey: 'person'),
-      Include(
-          fields: TransactionType.fields,
-          referenceName: TransactionType.TABLE_NAME,
-          foreignKey: 'type'),
-    ], page: page, pageSize: perPage, orderBy: 'created', descending: true);
+
+    return await serviceReader.getPaginated(
+        includes: [
+          Include(
+              fields: Person.fields,
+              referenceName: Person.TABLE_NAME,
+              foreignKey: 'person'),
+          Include(
+              fields: TransactionType.fields,
+              referenceName: TransactionType.TABLE_NAME,
+              foreignKey: 'type'),
+        ],
+        page: page,
+        pageSize: perPage,
+        orderBy: orderBy ?? 'created',
+        descending: descending);
   }
 }
 
@@ -61,7 +69,6 @@ class LoadLookupCall {
 
 class FetchElQardBalancesCall {
   static Future<Balance> call() async {
-
     final db = await SQLiteHelper.db;
     final result = await db.rawQuery(Balance.sql);
     return result.map(Balance.fromMap).first;

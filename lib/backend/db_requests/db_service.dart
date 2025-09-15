@@ -21,9 +21,13 @@ class DbReader<T> {
     return null;
   }
 
-  Future<List<T>> getAll() async {
+  Future<List<T>> getAll({String? orderBy, bool descending = false}) async {
     final db = await SQLiteHelper.db;
-    final result = await db.query(tableName);
+    final result = await db.query(
+      tableName,
+      orderBy:
+          orderBy != null ? '$orderBy ${descending ? 'DESC' : 'ASC'}' : null,
+    );
     return result.map(fromMap).toList();
   }
 

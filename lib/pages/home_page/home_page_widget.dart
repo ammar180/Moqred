@@ -447,10 +447,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                         .bodyLarge,
                                                   ),
                                                 ),
-                                                fixedWidth:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        0.25,
                                               ),
                                               DataColumn2(
                                                 label: DefaultTextStyle.merge(
@@ -473,10 +469,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                         .bodyLarge,
                                                   ),
                                                 ),
-                                                fixedWidth:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        0.2,
                                               ),
                                             ],
                                             dataRowBuilder: (personItem,
