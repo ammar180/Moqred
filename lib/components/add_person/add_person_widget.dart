@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart'
     show FilteringTextInputFormatter, MaxLengthEnforcement;
-import '/flutter_flow/flutterflow_ui.dart';
 import 'package:moqred/backend/db_requests/db_calls.dart';
 import 'package:moqred/backend/schema/dtos/lookup.dart' show Lookup;
 import '/utils/app_util.dart';

@@ -2,6 +2,7 @@ import 'package:moqred/backend/db_requests/db_calls.dart';
 import 'package:moqred/backend/schema/dtos/balance.dart';
 import 'package:moqred/backend/schema/structs/index.dart';
 import 'package:moqred/components/new_transaction/new_transaction_widget.dart';
+import 'package:moqred/pages/person_details/person_details_widget.dart';
 import '/utils/app_util.dart';
 import '/utils/app_state.dart';
 import 'package:shimmer/shimmer.dart';
@@ -484,12 +485,28 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                         .primaryBackground,
                                               ),
                                               cells: [
-                                                Text(
-                                                  valueOrDefault<String>(
-                                                      personItem.name,
-                                                      'المقترض'),
-                                                  style: AppTheme.of(context)
-                                                      .labelSmall,
+                                                GestureDetector(
+                                                  onTap: () =>
+                                                      context.pushNamed(
+                                                    PersonDetailsPageWidget
+                                                        .routeName,
+                                                    queryParameters: {
+                                                      'id': serializeParam(
+                                                        personItem.id,
+                                                        ParamType.String,
+                                                      ),
+                                                    }.withoutNulls,
+                                                  ),
+                                                  child: Text(
+                                                    valueOrDefault<String>(
+                                                        personItem.name,
+                                                        'المقترض'),
+                                                    style: AppTheme.of(context)
+                                                        .labelSmall
+                                                        .override(
+                                                          color: AppTheme.of(context).primary,
+                                                        ),
+                                                  ),
                                                 ),
                                                 Text(
                                                   valueOrDefault<String>(

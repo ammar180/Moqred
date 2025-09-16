@@ -114,6 +114,35 @@ class InsertPerson {
   }
 }
 
+class FetchPersonByIdCall {
+  static Future<Person?> call({required String id}) async {
+    final reader = DbReader<Person>(
+      tableName: Person.TABLE_NAME,
+      fromMap: (map) => Person.fromMap(map),
+    );
+    return await reader.getById(id);
+  }
+}
+
+class UpdatePersonCall {
+  static Future<int> call({required Person person}) async {
+    try {
+      final db = await SQLiteHelper.db;
+      final map = person.toMap();
+      final id = person.id;
+      map.remove('id');
+      return await db.update(
+        Person.TABLE_NAME,
+        map,
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    } catch (e) {
+      throw Exception('حدث خطأ أثناء تحديث بيانات الشخص');
+    }
+  }
+}
+
 class RemoveRecord {
   static Future<void> call(
       {required String tableName, required String id}) async {

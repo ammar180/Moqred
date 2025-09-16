@@ -46,7 +46,7 @@ class DbReader<T> {
 
     if (filters != null) {
       filters.forEach((key, value) {
-        whereClauses.add('$key LIKE ?');
+        whereClauses.add('tb.$key LIKE ?');
         whereArgs.add('%$value%');
       });
     }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:moqred/main.dart' show NavBarPage;
-import '/flutter_flow/flutterflow_ui.dart';
 import 'serialization_util.dart';
 import '/backend/schema/structs/index.dart';
 import '/index.dart';
@@ -78,6 +77,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: SettingsPageWidget.routePath,
           requireAuth: true,
           builder: (context, params) => NavBarPage(initialPage:SettingsPageWidget.routeName),
+        ),
+        FFRoute(
+          name: PersonDetailsPageWidget.routeName,
+          path: PersonDetailsPageWidget.routePath,
+          builder: (context, params) => PersonDetailsPageWidget(personId: params.getParam(
+              'id',
+              ParamType.String,
+            )),
         ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
