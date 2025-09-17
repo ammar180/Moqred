@@ -1,5 +1,6 @@
 import 'package:moqred/backend/schema/models/index.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '/flutter_flow/flutter_flow_util.dart' show DecimalType, FormatType, formatNumber;
 
 part 'transaction.g.dart';
 
@@ -35,11 +36,11 @@ class Transaction extends BaseModel {
   String get personName => personDetails?.name ?? 'غير معروف';
   String get typeName => typeDetails?.name ?? 'غير معروف';
 
-  String get formattedAmount {
-    final absAmount = amount.abs();
-    final sign = amount < 0 ? '-' : '';
-    return '$sign\$${(absAmount / 100).toStringAsFixed(2)}';
-  }
+  String get formattedAmount => formatNumber(
+        amount,
+        formatType: FormatType.decimal,
+        decimalType: DecimalType.periodDecimal,
+      );
 
   final Person? personDetails;
   final TransactionType? typeDetails;

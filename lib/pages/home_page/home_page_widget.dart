@@ -249,7 +249,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                               .fromSTEB(0.0,
                                                               16.0, 0.0, 0.0),
                                                       child: Text(
-                                                        "${balanceData.TotalIn}",
+                                                        formatNumber(
+                                                          balanceData.TotalIn,
+                                                          formatType: FormatType
+                                                              .decimal,
+                                                          decimalType:
+                                                              DecimalType
+                                                                  .periodDecimal,
+                                                        ),
                                                         style:
                                                             AppTheme.of(context)
                                                                 .headlineSmall
@@ -284,7 +291,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                               .fromSTEB(0.0,
                                                               16.0, 0.0, 0.0),
                                                       child: Text(
-                                                        '${balanceData.CurrentBalance}',
+                                                        formatNumber(
+                                                          balanceData
+                                                              .CurrentBalance,
+                                                          formatType: FormatType
+                                                              .decimal,
+                                                          decimalType:
+                                                              DecimalType
+                                                                  .periodDecimal,
+                                                        ),
                                                         style:
                                                             AppTheme.of(context)
                                                                 .headlineSmall,
@@ -310,7 +325,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                               .fromSTEB(0.0,
                                                               16.0, 0.0, 0.0),
                                                       child: Text(
-                                                        '${balanceData.TotalOut}',
+                                                        formatNumber(
+                                                          balanceData.TotalOut,
+                                                          formatType: FormatType
+                                                              .decimal,
+                                                          decimalType:
+                                                              DecimalType
+                                                                  .periodDecimal,
+                                                        ),
                                                         style:
                                                             AppTheme.of(context)
                                                                 .headlineSmall
@@ -504,14 +526,21 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     style: AppTheme.of(context)
                                                         .labelSmall
                                                         .override(
-                                                          color: AppTheme.of(context).primary,
+                                                          color: AppTheme.of(
+                                                                  context)
+                                                              .primary,
                                                         ),
                                                   ),
                                                 ),
                                                 Text(
                                                   valueOrDefault<String>(
-                                                    personItem.remainder
-                                                        .toString(),
+                                                    formatNumber(
+                                                      personItem.remainder,
+                                                      formatType:
+                                                          FormatType.decimal,
+                                                      decimalType: DecimalType
+                                                          .periodDecimal,
+                                                    ),
                                                     '-0',
                                                   ),
                                                   style: AppTheme.of(context)

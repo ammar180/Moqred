@@ -41,7 +41,7 @@ class PersonTransactionsDataSource extends DataGridSource {
       Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-        child: Text(tx.amount.toString()),
+        child: Text(tx.formattedAmount),
       ),
       Container(
         alignment: Alignment.center,
@@ -51,7 +51,10 @@ class PersonTransactionsDataSource extends DataGridSource {
           color: _typeColor(tx.typeDetails?.type ?? ''),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Text(tx.typeName),
+        child: Text(
+          tx.typeName,
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
@@ -133,7 +136,7 @@ class PersonTransactionsDataSource extends DataGridSource {
 }
 
 class PersonDetailsPageModel extends FlutterFlowModel<PersonDetailsPageWidget> {
-  static const pageSize = 5;
+  static const pageSize = 7;
   late PersonTransactionsDataSource dataSource;
   final formKey = GlobalKey<FormState>();
   final String personId;

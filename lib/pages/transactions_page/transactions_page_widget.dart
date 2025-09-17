@@ -53,7 +53,7 @@ class TransactionsDataSource extends DataGridSource {
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
         alignment: Alignment.center,
-        child: Text(tx.amount.toString()),
+        child: Text(tx.formattedAmount),
       ),
       Container(
         alignment: Alignment.center,

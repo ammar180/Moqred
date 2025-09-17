@@ -7,10 +7,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'add_person_model.dart';
+import 'package:moqred/backend/schema/models/index.dart';
 export 'add_person_model.dart';
 
 class AddPersonWidget extends StatefulWidget {
-  const AddPersonWidget({super.key});
+  const AddPersonWidget({super.key, this.person});
+
+  final Person? person;
 
   @override
   State<AddPersonWidget> createState() => _AddPersonWidgetState();
@@ -31,14 +34,19 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
 
     _model = createModel(context, () => AddPersonModel());
 
-    _model.personNameTextController ??= TextEditingController();
+    _model.personNameTextController ??=
+        TextEditingController(text: widget.person?.name ?? '');
     _model.personNameFocusNode ??= FocusNode();
 
-    _model.personPhoneTextController ??= TextEditingController();
+    _model.personPhoneTextController ??=
+        TextEditingController(text: widget.person?.phone ?? '');
     _model.personPhoneFocusNode ??= FocusNode();
 
-    _model.personBioTextController ??= TextEditingController();
+    _model.personBioTextController ??=
+        TextEditingController(text: widget.person?.bio ?? '');
     _model.personBioFocusNode ??= FocusNode();
+
+    _model.personRelatedToValue = widget.person?.relatedTo;
   }
 
   @override
@@ -487,7 +495,7 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                               .asValidator(context),
                                         ),
                                       ),
-                                      FFButtonWidget(
+                                          FFButtonWidget(
                                         onPressed: () async {
                                           if (_model.formKey.currentState ==
                                                   null ||
@@ -496,25 +504,48 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                             safeSetState(() => ());
                                             return;
                                           }
-                                          if (_model.personNameTextController
-                                              .text.isEmpty) return;
-                                          try {
-                                            await InsertPerson.call(
-                                                name: _model
-                                                    .personNameTextController
-                                                    .text,
-                                                phone: _model
-                                                    .personPhoneTextController
-                                                    .text,
-                                                relatedTo: _model
-                                                        .personRelatedToValue ??
-                                                    '',
-                                                bio: _model
-                                                    .personBioTextController
-                                                    .text);
+                                              if (_model.personNameTextController
+                                                  .text.isEmpty) return;
+                                              try {
+                                                if (widget.person == null) {
+                                                  await InsertPerson.call(
+                                                      name: _model
+                                                          .personNameTextController
+                                                          .text,
+                                                      phone: _model
+                                                          .personPhoneTextController
+                                                          .text,
+                                                      relatedTo: _model
+                                                              .personRelatedToValue ??
+                                                          '',
+                                                      bio: _model
+                                                          .personBioTextController
+                                                          .text);
+                                                } else {
+                                                  final updated = Person(
+                                                    id: widget.person!.id,
+                                                    name: _model
+                                                        .personNameTextController
+                                                        .text,
+                                                    bio: _model
+                                                        .personBioTextController
+                                                        .text,
+                                                    phone: _model
+                                                        .personPhoneTextController
+                                                        .text,
+                                                    relatedTo: _model
+                                                            .personRelatedToValue ??
+                                                        '',
+                                                    created:
+                                                        widget.person!.created,
+                                                    updated: DateTime.now(),
+                                                  );
+                                                  await UpdatePersonCall.call(
+                                                      person: updated);
+                                                }
 
-                                            Navigator.pop(context);
-                                          } on Exception catch (e) {
+                                                Navigator.pop(context);
+                                              } on Exception catch (e) {
                                             safeSetState(() {
                                               _model.errorMessage = e
                                                   .toString()
