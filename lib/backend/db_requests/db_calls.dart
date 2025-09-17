@@ -99,15 +99,15 @@ class InsertPerson {
       required String phone,
       required String relatedTo,
       required String bio}) async {
-    final serviceWriter = DbWriter<Person>();
     try {
-      final person = {
-        'name': name,
-        'phone': phone,
-        'related_to': relatedTo,
-        'bio': bio,
-      };
-      return await serviceWriter.insertMap(Person.TABLE_NAME, person);
+      final person = Person(
+        id: '',
+        name: name,
+        bio: bio,
+        phone: phone,
+        relatedTo: relatedTo,
+      );
+      return await DbWriter<Person>().insert(person);
     } catch (e) {
       throw Exception('حدث خطأ أثناء إضافة الشخص');
     }
@@ -127,16 +127,7 @@ class FetchPersonByIdCall {
 class UpdatePersonCall {
   static Future<int> call({required Person person}) async {
     try {
-      final db = await SQLiteHelper.db;
-      final map = person.toMap();
-      final id = person.id;
-      map.remove('id');
-      return await db.update(
-        Person.TABLE_NAME,
-        map,
-        where: 'id = ?',
-        whereArgs: [id],
-      );
+      return await DbWriter<Person>().update(person);
     } catch (e) {
       throw Exception('حدث خطأ أثناء تحديث بيانات الشخص');
     }

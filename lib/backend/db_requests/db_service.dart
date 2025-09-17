@@ -160,7 +160,11 @@ class Include {
 class DbWriter<T extends BaseModel> {
   Future<int> insert(T item) async {
     final db = await SQLiteHelper.db;
-    return await db.insert(item.tableName, item.toMap());
+    final map = item.toMap();
+    map.remove('id');
+    map.remove('created');
+    map.remove('updated');
+    return await db.insert(item.tableName, map);
   }
 
   Future<int> insertMap(String tableName, Map<String, dynamic> map) async {

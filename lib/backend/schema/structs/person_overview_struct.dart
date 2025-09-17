@@ -3,7 +3,7 @@ import 'package:moqred/backend/schema/util/base_model.dart';
 import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
-import '/utils/serialization_util.dart';
+import '../../../flutter_flow/serialization_util.dart';
 
 class PersonOverviewStruct extends BaseModel {
   PersonOverviewStruct({

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:moqred/main.dart' show NavBarPage;
-import 'serialization_util.dart';
+import '../flutter_flow/serialization_util.dart';
 import '/backend/schema/structs/index.dart';
 import '/index.dart';
-export 'serialization_util.dart';
+export '../flutter_flow/serialization_util.dart';
 export 'package:go_router/go_router.dart';
 
 const kTransitionInfoKey = '__transition_info__';

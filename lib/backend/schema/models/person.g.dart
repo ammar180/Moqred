@@ -12,8 +12,12 @@ Person _$PersonFromJson(Map<String, dynamic> json) => Person(
       bio: (json['bio'] ?? "") as String,
       phone: (json['phone'] ?? "") as String,
       relatedTo: (json['relatedTo'] ?? "") as String,
-      created: DateTime.parse(json['created'] as String),
-      updated: DateTime.parse(json['updated'] as String),
+      created: json['created'] == null
+          ? DateTime.now()
+          : DateTime.parse(json['created'] as String),
+      updated: json['updated'] == null
+          ? DateTime.now()
+          : DateTime.parse(json['updated'] as String),
     );
 
 Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
@@ -22,6 +26,6 @@ Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
       'bio': instance.bio,
       'phone': instance.phone,
       'relatedTo': instance.relatedTo,
-      'created': instance.created.toIso8601String(),
-      'updated': instance.updated.toIso8601String(),
+      'created': instance.created?.toIso8601String() ?? null,
+      'updated': instance.updated?.toIso8601String() ?? null,
     };

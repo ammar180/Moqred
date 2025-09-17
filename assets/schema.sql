@@ -3,7 +3,7 @@ CREATE TABLE `persons` (
     `bio` TEXT DEFAULT '' NOT NULL, 
     `name` TEXT DEFAULT '' NOT NULL, 
     `phone` TEXT DEFAULT '' NOT NULL, 
-    `related_to` TEXT DEFAULT '' NOT NULL, 
+    `relatedTo` TEXT DEFAULT '' NOT NULL, 
     `created` TEXT DEFAULT (datetime('now', 'localtime')) NOT NULL, 
     `updated` TEXT DEFAULT (datetime('now', 'localtime')) NOT NULL);
 

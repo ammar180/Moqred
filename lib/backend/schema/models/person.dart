@@ -10,8 +10,8 @@ class Person extends BaseModel {
   final String bio;
   final String phone;
   final String relatedTo;
-  final DateTime created;
-  final DateTime updated;
+  final DateTime? created;
+  final DateTime? updated;
 
   Person({
     required this.id,
@@ -19,8 +19,8 @@ class Person extends BaseModel {
     required this.bio,
     required this.phone,
     required this.relatedTo,
-    required this.created,
-    required this.updated,
+    this.created,
+    this.updated,
   });
 
   static const String TABLE_NAME = 'persons';
@@ -43,7 +43,7 @@ class Person extends BaseModel {
         'name',
         'bio',
         'phone',
-        'related_to',
+        'relatedTo',
         'created',
         'updated',
       ];

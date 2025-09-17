@@ -11,3 +11,4 @@ export 'lat_lng.dart';
 export 'uploaded_file.dart';
 export 'place.dart';
 export 'flutter_flow_util.dart';
+export 'serialization_util.dart';
