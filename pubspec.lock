@@ -409,10 +409,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: b9c29a161230ee03d3ccf545097fccd9b87a5264228c5d348202e0f0c28f9010
+      sha256: bb2ce4590bc2667c96f318d68cac1b5a7987ec819351d32b1c987239a815e007
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.2"
+    version: "1.5.0"
   http_multi_server:
     dependency: transitive
     description:
@@ -685,6 +685,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  pocketbase:
+    dependency: "direct main"
+    description:
+      name: pocketbase
+      sha256: "85282448be07e1920742a3272737b08778e5548ada8cd5ada82d0a0228347d0c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.23.0+1"
   pool:
     dependency: transitive
     description:
@@ -983,6 +991,14 @@ packages:
     description:
       name: syncfusion_flutter_datagrid
       sha256: "735c55efad955ad2b0d09e57c04c4131777f2cae6150a8ac8f0d686a3760c8bc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "29.2.11"
+  syncfusion_localizations:
+    dependency: "direct main"
+    description:
+      name: syncfusion_localizations
+      sha256: "5df8f93c61347447c6dee1e42ce78139be15f80e4fd114828e4b8cfefb4a008f"
       url: "https://pub.dev"
     source: hosted
     version: "29.2.11"

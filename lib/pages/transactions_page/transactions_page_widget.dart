@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart' show AutoSizeText;
 import 'package:moqred/backend/db_requests/db_calls.dart';
 import 'package:moqred/backend/schema/models/transaction.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
+import '/index.dart' show PersonDetailsPageWidget;
 import '/utils/app_util.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -25,8 +26,9 @@ class TransactionsDataSource extends DataGridSource {
   String? _orderBy;
   bool _descending = true;
   Map<String, String> _filters = {};
+  final BuildContext context;
 
-  TransactionsDataSource({required this.loadPage});
+  TransactionsDataSource(this.context, {required this.loadPage});
 
   @override
   List<DataGridRow> get rows => _rows;
@@ -39,17 +41,34 @@ class TransactionsDataSource extends DataGridSource {
     final tx = Transaction.fromMap(rowMap);
     return DataGridRowAdapter(cells: [
       Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-        alignment: Alignment.center,
-        child: Tooltip(
-          child: AutoSizeText(
-            tx.personName,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          message: tx.personName,
-        ),
-      ),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
+          alignment: Alignment.center,
+          child: GestureDetector(
+            onTap: () => tx.person.isEmpty
+                ? ()
+                : context.pushNamed(
+                    PersonDetailsPageWidget.routeName,
+                    queryParameters: {
+                      'id': serializeParam(
+                        tx.person,
+                        ParamType.String,
+                      ),
+                    }.withoutNulls,
+                  ),
+            child: Tooltip(
+              child: AutoSizeText(
+                tx.personName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: AppTheme.of(context).secondary,
+                    decoration: tx.person.isEmpty
+                        ? TextDecoration.none
+                        : TextDecoration.underline),
+              ),
+              message: tx.personName,
+            ),
+          )),
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
         alignment: Alignment.center,
@@ -181,6 +200,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
         );
         return pageResult;
       },
+      context,
     );
     // Initial data load
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -252,6 +272,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                       source: _dataSource,
                       controller: _gridController,
                       frozenColumnsCount: 1,
+                      // columnWidthMode: ColumnWidthMode.fill,
                       allowSorting: true,
                       allowFiltering: true,
                       allowPullToRefresh: true,
@@ -274,7 +295,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                       columns: [
                         GridColumn(
                           columnName: 'personName',
-                          columnWidthMode: ColumnWidthMode.auto,
+                          width: MediaQuery.of(context).size.width * 0.30,
                           label: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text('الشخص',
@@ -283,7 +304,6 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                         ),
                         GridColumn(
                           columnName: 'amount',
-                          columnWidthMode: ColumnWidthMode.auto,
                           label: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text('المبلغ',
@@ -292,6 +312,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                         ),
                         GridColumn(
                           columnName: 'typeName',
+                          width: 100,
                           label: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text('النوع',
@@ -309,6 +330,8 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                         GridColumn(
                           columnName: 'actions',
                           allowSorting: false,
+                          width: 50,
+                          allowFiltering: false,
                           label: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text('حذف',
@@ -318,9 +341,12 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                       ],
                       onColumnSortChanged:
                           (newSortedColumn, oldSortedColumn) async {
-                        if (newSortedColumn == null || oldSortedColumn == null)
-                          return;
-                        final columnName = newSortedColumn.name;
+                        if (newSortedColumn == null) return;
+                        final columnName = switch (newSortedColumn.name) {
+                          "typeName" => "type",
+                          "personName" => "person",
+                          _ => newSortedColumn.name
+                        };
                         final descending = newSortedColumn.sortDirection ==
                             DataGridSortDirection.descending;
                         await _dataSource.updateDataSource(

@@ -291,7 +291,8 @@ class _PersonDetailsPageWidgetState extends State<PersonDetailsPageWidget> {
                                 GridColumn(
                                   columnName: 'actions',
                                   allowSorting: false,
-                                  columnWidthMode: ColumnWidthMode.auto,
+                                  allowFiltering: false,
+                                  width: 50,
                                   label: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text('حذف',
@@ -301,9 +302,12 @@ class _PersonDetailsPageWidgetState extends State<PersonDetailsPageWidget> {
                               ],
                               onColumnSortChanged:
                                   (newSortedColumn, oldSortedColumn) async {
-                                if (newSortedColumn == null ||
-                                    oldSortedColumn == null) return;
-                                final columnName = newSortedColumn.name;
+                                if (newSortedColumn == null) return;
+                                final columnName = switch (
+                                    newSortedColumn.name) {
+                                  "typeName" => "type",
+                                  _ => newSortedColumn.name
+                                };
                                 final descending =
                                     newSortedColumn.sortDirection ==
                                         DataGridSortDirection.descending;

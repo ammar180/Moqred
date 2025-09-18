@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '/index.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -108,13 +109,13 @@ class _MyAppState extends State<MyApp> {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
+        SfGlobalLocalizations.delegate,
         FallbackMaterialLocalizationDelegate(),
         FallbackCupertinoLocalizationDelegate(),
       ],
       locale: _locale,
       supportedLocales: const [
         Locale('ar'),
-        Locale('en'),
       ],
       theme: ThemeData(
         brightness: Brightness.light,

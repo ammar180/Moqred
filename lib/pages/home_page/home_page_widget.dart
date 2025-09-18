@@ -528,7 +528,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                         .override(
                                                           color: AppTheme.of(
                                                                   context)
-                                                              .primary,
+                                                              .secondary,
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
                                                         ),
                                                   ),
                                                 ),
