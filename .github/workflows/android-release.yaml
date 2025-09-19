@@ -30,9 +30,9 @@ jobs:
       - name: Build APK with environment variables
         run: |
           flutter build apk --release \
-            --dart-define=pocketBaseAdminEmail=${{ vars.PB_ADMIN_EMAIL }} \
-            --dart-define=pocketBaseAdminPassword=${{ vars.PB_ADMIN_PASSWORD }} \
-            --dart-define=pocketBaseUrl=${{ vars.PB_URL }}
+            --dart-define=PB_URL=${{ vars.PB_URL }} \
+            --dart-define=PB_ADMIN_EMAIL=${{ vars.PB_ADMIN_EMAIL }} \
+            --dart-define=PB_ADMIN_PASSWORD=${{ vars.PB_ADMIN_PASSWORD }}
 
       - name: Rename APK to <reponame>.apk
         run: |
