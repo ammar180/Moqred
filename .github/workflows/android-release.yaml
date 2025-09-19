@@ -27,8 +27,12 @@ jobs:
       - name: Clean previous builds
         run: flutter clean
 
-      - name: Build APK
-        run: flutter build apk --release
+      - name: Build APK with environment variables
+        run: |
+          flutter build apk --release \
+            --dart-define=pocketBaseAdminEmail=${{ vars.PB_ADMIN_EMAIL }} \
+            --dart-define=pocketBaseAdminPassword=${{ vars.PB_ADMIN_PASSWORD }} \
+            --dart-define=pocketBaseUrl=${{ vars.PB_URL }}
 
       - name: Rename APK to <reponame>.apk
         run: |
