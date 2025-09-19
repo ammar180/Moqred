@@ -11,6 +11,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: env.prod
 
     steps:
       - name: Checkout source
