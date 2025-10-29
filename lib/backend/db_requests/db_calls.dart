@@ -1,9 +1,11 @@
 import 'package:moqred/backend/db_requests/db_manager.dart';
+import 'package:moqred/utils/internationalization.dart';
 import 'package:moqred/backend/db_requests/db_service.dart';
 import 'package:moqred/backend/schema/dtos/index.dart';
 import 'package:moqred/backend/schema/models/index.dart';
 import 'package:moqred/backend/schema/structs/index.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
+import 'package:moqred/utils/nav.dart' show appNavigatorKey;
 
 class FetchPersonsOverviewCall {
   static Future<List<PersonOverviewStruct>> call() async {
@@ -88,7 +90,7 @@ class InsertTransaction {
           {'notes': notes, 'amount': amount, 'person': person, 'type': type});
       return await serviceWriter.insertMap(Transaction.TABLE_NAME, transaction);
     } catch (e) {
-      throw Exception('حدث خطأ أثناء إضافة المعاملة');
+      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!).getText('err_add_transaction'));
     }
   }
 }
@@ -109,7 +111,7 @@ class InsertPerson {
       );
       return await DbWriter<Person>().insert(person);
     } catch (e) {
-      throw Exception('حدث خطأ أثناء إضافة الشخص');
+      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!).getText('err_add_person'));
     }
   }
 }
@@ -129,7 +131,7 @@ class UpdatePersonCall {
     try {
       return await DbWriter<Person>().update(person);
     } catch (e) {
-      throw Exception('حدث خطأ أثناء تحديث بيانات الشخص');
+      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!).getText('err_update_person'));
     }
   }
 }
@@ -141,7 +143,7 @@ class RemoveRecord {
     try {
       await serviceWriter.deleteById(tableName, id);
     } catch (e) {
-      throw Exception('حدث خطأ أثناء الحذف');
+      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!).getText('err_delete'));
     }
   }
 }
@@ -171,7 +173,7 @@ class InsertTransactionTypeCall {
       };
       return await writer.insertMap(TransactionType.TABLE_NAME, data);
     } catch (e) {
-      throw Exception('حدث خطأ أثناء إضافة نوع المعاملة');
+      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!).getText('err_add_tx_type'));
     }
   }
 }

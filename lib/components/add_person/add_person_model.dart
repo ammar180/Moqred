@@ -1,4 +1,5 @@
 import '/flutter_flow/flutterflow_ui.dart';
+import '/utils/internationalization.dart';
 import 'add_person_widget.dart' show AddPersonWidget;
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class AddPersonModel extends FlutterFlowModel<AddPersonWidget> {
   String? _personNameTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
-      return 'الاسم أساسي';
+      return AppLocalizations.of(context).getText('person_name_required');
     }
 
     return null;

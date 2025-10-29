@@ -5,6 +5,7 @@ import 'package:moqred/components/new_transaction/new_transaction_widget.dart';
 import 'package:moqred/pages/person_details/person_details_widget.dart';
 import '/utils/app_util.dart';
 import '/utils/app_state.dart';
+import '/utils/internationalization.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 
@@ -97,7 +98,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'القروض الحالية',
+                                              AppLocalizations.of(context).getText(
+                                                  'home_current_loans' /* Current Loans */),
                                               style: AppTheme.of(context)
                                                   .displaySmall,
                                             ),
@@ -105,7 +107,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 4.0, 0.0, 0.0),
                                               child: Text(
-                                                  'يتيح معاينة الرصيد الحالي بالاضافة لقائمة بالاشخاص والقروض الحالية',
+                                                  AppLocalizations.of(context).getText(
+                                                      'home_subtitle' /* Preview current balance plus list */),
                                                   style: AppTheme.of(context)
                                                       .bodySmall),
                                             ),
@@ -204,7 +207,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
                                             if (snapshot.hasError) {
                                               return Text(
-                                                  "عذرا، خطأ في تحميل تفاصيل الرصيد",
+                                                  AppLocalizations.of(context).getText(
+                                                      'home_error_loading_balance' /* Sorry, error loading balance details */),
                                                   style: AppTheme.of(context)
                                                       .labelMedium
                                                       .override(
@@ -216,7 +220,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
                                             if (!snapshot.hasData) {
                                               return Text(
-                                                  "لا يوجد بيانات حتى الان",
+                                                  AppLocalizations.of(context).getText(
+                                                      'home_no_data' /* No data yet */),
                                                   style: AppTheme.of(context)
                                                       .labelMedium);
                                             }
@@ -238,7 +243,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       CrossAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      'المبلغ المتوافر',
+                                                      AppLocalizations.of(context).getText(
+                                                          'home_available_amount' /* Available Amount */),
                                                       style:
                                                           AppTheme.of(context)
                                                               .labelMedium,
@@ -280,7 +286,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       CrossAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      'المبلغ الاجمالي',
+                                                      AppLocalizations.of(context).getText(
+                                                          'home_total_amount' /* Total Amount */),
                                                       style:
                                                           AppTheme.of(context)
                                                               .labelMedium,
@@ -314,7 +321,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       CrossAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      'المبلغ الخارج',
+                                                      AppLocalizations.of(context).getText(
+                                                          'home_outgoing_amount' /* Outgoing Amount */),
                                                       style:
                                                           AppTheme.of(context)
                                                               .labelMedium,
@@ -400,7 +408,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           ).then(
                                               (value) => safeSetState(() {}));
                                         },
-                                        text: 'معاملة جديدة',
+                                        text: AppLocalizations.of(context).getText(
+                                            'home_new_transaction' /* New Transaction */),
                                         options: FFButtonOptions(
                                           height: 40.0,
                                           padding:
@@ -464,7 +473,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                 label: DefaultTextStyle.merge(
                                                   softWrap: true,
                                                   child: Text(
-                                                    'المقترض',
+                                                    AppLocalizations.of(context).getText(
+                                                        'home_borrower' /* Borrower */),
                                                     textAlign: TextAlign.center,
                                                     style: AppTheme.of(context)
                                                         .bodyLarge,
@@ -475,7 +485,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                 label: DefaultTextStyle.merge(
                                                   softWrap: true,
                                                   child: Text(
-                                                    'المتبقي',
+                                                    AppLocalizations.of(context).getText(
+                                                        'home_remaining' /* Remaining */),
                                                     textAlign: TextAlign.center,
                                                     style: AppTheme.of(context)
                                                         .bodyLarge,
@@ -486,7 +497,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                 label: DefaultTextStyle.merge(
                                                   softWrap: true,
                                                   child: Text(
-                                                    'تاريخ',
+                                                    AppLocalizations.of(context).getText(
+                                                        'home_date' /* Date */),
                                                     textAlign: TextAlign.center,
                                                     style: AppTheme.of(context)
                                                         .bodyLarge,
@@ -522,7 +534,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   child: Text(
                                                     valueOrDefault<String>(
                                                         personItem.name,
-                                                        'المقترض'),
+                                                        AppLocalizations.of(context).getText(
+                                                            'home_borrower' /* Borrower */)),
                                                     style: AppTheme.of(context)
                                                         .labelSmall
                                                         .override(
@@ -564,9 +577,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   .map((c) => DataCell(c))
                                                   .toList(),
                                             ),
-                                            emptyBuilder: () => const Center(
+                                            emptyBuilder: () => Center(
                                                 child: Text(
-                                                    'لا يوجد قروض قائمة حتى الان')),
+                                                    AppLocalizations.of(context).getText(
+                                                        'home_no_loans' /* No active loans yet */))),
                                             paginated: true,
                                             selectable: false,
                                             hidePaginator: false,

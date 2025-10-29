@@ -3,6 +3,7 @@ import 'package:flutter/services.dart'
 import 'package:moqred/backend/db_requests/db_calls.dart';
 import 'package:moqred/backend/schema/dtos/lookup.dart' show Lookup;
 import '/utils/app_util.dart';
+import '/utils/internationalization.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
@@ -106,7 +107,7 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'إضافة شخص لقاعدة البيانات',
+                              AppLocalizations.of(context).getText('add_person_title'),
                               style:
                                   AppTheme.of(context).headlineSmall.override(
                                         fontFamily: 'Sora',
@@ -136,7 +137,7 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 4.0, 0.0, 0.0),
                           child: Text(
-                              'من الضروري ان يكون الشخص مسجل حتى يتم تسجيل العمليات عليه',
+                              AppLocalizations.of(context).getText('add_person_subtitle'),
                               style: AppTheme.of(context).bodySmall),
                         ),
                         Padding(
@@ -164,10 +165,10 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                               obscureText: false,
                                               decoration: InputDecoration(
                                                 isDense: true,
-                                                labelText: 'الاسم',
+                                                labelText: AppLocalizations.of(context).getText('add_person_name_label'),
                                                 labelStyle: AppTheme.of(context)
                                                     .labelMedium,
-                                                hintText: 'اسم الشخص',
+                                                hintText: AppLocalizations.of(context).getText('add_person_name_hint'),
                                                 hintStyle: AppTheme.of(context)
                                                     .labelMedium,
                                                 enabledBorder:
@@ -253,7 +254,7 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                             obscureText: false,
                                             decoration: InputDecoration(
                                               isDense: true,
-                                              labelText: 'رقم الهاتف',
+                                              labelText: AppLocalizations.of(context).getText('add_person_phone_label'),
                                               labelStyle: AppTheme.of(context)
                                                   .labelMedium,
                                               alignLabelWithHint: false,
@@ -333,7 +334,7 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'على صلة ب: ',
+                                            AppLocalizations.of(context).getText('add_person_related_to_label'),
                                             style: AppTheme.of(context)
                                                 .titleMedium
                                                 .override(
@@ -390,7 +391,7 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                                 searchTextStyle: TextStyle(),
                                                 textStyle: AppTheme.of(context)
                                                     .bodyMedium,
-                                                hintText: 'اختر شخص على صلة به',
+                                                hintText: AppLocalizations.of(context).getText('add_person_related_to_hint'),
                                                 searchCursorColor:
                                                     AppTheme.of(context)
                                                         .primaryText,
@@ -424,7 +425,7 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                           obscureText: false,
                                           decoration: InputDecoration(
                                             isDense: true,
-                                            hintText: 'ملاحظات اضافية',
+                                            hintText: AppLocalizations.of(context).getText('add_person_notes_hint'),
                                             hintStyle: AppTheme.of(context)
                                                 .labelMedium
                                                 .override(
@@ -554,7 +555,7 @@ class _AddPersonWidgetState extends State<AddPersonWidget> {
                                             });
                                           }
                                         },
-                                        text: 'إضافة',
+                                        text: AppLocalizations.of(context).getText('add_person_submit'),
                                         options: FFButtonOptions(
                                           width: double.infinity,
                                           height: 40.0,

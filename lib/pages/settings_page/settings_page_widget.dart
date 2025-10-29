@@ -4,6 +4,7 @@ import 'package:moqred/backend/schema/models/transaction_type.dart';
 import 'package:moqred/backend/sync/sync_manager.dart';
 import 'package:moqred/main.dart';
 import 'package:moqred/utils/app_theme.dart';
+import '/utils/internationalization.dart';
 import '/flutter_flow/flutterflow_ui.dart';
 
 class SettingsPageWidget extends StatefulWidget {
@@ -45,7 +46,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'تم إضافة نوع المعاملة بنجاح',
+            AppLocalizations.of(context).getText('settings_type_added_success' /* Transaction type added successfully */),
             style: TextStyle(
               color: AppTheme.of(context).primaryText,
             ),
@@ -56,7 +57,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('فشل الإضافة. تأكد أن النوع غير مكرر')),
+        SnackBar(content: Text(AppLocalizations.of(context).getText('settings_type_add_failed' /* Add failed */))),
       );
     }
   }
@@ -66,7 +67,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
     return Scaffold(
       backgroundColor: AppTheme.of(context).secondaryBackground,
       appBar: AppBar(
-        title: Text('الإعدادات'),
+        title: Text(AppLocalizations.of(context).getText('settings_title' /* Settings */)),
         backgroundColor: AppTheme.of(context).secondaryBackground,
       ),
       body: Stack(
@@ -93,7 +94,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text('النسخ الاحتياطي والاستعادة',
+                          Text(AppLocalizations.of(context).getText('settings_backup_restore' /* Backup & Restore */),
                               style: AppTheme.of(context).titleMedium),
                           const SizedBox(height: 8),
                           Row(
@@ -113,8 +114,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                                     backgroundColor:
                                                         AppTheme.of(context)
                                                             .success,
-                                                    content: Text(
-                                                        'تم النسخ الاحتياطي بنجاح')),
+                                                  content: Text(
+                                                      AppLocalizations.of(context).getText('settings_backup_success' /* Backup successful */))),
                                               );
                                             }
                                           } catch (e) {
@@ -122,8 +123,8 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 SnackBar(
-                                                    content: Text(
-                                                        'فشل النسخ الاحتياطي: $e')),
+                                                  content: Text(
+                                                      '${AppLocalizations.of(context).getText('settings_backup_failed' /* Backup failed */)}: $e')),
                                               );
                                             }
                                           } finally {
@@ -131,7 +132,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                               safeSetState(() => _busy = false);
                                           }
                                         },
-                                  text: 'نسخ احتياطي',
+                                  text: AppLocalizations.of(context).getText('settings_backup' /* Backup */),
                                   options: FFButtonOptions(
                                     height: 40.0,
                                     padding:
@@ -167,7 +168,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                                         AppTheme.of(context)
                                                             .success,
                                                     content: Text(
-                                                        'تمت الاستعادة بنجاح')),
+                                                        AppLocalizations.of(context).getText('settings_restore_success' /* Restore successful */))),
                                               );
                                             }
                                           } catch (e) {
@@ -176,7 +177,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                                   .showSnackBar(
                                                 SnackBar(
                                                     content: Text(
-                                                        'فشلت الاستعادة: $e')),
+                                                        '${AppLocalizations.of(context).getText('settings_restore_failed' /* Restore failed */)}: $e')),
                                               );
                                             }
                                           } finally {
@@ -184,7 +185,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                                               safeSetState(() => _busy = false);
                                           }
                                         },
-                                  text: 'استعادة',
+                                  text: AppLocalizations.of(context).getText('settings_restore' /* Restore */),
                                   options: FFButtonOptions(
                                     height: 40.0,
                                     padding:
@@ -208,14 +209,15 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                           const SizedBox(height: 6),
                           Text(
                               inSync
-                                  ? 'البيانات متزامنة'
-                                  : 'البيانات غير متزامنة',
+                                  ? AppLocalizations.of(context).getText('settings_synced' /* Data synchronized */)
+                                  : AppLocalizations.of(context).getText('settings_not_synced' /* Data not synchronized */),
                               style: AppTheme.of(context).labelMedium),
                         ],
                       );
                     },
                   ),
                 ),
+                const SizedBox(height: 16),
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
@@ -226,7 +228,41 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('الوضع الداكن',
+                      Text(AppLocalizations.of(context).getText('settings_language' /* Language */),
+                          style: AppTheme.of(context).bodyLarge),
+                      DropdownButton<String>(
+                        value: AppLocalizations.of(context).languageCode == 'ar' ? 'ar' : 'en',
+                        items: [
+                          DropdownMenuItem(
+                            value: 'en',
+                            child: Text(AppLocalizations.of(context).getText('settings_language_en' /* English */)),
+                          ),
+                          DropdownMenuItem(
+                            value: 'ar',
+                            child: Text(AppLocalizations.of(context).getText('settings_language_ar' /* العربية */)),
+                          ),
+                        ],
+                        onChanged: (value) {
+                          if (value != null) {
+                            MyApp.of(context).setLocale(value);
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppTheme.of(context).primaryBackground,
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(color: AppTheme.of(context).lineColor),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(AppLocalizations.of(context).getText('settings_dark_mode' /* Dark Mode */),
                           style: AppTheme.of(context).bodyLarge),
                       Switch.adaptive(
                         value: Theme.of(context).brightness == Brightness.dark,
@@ -245,7 +281,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Text('أنواع المعاملات الافتراضية',
+                Text(AppLocalizations.of(context).getText('settings_default_types' /* Default Transaction Types */),
                     style: AppTheme.of(context).titleMedium),
                 const SizedBox(height: 8),
                 Container(
@@ -268,7 +304,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                       if (snapshot.hasError) {
                         return Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: Text('تعذر تحميل الأنواع',
+                          child: Text(AppLocalizations.of(context).getText('settings_loading_types_error' /* Failed to load types */),
                               style: AppTheme.of(context).bodyMedium),
                         );
                       }
@@ -276,7 +312,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                       if (items.isEmpty) {
                         return Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: Text('لا يوجد أنواع معرفة',
+                          child: Text(AppLocalizations.of(context).getText('settings_no_types' /* No types defined */),
                               style: AppTheme.of(context).bodyMedium),
                         );
                       }
@@ -294,7 +330,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                Text('إضافة نوع جديد', style: AppTheme.of(context).titleMedium),
+                Text(AppLocalizations.of(context).getText('settings_add_new_type' /* Add New Type */), style: AppTheme.of(context).titleMedium),
                 const SizedBox(height: 8),
                 Container(
                   padding: const EdgeInsets.all(12),
@@ -309,40 +345,40 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                       children: [
                         TextFormField(
                           controller: _typeController,
-                          decoration: const InputDecoration(
-                              labelText: 'المعرف (type) مثل loan/payment'),
+                          decoration: InputDecoration(
+                              labelText: AppLocalizations.of(context).getText('settings_type_id' /* Type ID */)),
                           validator: (v) =>
-                              (v == null || v.trim().isEmpty) ? 'مطلوب' : null,
+                              (v == null || v.trim().isEmpty) ? AppLocalizations.of(context).getText('required_field' /* Required */) : null,
                         ),
                         const SizedBox(height: 8),
                         TextFormField(
                           controller: _nameController,
                           decoration:
-                              const InputDecoration(labelText: 'الاسم الظاهر'),
+                              InputDecoration(labelText: AppLocalizations.of(context).getText('settings_display_name' /* Display Name */)),
                           validator: (v) =>
-                              (v == null || v.trim().isEmpty) ? 'مطلوب' : null,
+                              (v == null || v.trim().isEmpty) ? AppLocalizations.of(context).getText('required_field' /* Required */) : null,
                         ),
                         const SizedBox(height: 8),
                         DropdownButtonFormField<int>(
                           value: _sign,
-                          items: const [
+                          items: [
                             DropdownMenuItem(
-                                value: 1, child: Text('موجب (+1)')),
+                                value: 1, child: Text(AppLocalizations.of(context).getText('settings_positive_sign' /* Positive */))),
                             DropdownMenuItem(
-                                value: -1, child: Text('سالب (-1)')),
+                                value: -1, child: Text(AppLocalizations.of(context).getText('settings_negative_sign' /* Negative */))),
                             DropdownMenuItem(
-                                value: 0, child: Text('لاشيء (0)')),
+                                value: 0, child: Text(AppLocalizations.of(context).getText('settings_zero_sign' /* None */))),
                           ],
                           onChanged: (v) => safeSetState(() => _sign = v ?? 1),
-                          decoration: const InputDecoration(
-                              labelText: 'الإشارة (sign)'),
+                          decoration: InputDecoration(
+                              labelText: AppLocalizations.of(context).getText('settings_sign' /* Sign */)),
                         ),
                         const SizedBox(height: 12),
                         Align(
                           alignment: Alignment.centerRight,
                           child: FFButtonWidget(
                             onPressed: _submit,
-                            text: 'حفظ',
+                            text: AppLocalizations.of(context).getText('settings_save' /* Save */),
                             options: FFButtonOptions(
                               height: 40.0,
                               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -385,7 +421,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                           color: AppTheme.of(context).primary, strokeWidth: 2),
                     ),
                     const SizedBox(width: 12),
-                    Text('جاري التنفيذ... برجاء الانتظار',
+                    Text(AppLocalizations.of(context).getText('settings_processing' /* Processing... Please wait */),
                         style: AppTheme.of(context).bodyMedium),
                   ],
                 ),

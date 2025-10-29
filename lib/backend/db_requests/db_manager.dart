@@ -1,4 +1,6 @@
 import 'package:moqred/backend/schema/enums/enums.dart' show TransactionType;
+import 'package:moqred/utils/internationalization.dart';
+import 'package:moqred/utils/nav.dart' show appNavigatorKey;
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:flutter/services.dart';
@@ -77,7 +79,8 @@ class DataSeeding {
       'id': TransactionType.loan.value,
       'sign': -1,
       'type': TransactionType.loan.name,
-      'name': 'قرض',
+      'name': AppLocalizations.of(appNavigatorKey.currentContext!)
+          .getText('type_loan'),
       'created': DateTime.now().toIso8601String(),
       'updated': DateTime.now().toIso8601String(),
     }),
@@ -85,7 +88,8 @@ class DataSeeding {
       'id': TransactionType.payment.value,
       'sign': 1,
       'type': TransactionType.payment.name,
-      'name': 'سداد',
+      'name': AppLocalizations.of(appNavigatorKey.currentContext!)
+          .getText('type_payment'),
       'created': DateTime.now().toIso8601String(),
       'updated': DateTime.now().toIso8601String(),
     }),
@@ -93,7 +97,8 @@ class DataSeeding {
       'id': TransactionType.filling.value,
       'sign': 1,
       'type': TransactionType.filling.name,
-      'name': 'ملئ',
+      'name': AppLocalizations.of(appNavigatorKey.currentContext!)
+          .getText('type_filling'),
       'created': DateTime.now().toIso8601String(),
       'updated': DateTime.now().toIso8601String(),
     }),
@@ -101,7 +106,7 @@ class DataSeeding {
       'id': TransactionType.donate.value,
       'sign': 1,
       'type': TransactionType.donate.name,
-      'name': 'تبرع',
+      'name': AppLocalizations.of(appNavigatorKey.currentContext!).getText('type_donate'),
       'created': DateTime.now().toIso8601String(),
       'updated': DateTime.now().toIso8601String(),
     }),

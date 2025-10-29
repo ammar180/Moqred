@@ -115,6 +115,7 @@ class _MyAppState extends State<MyApp> {
       ],
       locale: _locale,
       supportedLocales: const [
+        Locale('en'),
         Locale('ar'),
       ],
       theme: ThemeData(
@@ -201,7 +202,9 @@ class _NavBarPageState extends State<NavBarPage> {
               Icons.home_rounded,
               color: AppTheme.of(context).primary,
             ),
-            label: 'الرئيسية',
+            label: AppLocalizations.of(context).getText(
+              '40zv2ebw' /* My Car */,
+            ),
             tooltip: '',
           ),
           BottomNavigationBarItem(
@@ -213,7 +216,9 @@ class _NavBarPageState extends State<NavBarPage> {
               Icons.data_usage_rounded,
               color: AppTheme.of(context).primary,
             ),
-            label: 'المعاملات',
+            label: AppLocalizations.of(context).getText(
+              'nav_transactions' /* Transactions */,
+            ),
             tooltip: '',
           ),
           BottomNavigationBarItem(
@@ -225,7 +230,9 @@ class _NavBarPageState extends State<NavBarPage> {
               Icons.settings,
               color: AppTheme.of(context).primary,
             ),
-            label: 'الإعدادات',
+            label: AppLocalizations.of(context).getText(
+              'nav_settings' /* Settings */,
+            ),
             tooltip: '',
           ),
         ],

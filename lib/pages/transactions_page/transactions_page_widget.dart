@@ -4,6 +4,7 @@ import 'package:moqred/backend/schema/models/transaction.dart';
 import 'package:moqred/backend/schema/util/pagination_util.dart';
 import '/index.dart' show PersonDetailsPageWidget;
 import '/utils/app_util.dart';
+import '/utils/internationalization.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -86,7 +87,7 @@ class TransactionsDataSource extends DataGridSource {
       ),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-        child: Text(dateTimeFormat('d/M h:mm a', tx.created,
+        child: Text(dateTimeFormat('d/M', tx.created,
             locale: AppLocalizations.of(appNavigatorKey.currentContext!)
                 .languageCode)),
       ),
@@ -242,7 +243,8 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 0.0),
                 child: Text(
-                  'سجل كل المعاملات',
+                  AppLocalizations.of(context).getText(
+                      'transactions_title' /* All Transactions Record */),
                   style: AppTheme.of(context).displaySmall.override(
                         fontFamily: 'Sora',
                         letterSpacing: 0.0,
@@ -271,8 +273,7 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                     child: SfDataGrid(
                       source: _dataSource,
                       controller: _gridController,
-                      frozenColumnsCount: 1,
-                      // columnWidthMode: ColumnWidthMode.fill,
+                      columnWidthMode: ColumnWidthMode.fill,
                       allowSorting: true,
                       allowFiltering: true,
                       allowPullToRefresh: true,
@@ -295,10 +296,12 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                       columns: [
                         GridColumn(
                           columnName: 'personName',
-                          width: MediaQuery.of(context).size.width * 0.30,
+                          // width: 100,
                           label: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('الشخص',
+                            child: Text(
+                                AppLocalizations.of(context).getText(
+                                    'transactions_person' /* Person */),
                                 style: AppTheme.of(context).bodySmall),
                           ),
                         ),
@@ -306,16 +309,20 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                           columnName: 'amount',
                           label: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('المبلغ',
+                            child: Text(
+                                AppLocalizations.of(context).getText(
+                                    'transactions_amount' /* Amount */),
                                 style: AppTheme.of(context).bodySmall),
                           ),
                         ),
                         GridColumn(
                           columnName: 'typeName',
-                          width: 100,
+                          // width: 100,
                           label: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('النوع',
+                            child: Text(
+                                AppLocalizations.of(context)
+                                    .getText('transactions_type' /* Type */),
                                 style: AppTheme.of(context).bodySmall),
                           ),
                         ),
@@ -323,7 +330,9 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                           columnName: 'created',
                           label: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('تاريخ',
+                            child: Text(
+                                AppLocalizations.of(context)
+                                    .getText('transactions_date' /* Date */),
                                 style: AppTheme.of(context).bodySmall),
                           ),
                         ),
@@ -334,7 +343,9 @@ class _TransactionsPageWidgetState extends State<TransactionsPageWidget> {
                           allowFiltering: false,
                           label: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text('حذف',
+                            child: Text(
+                                AppLocalizations.of(context).getText(
+                                    'transactions_delete' /* Delete */),
                                 style: AppTheme.of(context).bodySmall),
                           ),
                         ),

@@ -94,7 +94,9 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('بيانات المعاملة الجديدة',
+                            Text(
+                                AppLocalizations.of(context)
+                                    .getText('new_tx_title'),
                                 style: AppTheme.of(context).headlineSmall),
                             Padding(
                               padding: EdgeInsets.all(8.0),
@@ -119,7 +121,8 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 4.0, 0.0, 0.0),
                           child: Text(
-                            'أدخل تفاصيل المعاملة ونوعها: قرض، سداد، تبرع ',
+                            AppLocalizations.of(context)
+                                .getText('new_tx_subtitle'),
                             style: AppTheme.of(context).bodySmall.override(
                                   fontFamily: 'Inter',
                                   letterSpacing: 0.0,
@@ -165,7 +168,8 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'المبلغ:',
+                                          AppLocalizations.of(context)
+                                              .getText('new_tx_amount_label'),
                                           style: AppTheme.of(context)
                                               .titleMedium
                                               .override(
@@ -186,14 +190,20 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                             obscureText: false,
                                             decoration: InputDecoration(
                                               isDense: true,
-                                              labelText: 'المبلغ',
+                                              labelText: AppLocalizations.of(
+                                                      context)
+                                                  .getText(
+                                                      'new_tx_amount_field_label'),
                                               labelStyle: AppTheme.of(context)
                                                   .labelMedium
                                                   .override(
                                                     fontFamily: 'Inter',
                                                     letterSpacing: 0.0,
                                                   ),
-                                              hintText: '0 ج.م',
+                                              hintText:
+                                                  AppLocalizations.of(context)
+                                                      .getText(
+                                                          'new_tx_amount_hint'),
                                               hintStyle: AppTheme.of(context)
                                                   .labelMedium
                                                   .override(
@@ -269,7 +279,8 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'نوع المعاملة: ',
+                                          AppLocalizations.of(context)
+                                              .getText('new_tx_type_label'),
                                           style: AppTheme.of(context)
                                               .titleMedium
                                               .override(
@@ -319,11 +330,13 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                                   () => _model
                                                           .transactionTypeValue =
                                                       val),
-                                              width: 171.4,
+                                              width: 220,
                                               height: 40.0,
                                               textStyle: AppTheme.of(context)
                                                   .bodyMedium,
-                                              hintText: 'اختر نوع المعاملة',
+                                              hintText: AppLocalizations.of(
+                                                      context)
+                                                  .getText('new_tx_type_hint'),
                                               fillColor: AppTheme.of(context)
                                                   .secondaryBackground,
                                               elevation: 2.0,
@@ -348,7 +361,8 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'الشخص:',
+                                          AppLocalizations.of(context)
+                                              .getText('new_tx_person_label'),
                                           style: AppTheme.of(context)
                                               .titleMedium
                                               .override(
@@ -408,7 +422,10 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                                   textStyle:
                                                       AppTheme.of(context)
                                                           .bodyMedium,
-                                                  hintText: 'اختر صاحب العملية',
+                                                  hintText: AppLocalizations.of(
+                                                          context)
+                                                      .getText(
+                                                          'new_tx_person_hint'),
                                                   searchCursorColor:
                                                       AppTheme.of(context)
                                                           .primaryText,
@@ -482,7 +499,8 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           isDense: true,
-                                          hintText: 'ملاحظات',
+                                          hintText: AppLocalizations.of(context)
+                                              .getText('new_tx_notes_hint'),
                                           hintStyle: AppTheme.of(context)
                                               .labelMedium
                                               .override(
@@ -575,7 +593,8 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'تم إضافة المعاملة بنجاح',
+                                                AppLocalizations.of(context)
+                                                    .getText('new_tx_success'),
                                                 style: TextStyle(
                                                   color: AppTheme.of(context)
                                                       .primaryText,
@@ -599,7 +618,8 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                           });
                                         }
                                       },
-                                      text: 'تنفيذ',
+                                      text: AppLocalizations.of(context)
+                                          .getText('new_tx_submit'),
                                       options: FFButtonOptions(
                                         width: double.infinity,
                                         height: 40.0,
