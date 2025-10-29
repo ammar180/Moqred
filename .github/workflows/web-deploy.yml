@@ -36,11 +36,12 @@ jobs:
         run: flutter clean
 
       - name: Build Flutter Web
-        run: flutter build web --release \
-              --dart-define=PB_URL=${{ secrets.PB_URL }} \
-              --dart-define=PB_ADMIN_EMAIL=${{ secrets.PB_ADMIN_EMAIL }} \
-              --dart-define=PB_ADMIN_PASSWORD=${{ secrets.PB_ADMIN_PASSWORD }} \
-              --base-href "$BASE_HREF"
+        run: |
+          flutter build web --release \
+            --dart-define=PB_URL=${{ secrets.PB_URL }} \
+            --dart-define=PB_ADMIN_EMAIL=${{ secrets.PB_ADMIN_EMAIL }} \
+            --dart-define=PB_ADMIN_PASSWORD=${{ secrets.PB_ADMIN_PASSWORD }} \
+            --base-href "$BASE_HREF"
 
       - name: Remove large or restricted files
         run: rm -f build/web/NOTICES || true
