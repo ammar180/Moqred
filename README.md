@@ -1,14 +1,15 @@
 # Moqred - Transaction Management App
 
-A comprehensive Flutter-based transaction management application designed for tracking loans, payments, and financial transactions with Arabic language support.
+A comprehensive Flutter-based transaction management application designed for tracking loans, payments, and financial transactions.
 
 ## 📱 Overview
 
-Moqred is a transaction-based application that helps users manage financial relationships, track loans, payments, and donations. The app features a clean, modern UI with full Arabic language support and provides both local SQLite storage and cloud synchronization capabilities.
+A simple mobile app helping you to keep track of money owed and money you've lent out, providing a clear overview of your current balance.
 
-## 🏗️ Architecture
+## Architecture
 
 ### Technology Stack
+
 - **Framework**: Flutter 3.0+
 - **Language**: Dart
 - **Local Database**: SQLite (sqflite)
@@ -18,9 +19,9 @@ Moqred is a transaction-based application that helps users manage financial rela
 - **UI Components**: Custom FlutterFlow components
 
 ### Project Structure
+
 ```
 lib/
-├── auth/                    # Authentication modules
 ├── backend/
 │   ├── db_requests/         # Database operations
 │   ├── remote/             # Cloud service integration
@@ -35,11 +36,11 @@ lib/
 ## 🎯 Core Features
 
 ### 1. Transaction Management
+
 - **Transaction Types**:
-  - **قرض (Loan)**: Money lent out (negative balance)
-  - **سداد (Payment)**: Loan repayment (positive balance)
-  - **ملئ (Filling)**: Account top-up (positive balance)
-  - **تبرع (Donation)**: Donations received (positive balance)
+  - **Loan**: Money lent out (negative balance)
+  - **Payment**: Loan repayment (positive balance)
+  - **Filling**: Account top-up (positive balance)
 
 - **Transaction Validation**:
   - Loan validation ensures sufficient balance
@@ -47,18 +48,21 @@ lib/
   - Real-time balance calculations
 
 ### 2. Person Management
+
 - **Person Profiles**: Name, phone, bio, and relationships
 - **Relationship Tracking**: Link persons to other persons
 - **Transaction History**: Complete transaction log per person
 - **Loan Overview**: Track outstanding loans and payments
 
 ### 3. Financial Dashboard
+
 - **Balance Overview**: Real-time total balance calculation
 - **Transaction Summary**: Income vs. outgoing transactions
 - **Person Overview**: List of persons with outstanding loans
 - **Data Visualization**: Paginated data tables with sorting
 
 ### 4. Data Synchronization
+
 - **Local Storage**: SQLite database for offline functionality
 - **Cloud Backup**: PocketBase integration for data backup
 - **Sync Management**: Bidirectional sync with conflict resolution
@@ -77,6 +81,7 @@ lib/
 - `created/updated`: Timestamps
 
 #### `transaction_types`
+
 - `id`: Unique identifier
 - `name`: Display name (e.g., "قرض", "سداد")
 - `type`: Type identifier (loan, payment, filling, donate)
@@ -84,6 +89,7 @@ lib/
 - `created/updated`: Timestamps
 
 #### `transactions`
+
 - `id`: Unique identifier
 - `amount`: Transaction amount
 - `person`: Reference to person
@@ -92,11 +98,52 @@ lib/
 - `created/updated`: Timestamps
 
 #### `persons_overview` (View)
+
 - Aggregated view showing:
   - Total loan amount per person
   - Current remainder (loan - payments)
   - Last transaction date
   - Only shows persons with outstanding loans
+
+## 📱 User Interface
+
+### Main Navigation
+
+The app features a bottom navigation bar with three main sections:
+
+1. **Home**: Dashboard with balance overview and person list
+2. **Transactions**: Transaction history and management
+3. **Settings**: App configuration and transaction type management
+
+### Key UI Components
+
+- **PaginatedDataTable**: For displaying large datasets
+- **FlutterFlowDropDown**: Custom dropdown components
+- **Shimmer Loading**: Loading states for better UX
+- **Responsive Design**: Adapts to different screen sizes
+
+## 🔄 Data Flow
+
+### Transaction Creation Flow
+
+1. User selects transaction type
+2. System validates available balance (for loans)
+3. User enters amount and selects person
+4. System validates person's loan status (for payments)
+5. Transaction is created and balance is updated
+6. UI refreshes to show new data
+
+### Synchronization Flow
+
+1. **Backup to Cloud**:
+   - Authenticate with PocketBase
+   - Clear remote data
+   - Upload local data in dependency order
+
+2. **Restore from Cloud**:
+   - Authenticate with PocketBase
+   - Clear local data
+   - Download and insert remote data
 
 ## 🚀 Getting Started
 
@@ -159,42 +206,6 @@ class SecureConfig {
   static const String pocketBaseAdminPassword = 'your-password';
 }
 ```
-
-## 📱 User Interface
-
-### Main Navigation
-The app features a bottom navigation bar with three main sections:
-
-1. **الرئيسية (Home)**: Dashboard with balance overview and person list
-2. **المعاملات (Transactions)**: Transaction history and management
-3. **الإعدادات (Settings)**: App configuration and transaction type management
-
-### Key UI Components
-- **PaginatedDataTable**: For displaying large datasets
-- **FlutterFlowDropDown**: Custom dropdown components
-- **Shimmer Loading**: Loading states for better UX
-- **Responsive Design**: Adapts to different screen sizes
-
-## 🔄 Data Flow
-
-### Transaction Creation Flow
-1. User selects transaction type
-2. System validates available balance (for loans)
-3. User enters amount and selects person
-4. System validates person's loan status (for payments)
-5. Transaction is created and balance is updated
-6. UI refreshes to show new data
-
-### Synchronization Flow
-1. **Backup to Cloud**:
-   - Authenticate with PocketBase
-   - Clear remote data
-   - Upload local data in dependency order
-   
-2. **Restore from Cloud**:
-   - Authenticate with PocketBase
-   - Clear local data
-   - Download and insert remote data
 
 ## 🛠️ Development
 
