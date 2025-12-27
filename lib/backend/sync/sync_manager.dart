@@ -4,7 +4,8 @@ import 'package:moqred/backend/schema/models/index.dart';
 import 'package:sqflite/sqflite.dart' show ConflictAlgorithm, Sqflite;
 
 class SyncManager {
-  SyncManager({PocketBaseService? remote}) : _remote = remote ?? PocketBaseService();
+  SyncManager({PocketBaseService? remote})
+      : _remote = remote ?? PocketBaseService();
 
   final PocketBaseService _remote;
 
@@ -27,8 +28,13 @@ class SyncManager {
     final db = await SQLiteHelper.db;
     await _remote.authenticateAdmin();
 
+    // Only proceed if admin has backup permission
+    final perms = _remote.adminPermissions();
+    if (!(perms['canBackup'] ?? false)) return;
+
     // Truncate remote in correct order: children first
-    for (final table in [...childTables, ...parentTables].map((t) => collectionMap[t]!)) {
+    for (final table
+        in [...childTables, ...parentTables].map((t) => collectionMap[t]!)) {
       await _remote.deleteAllRecords(table);
     }
 
@@ -41,8 +47,10 @@ class SyncManager {
     Future<void> pushAll(String table) async {
       final rows = await readAll(table);
       // PocketBase expects string values for ids and references
-      final normalized = rows.map((r) => r.map((k, v) => MapEntry(k, v))).toList();
-      await _remote.createRecords(collectionMap[table]!, normalized.cast<Map<String, dynamic>>());
+      final normalized =
+          rows.map((r) => r.map((k, v) => MapEntry(k, v))).toList();
+      await _remote.createRecords(
+          collectionMap[table]!, normalized.cast<Map<String, dynamic>>());
     }
 
     for (final table in parentTables) {
@@ -56,6 +64,10 @@ class SyncManager {
   Future<void> restoreFromPocketBase() async {
     final db = await SQLiteHelper.db;
     await _remote.authenticateAdmin();
+
+    // Only proceed if admin has restore permission
+    final perms = await _remote.adminPermissions();
+    if (!(perms['canRestore'] ?? false)) return;
 
     await db.transaction((txn) async {
       Future<void> clearTable(String table) async {
@@ -81,7 +93,8 @@ class SyncManager {
           for (final c in allowed) {
             if (map.containsKey(c)) filtered[c] = map[c];
           }
-          await txn.insert(table, filtered, conflictAlgorithm: ConflictAlgorithm.replace);
+          await txn.insert(table, filtered,
+              conflictAlgorithm: ConflictAlgorithm.replace);
         }
       }
 
@@ -99,9 +112,13 @@ class SyncManager {
     await _remote.authenticateAdmin();
 
     Future<Map<String, Object?>> localStats(String table) async {
-      final count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table')) ?? 0;
-      final res = await db.rawQuery('SELECT MAX(updated) as max_updated FROM $table');
-      final maxUpdated = (res.isNotEmpty ? res.first['max_updated'] : null) as String?;
+      final count = Sqflite.firstIntValue(
+              await db.rawQuery('SELECT COUNT(*) FROM $table')) ??
+          0;
+      final res =
+          await db.rawQuery('SELECT MAX(updated) as max_updated FROM $table');
+      final maxUpdated =
+          (res.isNotEmpty ? res.first['max_updated'] : null) as String?;
       return {'count': count, 'maxUpdated': maxUpdated};
     }
 
@@ -112,7 +129,10 @@ class SyncManager {
       result[table] = {
         'local': local,
         'remote': remote,
-        'inSync': local['count'] == remote['count'] && (local['maxUpdated'] == remote['maxUpdated'] || local['maxUpdated'] == null || remote['maxUpdated'] == null),
+        'inSync': local['count'] == remote['count'] &&
+            (local['maxUpdated'] == remote['maxUpdated'] ||
+                local['maxUpdated'] == null ||
+                remote['maxUpdated'] == null),
       };
     }
     return result;
@@ -121,9 +141,8 @@ class SyncManager {
   List<String> _allowedColumns(String table) {
     if (table == TransactionType.TABLE_NAME) return TransactionType.fields;
     if (table == Person.TABLE_NAME) return Person.fields;
-    if (table == Transaction.TABLE_NAME) return ['id', 'amount', 'created', 'updated', 'notes', 'person', 'type'];
+    if (table == Transaction.TABLE_NAME)
+      return ['id', 'amount', 'created', 'updated', 'notes', 'person', 'type'];
     return [];
   }
 }
-
-

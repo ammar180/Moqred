@@ -6,6 +6,8 @@ class PocketBaseService {
       : _pb = client ?? PocketBase(SecureConfig.pocketBaseUrl);
 
   final PocketBase _pb;
+  final _perms = ['canBackup', 'canRestore'];
+
 
   Future<T> _retry<T>(Future<T> Function() action, {int retries = 3}) async {
     int attempt = 0;
@@ -28,6 +30,20 @@ class PocketBaseService {
           SecureConfig.pocketBaseAdminEmail,
           SecureConfig.pocketBaseAdminPassword,
         );
+  }
+
+  /// Read the permissions for the authenticated admin from the PocketBase auth store.
+  /// Reads `canBackup` and `canRestore` from the authenticated admin model and
+  /// returns a map with those boolean flags (defaults to false).
+  Map<String, bool> adminPermissions() {
+    try {
+      return {
+        for (final v in _perms)
+          v: _pb.authStore.record?.get<bool>(v, false) ?? false,
+      };
+    } catch (e) {
+      return {for (final v in _perms) v: false};
+    }
   }
 
   Future<List<Map<String, dynamic>>> fetchAllRecords(String collection) async {
