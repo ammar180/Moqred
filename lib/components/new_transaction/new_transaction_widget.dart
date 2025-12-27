@@ -141,19 +141,62 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    Text(
-                                      dateTimeFormat(
-                                        "MMMEd",
-                                        getCurrentTimestamp,
-                                        locale: AppLocalizations.of(context)
-                                            .languageCode,
-                                      ),
-                                      style: AppTheme.of(context)
-                                          .titleLarge
-                                          .override(
-                                            fontFamily: 'Sora',
-                                            letterSpacing: 0.0,
+                                    InkWell(
+                                      onTap: () async {
+                                        final current =
+                                            _model.transactionCreated ??
+                                                DateTime.now();
+                                        final pickedDate = await showDatePicker(
+                                          context: context,
+                                          initialDate: current,
+                                          firstDate: DateTime(2000),
+                                          lastDate: DateTime(2100),
+                                        );
+                                        if (pickedDate != null) {
+                                          final pickedTime =
+                                              await showTimePicker(
+                                            context: context,
+                                            initialTime:
+                                                TimeOfDay.fromDateTime(current),
+                                          );
+                                          final newDate = DateTime(
+                                            pickedDate.year,
+                                            pickedDate.month,
+                                            pickedDate.day,
+                                            pickedTime?.hour ?? current.hour,
+                                            pickedTime?.minute ??
+                                                current.minute,
+                                          );
+                                          safeSetState(() => _model
+                                              .transactionCreated = newDate);
+                                        }
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            dateTimeFormat(
+                                              "MMMEd",
+                                              _model.transactionCreated ??
+                                                  getCurrentTimestamp,
+                                              locale:
+                                                  AppLocalizations.of(context)
+                                                      .languageCode,
+                                            ),
+                                            style: AppTheme.of(context)
+                                                .titleLarge
+                                                .override(
+                                                  fontFamily: 'Sora',
+                                                  letterSpacing: 0.0,
+                                                ),
                                           ),
+                                          SizedBox(width: 8),
+                                          Icon(Icons.edit,
+                                              size: 18,
+                                              color:
+                                                  AppTheme.of(context).primary),
+                                        ],
+                                      ),
                                     ),
                                     SizedBox(
                                       width: 200.0,
@@ -588,6 +631,7 @@ class _NewTransactionWidgetState extends State<NewTransactionWidget> {
                                             notes: _model
                                                 .transactionPersonNotesTextController!
                                                 .text,
+                                            created: _model.transactionCreated,
                                           );
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(

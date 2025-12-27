@@ -83,14 +83,23 @@ class InsertTransaction {
       {required String notes,
       required int amount,
       required String person,
-      required String type}) async {
+      required String type,
+      DateTime? created}) async {
     final serviceWriter = DbWriter<Transaction>();
     try {
-      final transaction = Map<String, dynamic>.from(
-          {'notes': notes, 'amount': amount, 'person': person, 'type': type});
+      final now = DateTime.now();
+      final transaction = Map<String, dynamic>.from({
+        'notes': notes,
+        'amount': amount,
+        'person': person,
+        'type': type,
+        'created': (created ?? now).toIso8601String(),
+        'updated': now.toIso8601String(),
+      });
       return await serviceWriter.insertMap(Transaction.TABLE_NAME, transaction);
     } catch (e) {
-      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!).getText('err_add_transaction'));
+      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!)
+          .getText('err_add_transaction'));
     }
   }
 }
@@ -111,7 +120,8 @@ class InsertPerson {
       );
       return await DbWriter<Person>().insert(person);
     } catch (e) {
-      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!).getText('err_add_person'));
+      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!)
+          .getText('err_add_person'));
     }
   }
 }
@@ -131,7 +141,8 @@ class UpdatePersonCall {
     try {
       return await DbWriter<Person>().update(person);
     } catch (e) {
-      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!).getText('err_update_person'));
+      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!)
+          .getText('err_update_person'));
     }
   }
 }
@@ -143,7 +154,8 @@ class RemoveRecord {
     try {
       await serviceWriter.deleteById(tableName, id);
     } catch (e) {
-      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!).getText('err_delete'));
+      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!)
+          .getText('err_delete'));
     }
   }
 }
@@ -173,7 +185,8 @@ class InsertTransactionTypeCall {
       };
       return await writer.insertMap(TransactionType.TABLE_NAME, data);
     } catch (e) {
-      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!).getText('err_add_tx_type'));
+      throw Exception(AppLocalizations.of(appNavigatorKey.currentContext!)
+          .getText('err_add_tx_type'));
     }
   }
 }
