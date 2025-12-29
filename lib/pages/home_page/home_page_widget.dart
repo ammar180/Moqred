@@ -64,24 +64,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 24.0, 16.0, 0.0),
+                                16.0, 0.0, 16.0, 0.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                if (responsiveVisibility(
-                                  context: context,
-                                  tabletLandscape: false,
-                                  desktop: false,
-                                ))
-                                  Container(
-                                    width: double.infinity,
-                                    height: 44.0,
-                                    decoration: BoxDecoration(
-                                      color: AppTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
-                                  ),
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
@@ -107,8 +94,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 4.0, 0.0, 0.0),
                                               child: Text(
-                                                  AppLocalizations.of(context).getText(
-                                                      'home_subtitle' /* Preview current balance plus list */),
+                                                  AppLocalizations.of(context)
+                                                      .getText(
+                                                          'home_subtitle' /* Preview current balance plus list */),
                                                   style: AppTheme.of(context)
                                                       .bodySmall),
                                             ),
@@ -118,26 +106,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     ),
                                   ],
                                 ),
-                                if (responsiveVisibility(
-                                  context: context,
-                                  phone: false,
-                                  tablet: false,
-                                ))
-                                  Divider(
-                                    height: 44.0,
-                                    thickness: 1.0,
-                                    color: AppTheme.of(context).lineColor,
-                                  ),
-                                if (responsiveVisibility(
-                                  context: context,
-                                  tabletLandscape: false,
-                                  desktop: false,
-                                ))
-                                  Divider(
-                                    height: 24.0,
-                                    thickness: 1.0,
-                                    color: AppTheme.of(context).lineColor,
-                                  ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
@@ -207,8 +175,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
                                             if (snapshot.hasError) {
                                               return Text(
-                                                  AppLocalizations.of(context).getText(
-                                                      'home_error_loading_balance' /* Sorry, error loading balance details */),
+                                                  AppLocalizations.of(context)
+                                                      .getText(
+                                                          'home_error_loading_balance' /* Sorry, error loading balance details */),
                                                   style: AppTheme.of(context)
                                                       .labelMedium
                                                       .override(
@@ -220,8 +189,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
                                             if (!snapshot.hasData) {
                                               return Text(
-                                                  AppLocalizations.of(context).getText(
-                                                      'home_no_data' /* No data yet */),
+                                                  AppLocalizations.of(context)
+                                                      .getText(
+                                                          'home_no_data' /* No data yet */),
                                                   style: AppTheme.of(context)
                                                       .labelMedium);
                                             }
@@ -243,8 +213,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       CrossAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      AppLocalizations.of(context).getText(
-                                                          'home_available_amount' /* Available Amount */),
+                                                      AppLocalizations.of(
+                                                              context)
+                                                          .getText(
+                                                              'home_available_amount' /* Available Amount */),
                                                       style:
                                                           AppTheme.of(context)
                                                               .labelMedium,
@@ -286,8 +258,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       CrossAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      AppLocalizations.of(context).getText(
-                                                          'home_total_amount' /* Total Amount */),
+                                                      AppLocalizations.of(
+                                                              context)
+                                                          .getText(
+                                                              'home_total_amount' /* Total Amount */),
                                                       style:
                                                           AppTheme.of(context)
                                                               .labelMedium,
@@ -321,8 +295,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       CrossAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      AppLocalizations.of(context).getText(
-                                                          'home_outgoing_amount' /* Outgoing Amount */),
+                                                      AppLocalizations.of(
+                                                              context)
+                                                          .getText(
+                                                              'home_outgoing_amount' /* Outgoing Amount */),
                                                       style:
                                                           AppTheme.of(context)
                                                               .labelMedium,
@@ -371,7 +347,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   desktop: false,
                                 ))
                                   Divider(
-                                    height: 24.0,
+                                    height: 10.0,
                                     thickness: 1.0,
                                     color: AppTheme.of(context).lineColor,
                                   ),
@@ -473,8 +449,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                 label: DefaultTextStyle.merge(
                                                   softWrap: true,
                                                   child: Text(
-                                                    AppLocalizations.of(context).getText(
-                                                        'home_borrower' /* Borrower */),
+                                                    AppLocalizations.of(context)
+                                                        .getText(
+                                                            'home_borrower' /* Borrower */),
                                                     textAlign: TextAlign.center,
                                                     style: AppTheme.of(context)
                                                         .bodyLarge,
@@ -485,8 +462,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                 label: DefaultTextStyle.merge(
                                                   softWrap: true,
                                                   child: Text(
-                                                    AppLocalizations.of(context).getText(
-                                                        'home_remaining' /* Remaining */),
+                                                    AppLocalizations.of(context)
+                                                        .getText(
+                                                            'home_remaining' /* Remaining */),
                                                     textAlign: TextAlign.center,
                                                     style: AppTheme.of(context)
                                                         .bodyLarge,
@@ -497,8 +475,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                 label: DefaultTextStyle.merge(
                                                   softWrap: true,
                                                   child: Text(
-                                                    AppLocalizations.of(context).getText(
-                                                        'home_date' /* Date */),
+                                                    AppLocalizations.of(context)
+                                                        .getText(
+                                                            'home_date' /* Date */),
                                                     textAlign: TextAlign.center,
                                                     style: AppTheme.of(context)
                                                         .bodyLarge,
@@ -534,8 +513,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   child: Text(
                                                     valueOrDefault<String>(
                                                         personItem.name,
-                                                        AppLocalizations.of(context).getText(
-                                                            'home_borrower' /* Borrower */)),
+                                                        AppLocalizations.of(
+                                                                context)
+                                                            .getText(
+                                                                'home_borrower' /* Borrower */)),
                                                     style: AppTheme.of(context)
                                                         .labelSmall
                                                         .override(
@@ -578,8 +559,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   .toList(),
                                             ),
                                             emptyBuilder: () => Center(
-                                                child: Text(
-                                                    AppLocalizations.of(context).getText(
+                                                child: Text(AppLocalizations.of(
+                                                        context)
+                                                    .getText(
                                                         'home_no_loans' /* No active loans yet */))),
                                             paginated: true,
                                             selectable: false,

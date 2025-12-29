@@ -12,7 +12,7 @@ Person _$PersonFromJson(Map<String, dynamic> json) => Person(
       bio: (json['bio'] ?? "") as String,
       phone: (json['phone'] ?? "") as String,
       relatedTo: (json['relatedTo'] ?? "") as String,
-      created: json['created'] == null
+      created: ((json['created'] ?? "") as String).isEmpty
           ? DateTime.now()
           : DateTime.parse(json['created'] as String),
       updated: json['updated'] == null
